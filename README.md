@@ -19,7 +19,7 @@
 * Fix links for Minecraft's authentication server
 * Fix links for viewing skins
 * Fix minor bugs
-* Refactor classes to match current Minecraft?
+	- Slab Crash (44:4)
 
 **MCP**
 
