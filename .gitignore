@@ -1,1 +1,12 @@
+# Block folders that MCP generates 
+jars/
+logs/
+reobf/
+temp/
+src/
+
+# Allow server.properties
+!jars/server.properties
+
+# Block compiled Python
 *.pyc
