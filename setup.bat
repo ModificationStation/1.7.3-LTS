@@ -22,7 +22,7 @@ rem Download function
 rem Arguments: 
 rem         URL, Output file
 rem     URL: a http(s) link 
-rem     Output file: A path that will be output of downloaded file
+rem     Output file: A path that will be output for the downloaded file
 :download
 runtime\bin\wget.exe -q -O %2 %1
 exit /b
