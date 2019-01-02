@@ -19,7 +19,9 @@ if /I "%c%" EQU "N" goto :end
 :: Create folders
 ::
 
+echo.
 echo Creating folders...
+echo.
 
 mkdir jars\bin\natives
 
@@ -78,5 +80,6 @@ cd ..\..\..
 
 :end
 echo Finished^!
+echo.
 
 pause
