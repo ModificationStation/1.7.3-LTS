@@ -1,10 +1,21 @@
+0.0.1:
+    *Create setup.bat for easy setup
+    *Re-wrote cleanup.bat for a better cleanup
+    *Re-wrote the update checker to work with LTS
+    *Re-wrote the update downloader to work with LTS
+    *Implemented comments on methods
+    *Added more mapping
+    
+Mapping:
 
 I don't know how to organize this, so I'm putting fields and funcs in the order that I changed them, along with the class
 I edited them from.
 
+These names are from either later versions of MCP or from staring at it for a while.
+
 * = I made this name up / Couldn't find it online	
 
-TODO/Idk: 
+Needs more attention: 
 	BlockJukeBox.java
 	CanvasIsomPreview.java
 	ChunkProviderGenerate.java
@@ -44,9 +55,6 @@ TODO/Idk:
 	MetadataChunkBlock.java
 	MouseHelper.java
 	MovementInput.java
-
-Other:
-	Delete CheckUpdates (Update this update checker!)
 
 Fields.csv:
 	Block.java:
@@ -542,12 +550,6 @@ Fields.csv:
 		field_28048_a=respawnDimension
 		field_28118_b=mapStorage
 		
-		
-		
-		
-		
-		
-
 Methods.csv:
 	Block.java:
 		func_25154_a=initBreakableStats
@@ -1002,13 +1004,3 @@ Methods.csv:
 		func_28116_a=handleMapData
 		func_28115_a=handleDoorChange
 		func_27245_a=handleStatistic
-		
-		
-
-	
-	
-	
-	
-		
-
-	
