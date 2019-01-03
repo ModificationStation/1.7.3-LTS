@@ -59,8 +59,8 @@ call :download https://launcher.mojang.com/v1/objects/43db9b498cb67058d2e12d394e
 
 echo  ^> Client
 
-:: Server (From Minecraft Version Changer)
-call :download "https://docs.google.com/uc?export=download&id=0B5MTZq5CKD-rcExXc28yQWw1dEk" jars\minecraft_server.jar
+:: Server (From BetaCraft, official would be better...)
+call :download https://betacraft.ovh/server-archive/minecraft/b1.7.3.jar jars\minecraft_server.jar
 
 echo  ^> Server
 
