@@ -59,8 +59,10 @@ call :download https://launcher.mojang.com/v1/objects/43db9b498cb67058d2e12d394e
 
 echo  ^> Client
 
-:: Server (find an official link!
-REM runtime\bin\wget.exe -O jars\minecraft_server.jar
+:: Server (From Minecraft Version Changer)
+call :download "https://docs.google.com/uc?export=download&id=0B5MTZq5CKD-rcExXc28yQWw1dEk" jars\minecraft_server.jar
+
+echo  ^> Server
 
 :: LWJGL 2.8.4
 call :download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/2.8.4/lwjgl-2.8.4.jar jars\bin\lwjgl.jar
@@ -74,12 +76,12 @@ call :download http://central.maven.org/maven2/net/java/jinput/jinput/2.0.5/jinp
 call :download http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-windows.jar jars\bin\natives\jinput_platform.jar
 
 echo  ^> jinput
-echo.
 
 ::
 :: Unzipping natives
 ::
 
+echo.
 echo Unzipping natives...
 
 call :unzip jars\bin\natives\lwjgl_platform.jar jars\bin\natives
