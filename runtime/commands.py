@@ -234,6 +234,12 @@ class Commands(object):
         self.mcplogfile     = config.get('MCP', 'LogFile')
         self.mcperrlogfile  = config.get('MCP', 'LogFileErr')
 
+		# LTS Updater
+        version = ConfigParser.SafeConfigParser()
+        version.readfp(open('conf/version.cfg'))
+		
+        self.mcpversion 	= version.get('VERSION', 'MCPVersion')
+
         try:
             self.rgreobconfig   = config.get('RETROGUARD', 'RetroReobConf')
             self.rgclientreobconf = config.get('RETROGUARD', 'ClientReobConf')
@@ -516,6 +522,20 @@ class Commands(object):
             self.logger.warning('!! Updates available. Please run updatemcp to get them. !!')
 
         return results
+
+    # LTS Check for updates
+    def checkforupdates(self, silent=False):
+        latestversionconf = ConfigParser.SafeConfigParser()
+        url = urllib.urlopen('https://raw.githubusercontent.com/ModificationStation/1.7.3-LTS/master/conf/version.cfg')
+        latestversionconf.readfp(url)
+        
+        self.latestversion 	= latestversionconf.get('VERSION', 'MCPVersion')
+        
+        self.logger.debug('Current version: ' + self.mcpversion)
+        self.logger.debug('Latest version: '+ self.latestversion)
+        
+        if self.mcpversion != self.latestversion:
+            self.logger.info('MCP version ' + self.latestversion + ' has been released! Run updatemcp.bat to download it!')
 
     def cleanbindirs(self,side):
         pathbinlk    = {0:self.binclient,    1:self.binserver}
