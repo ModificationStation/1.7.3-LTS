@@ -535,7 +535,12 @@ class Commands(object):
         self.logger.debug('Latest version: '+ self.latestversion)
         
         if self.mcpversion != self.latestversion:
-            self.logger.info('MCP version ' + self.latestversion + ' has been released! Run updatemcp.bat to download it!')
+            if not silent:
+                self.logger.info('MCP version ' + self.latestversion + ' has been released! Run updatemcp.bat to download it!')
+            result = True
+        else:
+            result = False
+        return result
 
     def cleanbindirs(self,side):
         pathbinlk    = {0:self.binclient,    1:self.binserver}
@@ -1173,8 +1178,20 @@ class Commands(object):
             if entry[3] == 'D':
                 self.logger.info('Removing file from local install : %s'%entry[0])
                 #Remove file here
-
-# LTS BACKPORTED JAVADOC
+                
+    # LTS Update MCP
+    def updatemcp(self, force=False):
+        if self.checkforupdates(silent=True):
+            self.logger.info('Update found! The latest version is ' + self.latestversion + ', and you are using ' + self.mcpversion + '!')
+            self.logger.info('Downloading!')
+            
+            filename = 'mcp_' + self.latestversion + '.zip'
+            os.system('runtime\\bin\\wget.exe -q -O ' + filename + ' http://github.com/ModificationStation/1.7.3-LTS/archive/master.zip ')
+            self.logger.info('Download complete! Saved to ' + filename + '!')
+        else:
+            self.logger.info('You are using the latest version of MCP! (' + self.mcpversion + ')')
+         
+    # LTS BACKPORTED JAVADOC
     def process_javadoc(self, side):
         """Add CSV descriptions to methods and fields as javadoc"""
         pathsrclk = {0: self.srcclient, 1: self.srcserver}
