@@ -525,14 +525,18 @@ class Commands(object):
 
     # LTS Check for updates
     def checkforupdates(self, silent=False):
-        latestversionconf = ConfigParser.SafeConfigParser()
-        url = urllib.urlopen('https://raw.githubusercontent.com/ModificationStation/1.7.3-LTS/master/conf/version.cfg')
-        latestversionconf.readfp(url)
-        
-        self.latestversion 	= latestversionconf.get('VERSION', 'MCPVersion')
-        
-        self.logger.debug('Current version: ' + self.mcpversion)
-        self.logger.debug('Latest version: '+ self.latestversion)
+        try:
+            latestversionconf = ConfigParser.SafeConfigParser()
+            url = urllib.urlopen('https://raw.githubusercontent.com/ModificationStation/1.7.3-LTS/master/conf/version.cfg')
+            latestversionconf.readfp(url)
+            
+            self.latestversion 	= latestversionconf.get('VERSION', 'MCPVersion')
+            
+            self.logger.debug('Current version: ' + self.mcpversion)
+            self.logger.debug('Latest version: '+ self.latestversion)
+        except:
+            self.logger.error('Could not fetch the latest version!')
+            return False
         
         if self.mcpversion != self.latestversion:
             if not silent:
