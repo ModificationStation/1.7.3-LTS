@@ -42,7 +42,8 @@ start() {
     removedir reobf/
     removedir temp/
     removedir src/
-    removedir bin/    
+    removedir bin/
+    removedir runtime/kotlinc
     
     echo 'Finished!'
 }
