@@ -52,6 +52,7 @@ call :rmdir reobf\
 call :rmdir temp\
 call :rmdir src\
 call :rmdir bin\
+call :rmdir runtime\kotlinc
 
 :end
 

@@ -6,13 +6,12 @@ echo -------------------
 echo.
 
 ::
-:: Conirmation
+:: Confirmation
 ::
 
 set /P c=Are you sure you want to run the setup? [Y/N]? 
 if /I "%c%" EQU "Y" goto :start 
 if /I "%c%" EQU "N" goto :end
-
 
 ::
 :: Methods
@@ -53,6 +52,25 @@ mkdir jars\bin\natives >> nul
 ::
 
 echo Downloading runtimes...
+echo.
+
+:: Kotlin Confirmation
+
+set /P c=Do you want to use Kotlin in your project? [Y/N]? 
+if /I "%c%" EQU "Y" goto :kotlin 
+if /I "%c%" EQU "N" goto :skip
+
+:kotlin
+
+:: Kotlin Installation
+
+call :download https://github.com/JetBrains/kotlin/releases/download/v1.2.61/kotlin-compiler-1.2.61.zip runtime\kotlinc.zip
+call :unzip runtime\kotlinc.zip runtime
+del /Q runtime\kotlinc.zip >> nul
+
+echo  ^> Kotlin
+
+:skip
 
 :: Client
 call :download https://launcher.mojang.com/v1/objects/43db9b498cb67058d2e12d394e6507722e71bb45/client.jar jars\bin\minecraft.jar
