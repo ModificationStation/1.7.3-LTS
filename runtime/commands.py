@@ -234,10 +234,10 @@ class Commands(object):
         self.mcplogfile     = config.get('MCP', 'LogFile')
         self.mcperrlogfile  = config.get('MCP', 'LogFileErr')
 
-        # LTS Updater
+		# LTS Updater
         version = ConfigParser.SafeConfigParser()
         version.readfp(open('conf/version.cfg'))
-
+		
         self.mcpversion 	= version.get('VERSION', 'MCPVersion')
 
         try:
@@ -529,15 +529,15 @@ class Commands(object):
             latestversionconf = ConfigParser.SafeConfigParser()
             url = urllib.urlopen('https://raw.githubusercontent.com/ModificationStation/1.7.3-LTS/master/conf/version.cfg')
             latestversionconf.readfp(url)
-
+            
             self.latestversion 	= latestversionconf.get('VERSION', 'MCPVersion')
-
+            
             self.logger.debug('Current version: ' + self.mcpversion)
             self.logger.debug('Latest version: '+ self.latestversion)
         except:
             self.logger.error('Could not fetch the latest version!')
             return False
-
+        
         if self.mcpversion != self.latestversion:
             if not silent:
                 self.logger.info('MCP version ' + self.latestversion + ' has been released! Run updatemcp.bat to download it!')
@@ -776,67 +776,21 @@ class Commands(object):
 
         #HINT: We create the list of source directories based on the list of packages
         pkglist = ''
-        ktlist = '' #Kotlin
-        if side == 0: #Kotlin
-            ktlist = 'src/minecraft' #Kotlin
-        if side == 1: #Kotlin
-            ktlist = 'src/minecraft_server' #Kotlin
         for path, dirlist, filelist in os.walk(pathsrclk[side]):
             if glob.glob(os.path.join(path,'*.java')):
                 pkglist += os.path.join(path,'*.java') + ' '
 
         #HINT: We have to split between client & server because both have different arguments
         forkcmd = ''
-        ktcmd = '' #Kotlin
         if side == 0:
-            self.cpathclient.append('bin/minecraft') #Kotlin
             cpc = os.pathsep.join(self.cpathclient)
             forkcmd = cmdlk[side].format(classpath=cpc, sourcepath=pathsrclk[side], outpath=pathbinlk[side], pkgs=pkglist, fixes=self.fixesclient)
-            ktcmd = '"runtime/kotlinc/bin/kotlinc" -d "%s" -cp "%s" "%s"' % (pathbinlk[side], cpc, ktlist) #Kotlin
 
         if side == 1:
-            self.cpathclient.append('bin/minecraft_server') #Kotlin
             cps = os.pathsep.join(self.cpathserver)
             forkcmd = cmdlk[side].format(classpath=cps, sourcepath=pathsrclk[side], outpath=pathbinlk[side], pkgs=pkglist)
-            ktcmd = '"runtime/kotlinc/bin/kotlinc" -d "%s" -cp "%s" "%s"' % (pathbinlk[side], cps, ktlist) #Kotlin
 
         self.logger.debug("recompile: '"+forkcmd+"'")
-        #Kotlin Compiler Start
-        print("Compiling Kotlin")
-        p = subprocess.Popen(ktcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        buffer = []
-        errormsgs = []
-        retcode = None
-        while True:
-            o = p.stdout.readline()
-            retcode = p.poll()
-            if o == '' and retcode is not None:
-                break
-            if o != '':
-                buffer.append(o.strip())
-
-        if retcode == 0:
-            for line in buffer:
-                self.logger.debug(line)
-        else:
-            self.logger.error('%s failed.'%ktcmd)
-            self.logger.error('Return code : %d'%retcode)
-            for line in buffer:
-                if not line.strip(): continue
-                if line[0] != '[' and line[0:4] != 'Note':
-                    errormsgs.append(line)
-                self.logger.debug(line)
-
-            self.logger.error('')
-            self.logger.error('== ERRORS FOUND ==')
-            self.logger.error('')
-            for line in errormsgs:
-                self.logger.error(line)
-                if '^' in line: self.logger.error('')
-            self.logger.error('==================')
-            self.logger.error('')
-        #Kotlin Compiler End
-        print("Compiling Java")
         p = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         buffer = []
         errormsgs = []
@@ -874,8 +828,6 @@ class Commands(object):
     def startserver(self):
         cps = ['../'+p for p in self.cpathserver]
         cps.insert(2, '../'+self.binserver)
-        cps.append('../runtime/kotlinc/lib/kotlin-runtime.jar') #Kotlin
-        cps.append('../runtime/kotlinc/lib/kotlin-reflect.jar') #Kotlin
         cps = os.pathsep.join(cps)
         #self.logger.info("classpath: '"+cps+"'")
 
@@ -887,8 +839,6 @@ class Commands(object):
     def startclient(self):
         cpc = ['../'+p for p in self.cpathclient]
         cpc.insert(2, '../'+self.binclient)
-        cpc.append('../runtime/kotlinc/lib/kotlin-runtime.jar') #Kotlin
-        cpc.append('../runtime/kotlinc/lib/kotlin-reflect.jar') #Kotlin
         cpc = os.pathsep.join(cpc)
         #self.logger.info("classpath: '"+cpc+"'")
 
@@ -1232,19 +1182,19 @@ class Commands(object):
             if entry[3] == 'D':
                 self.logger.info('Removing file from local install : %s'%entry[0])
                 #Remove file here
-
+                
     # LTS Update MCP
     def updatemcp(self, force=False):
         if self.checkforupdates(silent=True):
             self.logger.info('Update found! The latest version is ' + self.latestversion + ', and you are using ' + self.mcpversion + '!')
             self.logger.info('Downloading!')
-
+            
             filename = 'mcp_' + self.latestversion + '.zip'
             os.system('runtime\\bin\\wget.exe -q -O ' + filename + ' http://github.com/ModificationStation/1.7.3-LTS/archive/master.zip ')
             self.logger.info('Download complete! Saved to ' + filename + '!')
         else:
             self.logger.info('You are using the latest version of MCP! (' + self.mcpversion + ')')
-
+         
     # LTS BACKPORTED JAVADOC
     def process_javadoc(self, side):
         """Add CSV descriptions to methods and fields as javadoc"""
