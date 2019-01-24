@@ -62,9 +62,10 @@ start() {
     echo ' > jinput'
     
     # PyPy 2.7.13
-    download https://bitbucket.org/squeaky/portable-pypy/downloads/pypy-6.0.0-linux_x86_64-portable.tar.bz2 runtime/bin/pypy.tar.bz2
-    
-    echo ' > PyPy 6.0.0'
+    if [ ! -d runtime/bin/pypy_linux/ ]; then
+        download https://bitbucket.org/squeaky/portable-pypy/downloads/pypy-6.0.0-linux_x86_64-portable.tar.bz2 runtime/bin/pypy.tar.bz2
+        echo ' > PyPy 6.0.0'
+    fi
     
     #
     # Unzipping natives
@@ -77,10 +78,11 @@ start() {
     echo ' > lwjgl_platform.jar'
     unzip jars/bin/natives/jinput_platform.jar jars/bin/natives
     echo ' > jinput_platform.jar'
-    mkdir -p runtime/bin/pypy_linux
-    tar -xjf runtime/bin/pypy.tar.bz2 -C runtime/bin pypy-6.0.0-linux_x86_64-portable/
-    mv runtime/bin/pypy-6.0.0-linux_x86_64-portable/ runtime/bin/pypy_linux/
-    echo ' > PyPy 6.0.0'
+    if [ ! -d runtime/bin/pypy_linux/ ]; then
+        tar -xjf runtime/bin/pypy.tar.bz2 -C runtime/bin/ pypy-6.0.0-linux_x86_64-portable/
+        mv runtime/bin/pypy-6.0.0-linux_x86_64-portable/ runtime/bin/pypy_linux
+        echo ' > PyPy 6.0.0'
+    fi
     echo
     
     #
@@ -93,7 +95,9 @@ start() {
     rm -R jars/bin/natives/META-INF>/dev/null
     rm jars/bin/natives/lwjgl_platform.jar
     rm jars/bin/natives/jinput_platform.jar
-    rm runtime/bin/pypy.tar.bz2
+    if [ -d runtime/bin/pypy.tar.bz2 ]; then
+        rm runtime/bin/pypy.tar.bz2
+    fi
     
     echo Finished!
     exit
