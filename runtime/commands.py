@@ -118,7 +118,8 @@ class Commands(object):
     def readconf(self):
         """Read the configuration file to setup some basic paths"""
         config = ConfigParser.SafeConfigParser()
-        config.readfp(open(self._default_config))
+        with open(self._default_config) as config_file:
+            config.readfp(config_file)
         if self.conffile is not None:
             config.read(self.conffile)
         self.config = config
@@ -236,7 +237,8 @@ class Commands(object):
 
 		# LTS Updater
         version = ConfigParser.SafeConfigParser()
-        version.readfp(open('conf/version.cfg'))
+        with open('conf/version.cfg') as version_file:
+            version.readfp(version_file)
 		
         self.mcpversion 	= version.get('VERSION', 'MCPVersion')
 
@@ -346,29 +348,30 @@ class Commands(object):
         ff.write('strip_package net/minecraft/src\n\n')
 
         #HINT: We read the data from the CSVs and dump it in another formating to a SAFFX file
-        methodsreader = csv.DictReader(open(self.csvmethods, 'r'), delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
-        fieldsreader  = csv.DictReader(open(self.csvfields,  'r'), delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
-        classesreader = csv.DictReader(open(self.csvclasses, 'r'), delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
+        with open(self.csvmethods, 'r') as methods_file, open(self.csvfields,  'r') as fields_file, open(self.csvclasses, 'r') as classes_file:
+            methodsreader = csv.DictReader(methods_file, delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
+            fieldsreader  = csv.DictReader(fields_file, delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
+            classesreader = csv.DictReader(classes_file, delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
 
-        ff.write('[CLASSES]\n')
-        for row in classesreader:
-            if row['name'] == 'Start': continue
-            if int(row['side']) == side:
-                ff.write('%s/%s %s\n'%(row['package'], row['name'], row['notch']))
+            ff.write('[CLASSES]\n')
+            for row in classesreader:
+                if row['name'] == 'Start': continue
+                if int(row['side']) == side:
+                    ff.write('%s/%s %s\n'%(row['package'], row['name'], row['notch']))
 
-        ff.write('[METHODS]\n')
-        for row in methodsreader:
-            if row['classname'] == 'Start': continue
-            if int(row['side']) == side:
-                ff.write('%s/%s/%s %s %s\n'%(row['package'], row['classname'], row['name'], row['notchsig'], row['notch']))
+            ff.write('[METHODS]\n')
+            for row in methodsreader:
+                if row['classname'] == 'Start': continue
+                if int(row['side']) == side:
+                    ff.write('%s/%s/%s %s %s\n'%(row['package'], row['classname'], row['name'], row['notchsig'], row['notch']))
 
-        ff.write('[FIELDS]\n')
-        for row in fieldsreader:
-            if row['classname'] == 'Start': continue
-            if int(row['side']) == side:
-                ff.write('%s/%s/%s %s\n'%(row['package'], row['classname'], row['name'], row['notch']))
+            ff.write('[FIELDS]\n')
+            for row in fieldsreader:
+                if row['classname'] == 'Start': continue
+                if int(row['side']) == side:
+                    ff.write('%s/%s/%s %s\n'%(row['package'], row['classname'], row['name'], row['notch']))
 
-        ff.close()
+            ff.close()
 
     def checkjava(self):
         """Check for java and setup the proper directory if needed"""
@@ -431,7 +434,8 @@ class Commands(object):
             self.logger.warning('!! Missing jar file %s. Aborting !!'%jarlk[side])
             return False
 
-        md5jar = md5(open(jarlk[side],'rb').read()).hexdigest()
+        with open(jarlk[side],'rb') as jar_file:
+            md5jar = md5(jar_file.read()).hexdigest()
 
         if not md5jar == md5jarlk[side]:
             self.logger.warn('!! Modified jar detected. Unpredictable results !!')
@@ -494,10 +498,11 @@ class Commands(object):
         md5lcldict = {}
         for path, dirlist, filelist in os.walk('.'):
             for trgfile in filelist:
-                md5lcldict[os.path.join(path,trgfile).replace(os.sep, '/').replace('./','')] = \
-                (md5(open(os.path.join(path,trgfile),'rb').read()).hexdigest(),
-                 os.stat(os.path.join(path,trgfile)).st_mtime
-                 )
+                with open(os.path.join(path,trgfile),'rb') as trgfile_file:
+                    md5lcldict[os.path.join(path,trgfile).replace(os.sep, '/').replace('./','')] = \
+                    (md5(trgfile_file.read()).hexdigest(),
+                     os.stat(os.path.join(path,trgfile)).st_mtime
+                     )
 
         try:
             md5srvlist = urllib.urlopen('http://mcp.ocean-labs.de/files/mcprolling/mcp.md5').readlines()
@@ -675,14 +680,13 @@ class Commands(object):
         patchlk   = {0:self.patchclient, 1:self.patchserver}
 
         #HINT: Here we transform the patches to match the directory separator of the specific platform
-        patch    = open(patchlk[side],'r').read().splitlines()
-        outpatch = open(self.patchtemp,'wb')
-        for line in patch:
-            if line[:3] in ['+++','---', 'Onl', 'dif']:
-                 outpatch.write(line.replace('\\',os.sep).replace('/',os.sep) + '\r\n')
-            else:
-                outpatch.write(line  + '\r\n')
-        outpatch.close()
+        with open(self.patchtemp,'wb') as outpatch, open(patchlk[side],'r') as patch_file:
+            patch    = patch_file.read().splitlines()
+            for line in patch:
+                if line[:3] in ['+++','---', 'Onl', 'dif']:
+                     outpatch.write(line.replace('\\',os.sep).replace('/',os.sep) + '\r\n')
+                else:
+                    outpatch.write(line  + '\r\n')
 
         forkcmd = self.cmdpatch.format(srcdir=pathsrclk[side], patchfile=self.patchtemp)
 
@@ -723,14 +727,13 @@ class Commands(object):
         patchlk   = {0:self.ffpatchclient, 1:self.ffpatchserver}
 
         #HINT: Here we transform the patches to match the directory separator of the specific platform
-        patch    = open(patchlk[side],'r').read().splitlines()
-        outpatch = open(self.patchtemp,'wb')
-        for line in patch:
-            if line[:3] in ['+++','---', 'Onl', 'dif']:
-                 outpatch.write(line.replace('\\',os.sep).replace('/',os.sep) + '\r\n')
-            else:
-                outpatch.write(line  + '\r\n')
-        outpatch.close()
+        with open(self.patchtemp,'wb') as outpatch, open(patchlk[side],'r') as patch_file:
+            patch    = patch_file.read().splitlines()
+            for line in patch:
+                if line[:3] in ['+++','---', 'Onl', 'dif']:
+                     outpatch.write(line.replace('\\',os.sep).replace('/',os.sep) + '\r\n')
+                else:
+                    outpatch.write(line  + '\r\n')
 
         forkcmd = self.cmdpatch.format(srcdir=pathsrclk[side], patchfile=self.patchtemp)
 
@@ -959,19 +962,20 @@ class Commands(object):
         pathsrclk = {0:self.srcclient,    1:self.srcserver}
 
         #HINT: We read the relevant CSVs
-        methodsreader = csv.DictReader(open(self.csvmethods, 'r'), delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
-        fieldsreader  = csv.DictReader(open(self.csvfields,  'r'), delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
+        with open(self.csvmethods, 'r') as methods_file, open(self.csvfields,  'r') as fields_file:
+            methodsreader = csv.DictReader(methods_file, delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
+            fieldsreader  = csv.DictReader(fields_file, delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
 
-        methods = {}
-        fields  = {}
-        for row in methodsreader:
-            if int(row['side']) == side:
-                if row['searge'] in methods: self.logger.debug('WTF ? %s'%row['searge'])
-                methods[row['searge']] = row
-        for row in fieldsreader:
-            if int(row['side']) == side:
-                if row['searge'] in methods: self.logger.debug('WTF ? %s'%row['searge'])
-                fields[row['searge']]  = row
+            methods = {}
+            fields  = {}
+            for row in methodsreader:
+                if int(row['side']) == side:
+                    if row['searge'] in methods: self.logger.debug('WTF ? %s'%row['searge'])
+                    methods[row['searge']] = row
+            for row in fieldsreader:
+                if int(row['side']) == side:
+                    if row['searge'] in methods: self.logger.debug('WTF ? %s'%row['searge'])
+                    fields[row['searge']]  = row
 
         type_hash         = {'methods':'func', 'fields':'field'}
         regexp_searge     = r'%s_[0-9]+_[a-zA-Z]+_?'
@@ -979,27 +983,22 @@ class Commands(object):
         #HINT: We pathwalk the sources
         for path, dirlist, filelist in os.walk(pathsrclk[side]):
             for src_file in glob.glob(os.path.join(path, '*.java')):
+                with open(src_file, 'r') as ff, open(src_file + '.tmp', 'w') as fftmp:
+                    buffer = ff.read()
 
-                ff    = open(src_file, 'r')
-                fftmp = open(src_file + '.tmp', 'w')
+                    #HINT: We check if the sources have func_????_? or field_????_? in them.
+                    # If yes, we replace with the relevant information
+                    for group in ['methods', 'fields']:
+                        results = re.findall(regexp_searge%type_hash[group], buffer)
 
-                buffer = ff.read()
-                ff.close()
+                        for result in results:
+                            #HINT: It is possible for the csv to contain data from previous version or enums, so we catch those
+                            try:
+                                buffer = buffer.replace(result, locals()[group][result]['name'])
+                            except KeyError as msg:
+                                self.logger.debug("Can not replace %s on side %d"%(msg,side))
 
-                #HINT: We check if the sources have func_????_? or field_????_? in them.
-                # If yes, we replace with the relevant information
-                for group in ['methods', 'fields']:
-                    results = re.findall(regexp_searge%type_hash[group], buffer)
-
-                    for result in results:
-                        #HINT: It is possible for the csv to contain data from previous version or enums, so we catch those
-                        try:
-                            buffer = buffer.replace(result, locals()[group][result]['name'])
-                        except KeyError as msg:
-                            self.logger.debug("Can not replace %s on side %d"%(msg,side))
-
-                fftmp.write(buffer)
-                fftmp.close()
+                    fftmp.write(buffer)
 
                 shutil.move(src_file + '.tmp', src_file)
 
@@ -1010,22 +1009,21 @@ class Commands(object):
         deoblk = {0:self.rgclientdeoblog, 1:self.rgserverdeoblog}
         reoblk = {0:self.reobsrgclient, 1:self.reobsrgserver}
 
-        deoblog = open(deoblk[side],'r').read()
-        reobsrg = open(reoblk[side],'w')
+        with open(self.csvmethods, 'r') as methods_file, open(self.csvfields,  'r') as fields_file, \
+                open(deoblk[side],'r') as deoblog_file, open(reoblk[side],'w') as reobsrg:
+            deoblog = deoblog_file.read()
+            methodsreader = csv.DictReader(methods_file, delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
+            fieldsreader  = csv.DictReader(fields_file, delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
 
-        methodsreader = csv.DictReader(open(self.csvmethods, 'r'), delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
-        fieldsreader  = csv.DictReader(open(self.csvfields,  'r'), delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
+            #TODO: A bit too much brute force and a bit slow.
+            for row in methodsreader:
+                if int(row['side']) == side:
+                    deoblog = deoblog.replace(row['searge'], row['name'])
+            for row in fieldsreader:
+                if int(row['side']) == side:
+                    deoblog = deoblog.replace(row['searge'], row['name'])
 
-        #TODO: A bit too much brute force and a bit slow.
-        for row in methodsreader:
-            if int(row['side']) == side:
-                deoblog = deoblog.replace(row['searge'], row['name'])
-        for row in fieldsreader:
-            if int(row['side']) == side:
-                deoblog = deoblog.replace(row['searge'], row['name'])
-
-        reobsrg.write(deoblog)
-        reobsrg.close()
+            reobsrg.write(deoblog)
 
     def gathermd5s(self, side, reobf=False):
         if not reobf:
@@ -1034,14 +1032,13 @@ class Commands(object):
             md5lk     = {0:self.md5reobfclient,    1:self.md5reobfserver}
         pathbinlk = {0:self.binclient,    1:self.binserver}
 
-        md5file = open(md5lk[side],'w')
-
-        #HINT: We pathwalk the recompiled classes
-        for path, dirlist, filelist in os.walk(pathbinlk[side]):
-            for bin_file in glob.glob(os.path.join(path, '*.class')):
-                bin_file_osindep = os.sep.join(bin_file.replace(os.sep,'/').split('/')[2:]).split('.')[0]
-                md5file.write('%s %s\n'%(bin_file_osindep, md5(open(bin_file,'rb').read()).hexdigest()))
-        md5file.close()
+        with open(md5lk[side],'w') as md5_file:
+            #HINT: We pathwalk the recompiled classes
+            for path, dirlist, filelist in os.walk(pathbinlk[side]):
+                for bin_file in glob.glob(os.path.join(path, '*.class')):
+                    bin_file_osindep = os.sep.join(bin_file.replace(os.sep,'/').split('/')[2:]).split('.')[0]
+                    with open(bin_file,'rb') as the_class:
+                        md5_file.write('%s %s\n'%(bin_file_osindep, md5(the_class.read()).hexdigest()))
 
     def packbin(self, side):
         jarlk     = {0:self.cmpjarclient, 1:self.cmpjarserver}
@@ -1091,14 +1088,18 @@ class Commands(object):
         #HINT: We need a table for the old md5 and the new ones
         md5table     = {}
         md5reobtable = {}
-        for row in open(md5lk[side],'r').read().splitlines():
-            row = row.strip().split()
-            if len(row) == 2:
-                md5table[row[0].replace(os.sep,'/')] = row[1]
-        for row in open(md5reoblk[side],'r').read().splitlines():
-            row = row.strip().split()
-            if len(row) == 2:
-                md5reobtable[row[0].replace(os.sep,'/')] = row[1]
+
+        with open(md5lk[side],'r') as md5table_file:
+            for row in md5table_file.read().splitlines():
+                row = row.strip().split()
+                if len(row) == 2:
+                    md5table[row[0].replace(os.sep,'/')] = row[1]
+
+        with open(md5reoblk[side],'r') as md5reobtable_file:
+            for row in md5reobtable_file.read().splitlines():
+                row = row.strip().split()
+                if len(row) == 2:
+                    md5reobtable[row[0].replace(os.sep,'/')] = row[1]
 
         trgclasses = []
         for key,value in md5reobtable.items():
@@ -1110,14 +1111,15 @@ class Commands(object):
                 trgclasses.append(key.split('.')[0])
                 self.logger.info ('> Modified class found : %s'%key)
 
-        classesreader = csv.DictReader(open(self.csvclasses, 'r'), delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
-        classes = {}
-        for row in classesreader:
-            if int(row['side']) == side:
-                #HINT: This pkg equivalence is used to reduce the src pkg to the null one
-                pkg = row['package'] + '/'
-                if row['package'] == self.nullpkg: pkg = ''
-                classes['%s/%s'%(row['package'],row['name'])] = pkg + row['notch']
+        with open(self.csvclasses, 'r') as classes_file:
+            classesreader = csv.DictReader(classes_file, delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
+            classes = {}
+            for row in classesreader:
+                if int(row['side']) == side:
+                    #HINT: This pkg equivalence is used to reduce the src pkg to the null one
+                    pkg = row['package'] + '/'
+                    if row['package'] == self.nullpkg: pkg = ''
+                    classes['%s/%s'%(row['package'],row['name'])] = pkg + row['notch']
 
         if not os.path.exists(outpathlk[side]):
             os.mkdir(outpathlk[side])
@@ -1201,20 +1203,21 @@ class Commands(object):
         pathsrclk = {0: self.srcclient, 1: self.srcserver}
 
         #HINT: We read the relevant CSVs
-        methodsreader = csv.DictReader(open(self.csvmethods, 'r'))
-        fieldsreader = csv.DictReader(open(self.csvfields, 'r'))
+        with open(self.csvmethods, 'r') as methods_file, open(self.csvfields, 'r') as fields_file:
+            methodsreader = csv.DictReader(methods_file)
+            fieldsreader = csv.DictReader(fields_file)
 
-        methods = {}
-        for row in methodsreader:
-            #HINT: Only include methods that have a non-empty description
-            if int(row['side']) == side and row['desc']:
-                methods[row['searge']] = row['desc'].replace('*/', '* /')
+            methods = {}
+            for row in methodsreader:
+                #HINT: Only include methods that have a non-empty description
+                if int(row['side']) == side and row['desc']:
+                    methods[row['searge']] = row['desc'].replace('*/', '* /')
 
-        fields = {}
-        for row in fieldsreader:
-            #HINT: Only include fields that have a non-empty description
-            if int(row['side']) == side and row['desc']:
-                fields[row['searge']] = row['desc'].replace('*/', '* /')
+            fields = {}
+            for row in fieldsreader:
+                #HINT: Only include fields that have a non-empty description
+                if int(row['side']) == side and row['desc']:
+                    fields[row['searge']] = row['desc'].replace('*/', '* /')
 
         regexps = {
             'field': re.compile(r'^ {4}(?:[\w$.[\]]+ )*(?P<name>field_[0-9]+_[a-zA-Z_]+) *(?:=|;)'),
