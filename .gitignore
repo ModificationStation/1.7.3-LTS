@@ -4,9 +4,13 @@ logs/
 reobf/
 temp/
 src/
+bin/
 
 # Allow server.properties
 !jars/server.properties
 
 # Block compiled Python
 *.pyc
+
+# Block downloaded files
+runtime/bin/pypy*
