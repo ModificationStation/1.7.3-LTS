@@ -31,6 +31,7 @@ start() {
     
     # https://www.shellscript.sh/tips/cp-t/  :^)
     find runtime/linux_scripts -name "*.sh" -print0 | xargs -0 cp -t ./
+    find . -maxdepth 1 -name "*.sh" | xargs -I{} chmod -v 755 {}
     
     #
     # Create folders
