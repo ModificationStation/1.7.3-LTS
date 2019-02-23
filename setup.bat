@@ -1,7 +1,7 @@
 @echo off
-title Initial MCP Setup
+title Initial 1.7.3-LTS Setup
 
-echo Initial MCP Setup
+echo Initial 1.7.3-LTS Setup
 echo -------------------
 echo.
 
@@ -39,6 +39,17 @@ exit /b
 :start
 
 ::
+:: Copying scripts to the root folder
+::
+
+echo.
+echo Copying scripts...
+echo.
+
+xcopy /Y runtime\windows_scripts\*.bat . >> nul
+
+
+::
 :: Create folders
 ::
 
@@ -55,27 +66,24 @@ mkdir jars\bin\natives >> nul
 echo Downloading runtimes...
 
 :: Client
+echo  ^> Client
 call :download https://launcher.mojang.com/v1/objects/43db9b498cb67058d2e12d394e6507722e71bb45/client.jar jars\bin\minecraft.jar
 
-echo  ^> Client
-
 :: Server (From BetaCraft, official would be better...)
+echo  ^> Server
 call :download https://betacraft.ovh/server-archive/minecraft/b1.7.3.jar jars\minecraft_server.jar
 
-echo  ^> Server
-
 :: LWJGL 2.8.4
+echo  ^> LWJGL
 call :download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/2.8.4/lwjgl-2.8.4.jar jars\bin\lwjgl.jar
 call :download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl_util/2.8.4/lwjgl_util-2.8.4.jar jars\bin\lwjgl_util.jar
 call :download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-windows.jar jars\bin\natives\lwjgl_platform.jar
 
-echo  ^> LWJGL
-
 :: jinput 2.0.5
+echo  ^> jinput
 call :download http://central.maven.org/maven2/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar jars\bin\jinput.jar
 call :download http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-windows.jar jars\bin\natives\jinput_platform.jar
 
-echo  ^> jinput
 
 ::
 :: Unzipping natives
@@ -84,10 +92,10 @@ echo  ^> jinput
 echo.
 echo Unzipping natives...
 
-call :unzip jars\bin\natives\lwjgl_platform.jar jars\bin\natives
 echo  ^> lwjgl_platform.jar
-call :unzip jars\bin\natives\jinput_platform.jar jars\bin\natives
+call :unzip jars\bin\natives\lwjgl_platform.jar jars\bin\natives
 echo  ^> jinput_platform.jar
+call :unzip jars\bin\natives\jinput_platform.jar jars\bin\natives
 echo.
 
 ::
