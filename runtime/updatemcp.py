@@ -9,11 +9,13 @@ import sys, time
 from optparse import OptionParser
 from commands import Commands
 
+
 def main(conffile=None, force=False):
     commands = Commands(conffile)
 
-    commands.logger.info ('== Updating MCP ==')
+    commands.logger.info('== Updating MCP ==')
     commands.updatemcp(force)
+
 
 if __name__ == '__main__':
     parser = OptionParser(version='MCP %s' % Commands.MCPVersion)
