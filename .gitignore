@@ -14,4 +14,3 @@ bin/
 
 # Block downloaded files
 runtime/bin/pypy*
-!runtime/bin/

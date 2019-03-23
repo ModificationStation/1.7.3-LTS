@@ -15,7 +15,6 @@ def main(conffile=None):
 
     commands.startserver()
 
-
 if __name__ == '__main__':
     parser = OptionParser(version='MCP %s' % Commands.MCPVersion)
     parser.add_option('-c', '--config', dest='config', help='additional configuration file')
