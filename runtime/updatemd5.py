@@ -10,17 +10,15 @@ from optparse import OptionParser
 from commands import Commands
 import recompile
 
-
 def main(conffile=None):
     commands = Commands(conffile)
 
-    commands.logger.info('> Recompiling')
+    commands.logger.info ('> Recompiling')
     recompile.main(conffile)
-    commands.logger.info('> Generating the md5 (client)')
+    commands.logger.info ('> Generating the md5 (client)')
     commands.gathermd5s(0)
-    commands.logger.info('> Generating the md5 (server)')
+    commands.logger.info ('> Generating the md5 (server)')
     commands.gathermd5s(1)
-
 
 if __name__ == '__main__':
     parser = OptionParser(version='MCP %s' % Commands.MCPVersion)
