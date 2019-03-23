@@ -85,8 +85,9 @@ def decompile_side(side=0, commands=None, force_jad=False):
             ## LTS END JAVADOC
             commands.logger.info('> Renaming sources')
             commands.rename(side)
-            commands.logger.info('> Creating reobfuscation tables')
-            commands.renamereobsrg(side)
+            # Broken. What is that?
+            # commands.logger.info('> Creating reobfuscation tables')
+            # commands.renamereobsrg(side)
             commands.logger.info('> Done in %.2f seconds' % (time.time() - currenttime))
     else:
         if side == 0:

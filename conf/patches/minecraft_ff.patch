@@ -64,3 +64,43 @@ diff -r -U 3 minecraft\net\minecraft\src\MusInputStream.java minecraft_patched\n
  
        for(int var4 = 0; var4 < var3; ++var4) {
           byte var5 = var1[var2 + var4] = (byte)(var1[var2 + var4] ^ this.field_1516_c >> 8);
+diff -r -U 3 minecraft/net/minecraft/src/TileEntityChest.java minecraft_patched/net/minecraft/src/TileEntityChest.java
+--- minecraft/net/minecraft/src/TileEntityChest.java    2019-03-23 16:09:31.858964000 +0700
++++ minecraft_patched/net/minecraft/src/TileEntityChest.java    2019-03-23 16:15:33.000197000 +0700
+@@ -90,6 +90,9 @@
+       return 64;
+    }
+
++   public void func_474_j_() {
++   }
++
+    public boolean func_20070_a_(EntityPlayer var1) {
+       return this.field_824_e.func_603_b(this.field_823_f, this.field_822_g, this.field_821_h) != this?false:var1.func_360_d((double)this.field_823_f + 0.5D, (double)this.field_822_g + 0.5D, (double)this.field_821_h + 0.5D) <= 64.0D;
+    }
+diff -r -U 3 minecraft/net/minecraft/src/TileEntityDispenser.java minecraft_patched/net/minecraft/src/TileEntityDispenser.java
+--- minecraft/net/minecraft/src/TileEntityDispenser.java        2019-03-23 16:09:31.860963000 +0700
++++ minecraft_patched/net/minecraft/src/TileEntityDispenser.java        2019-03-23 16:15:17.846933400 +0700
+@@ -109,6 +109,9 @@
+       return 64;
+    }
+
++   public void func_474_j_() {
++   }
++
+    public boolean func_20070_a_(EntityPlayer var1) {
+       return this.field_824_e.func_603_b(this.field_823_f, this.field_822_g, this.field_821_h) != this?false:var1.func_360_d((double)this.field_823_f + 0.5D, (double)this.field_822_g + 0.5D, (double)this.field_821_h + 0.5D) <= 64.0D;
+    }
+diff -r -U 3 minecraft/net/minecraft/src/TileEntityFurnace.java minecraft_patched/net/minecraft/src/TileEntityFurnace.java
+--- minecraft/net/minecraft/src/TileEntityFurnace.java  2019-03-23 16:09:31.862962000 +0700
++++ minecraft_patched/net/minecraft/src/TileEntityFurnace.java  2019-03-23 16:15:17.855928300 +0700
+@@ -100,6 +100,10 @@
+       return 64;
+    }
+
++   public void func_474_j_() {
++
++   }
++
+    public int func_490_a(int var1) {
+       return this.field_834_d * var1 / 200;
+    }
