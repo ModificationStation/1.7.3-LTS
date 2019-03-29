@@ -12,12 +12,12 @@ read -p 'Are you sure you want to run the setup? [Y/N]? ' answer
 
 # Download (url, path)
 download() {
-    wget -q -O $2 $1 >/dev/null
+    wget -q -O $2 $1
 }
 
-# Unzip (zip, output)
-unzip() {
-    7z x -y -o$2 $1 >/dev/null
+# Unpack (zip, output)
+unpack() {
+    unzip -qqod $2 $1
 }
 
 start() {
@@ -82,9 +82,9 @@ start() {
     echo Unzipping natives
     
     echo ' > lwjgl_platform.jar'
-    unzip jars/bin/natives/lwjgl_platform.jar jars/bin/natives
+    unpack jars/bin/natives/lwjgl_platform.jar jars/bin/natives
     echo ' > jinput_platform.jar'
-    unzip jars/bin/natives/jinput_platform.jar jars/bin/natives
+    unpack jars/bin/natives/jinput_platform.jar jars/bin/natives
     if [ ! -d runtime/bin/pypy_linux/ ]; then
         echo ' > PyPy 6.0.0'
         tar -xjf runtime/bin/pypy.tar.bz2 -C runtime/bin/ pypy-6.0.0-linux_x86_64-portable/
