@@ -1270,44 +1270,44 @@ diff -r -U 3 minecraft_server\net\minecraft\src\ThreadSleepForever.java minecraf
          start();
      }
 diff -r -U 3 minecraft_server/net/minecraft/src/TileEntityChest.java minecraft_server_patched/net/minecraft/src/TileEntityChest.java
---- minecraft_server/net/minecraft/src/TileEntityChest.java     2019-03-23 16:09:53.950517000 +0700
-+++ minecraft_server_patched/net/minecraft/src/TileEntityChest.java     2019-03-23 16:17:15.834810400 +0700
-@@ -107,6 +107,10 @@
-         return 64;
+--- minecraft_server/net/minecraft/src/TileEntityChest.java	2019-03-29 14:28:31.000000000 -0700
++++ minecraft_server_patched/net/minecraft/src/TileEntityChest.java	2019-03-29 14:31:14.000000000 -0700
+@@ -103,6 +103,10 @@
+         nbttagcompound.func_399_a("Items", nbttaglist);
      }
-
+ 
 +    public void func_183_c()
 +    {
 +    }
 +
-     public boolean func_20067_a_(EntityPlayer entityplayer)
+     public int func_202_d()
      {
-         if(field_479_a.func_451_k(field_478_b, field_483_c, field_482_d) != this)
+         return 64;
 diff -r -U 3 minecraft_server/net/minecraft/src/TileEntityDispenser.java minecraft_server_patched/net/minecraft/src/TileEntityDispenser.java
---- minecraft_server/net/minecraft/src/TileEntityDispenser.java 2019-03-23 16:26:01.650989000 +0700
-+++ minecraft_server_patched/net/minecraft/src/TileEntityDispenser.java 2019-03-23 16:25:11.298051600 +0700
-@@ -131,6 +131,10 @@
-         return 64;
+--- minecraft_server/net/minecraft/src/TileEntityDispenser.java	2019-03-29 14:28:31.000000000 -0700
++++ minecraft_server_patched/net/minecraft/src/TileEntityDispenser.java	2019-03-29 14:31:18.000000000 -0700
+@@ -126,6 +126,10 @@
+         nbttagcompound.func_399_a("Items", nbttaglist);
      }
-
+ 
 +    public void func_183_c()
 +    {
 +    }
 +
-     public boolean func_20067_a_(EntityPlayer entityplayer)
+     public int func_202_d()
      {
-         if(field_479_a.func_451_k(field_478_b, field_483_c, field_482_d) != this)
+         return 64;
 diff -r -U 3 minecraft_server/net/minecraft/src/TileEntityFurnace.java minecraft_server_patched/net/minecraft/src/TileEntityFurnace.java
---- minecraft_server/net/minecraft/src/TileEntityFurnace.java   2019-03-23 16:26:01.652988000 +0700
-+++ minecraft_server_patched/net/minecraft/src/TileEntityFurnace.java   2019-03-23 16:25:11.288059000 +0700
-@@ -114,6 +114,10 @@
-         return 64;
+--- minecraft_server/net/minecraft/src/TileEntityFurnace.java	2019-03-29 14:28:31.000000000 -0700
++++ minecraft_server_patched/net/minecraft/src/TileEntityFurnace.java	2019-03-29 14:31:07.000000000 -0700
+@@ -109,6 +109,10 @@
+         nbttagcompound.func_399_a("Items", nbttaglist);
      }
-
+ 
 +    public void func_183_c()
 +    {
 +    }
 +
-     public boolean func_191_e()
+     public int func_202_d()
      {
-         return field_488_f > 0;
+         return 64;
