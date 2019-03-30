@@ -715,7 +715,7 @@
 "func_28186_a","getUniqueDataId","a","(Ljava/lang/String;)I","(Ljava/lang/String;)I","MapStorage","hc","net/minecraft/src","0",
 "func_27065_a","func_27065_a","a","(Ljava/util/Map;)Z","(Ljava/util/Map;)Z","J_JsonFieldNodeSelector","qi","net/minecraft/src","0",
 "func_27064_b","func_27064_b","b","(Ljava/util/Map;)LJ_JsonNode;","(Ljava/util/Map;)Lgu;","J_JsonFieldNodeSelector","qi","net/minecraft/src","0",
-"read","read","read","()I","([BII)I","MusInputStream","np","net/minecraft/src","0",
+"read","read","read","()I","()I","MusInputStream","np","net/minecraft/src","0",
 "read","read","read","([BII)I","([BII)I","MusInputStream","np","net/minecraft/src","0",
 "func_280_h","updateAndPropagateCurrentStrength","h","(LWorld;III)V","(Lfd;III)V","BlockRedstoneWire","sm","net/minecraft/src","0",
 "func_21030_a","calculateCurrentChanges","a","(LWorld;IIIIII)V","(Lfd;IIIIII)V","BlockRedstoneWire","sm","net/minecraft/src","0",
