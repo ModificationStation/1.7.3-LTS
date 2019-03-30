@@ -75,7 +75,7 @@ def writesrgsfromcsvs(csvclass, csvmethods, csvfields, outsrgs, side):
 def writesrgsfromcsvnames(csvclass, csvmethods, csvfields, outsrgs, side):
     """Reads 3 CSVs and output a srgs"""
 
-    packages=[]; classes=[]; methods=[]; fields=[]
+    packages=[]; classes=[]; classes_library=[]; methods=[]; fields=[]
 
     #HINT: We are adding the package conversions
     packages.append(['.', 'net/minecraft/src'])
@@ -104,6 +104,7 @@ def writesrgsfromcsvnames(csvclass, csvmethods, csvfields, outsrgs, side):
                 row['notch'] = 'net/minecraft/server/%s'%row['notch']
             if row['notch'] == 'Start':continue
             classes.append(['%s/%s'%(row['package'],row['name']), row['notch']])
+            classes_library.append(row['name'])
 
     #HINT: We append the method elements
     csvreader = csv.DictReader(open(csvmethods, 'r'), delimiter=',',quotechar='"', quoting=csv.QUOTE_ALL)
@@ -114,7 +115,15 @@ def writesrgsfromcsvnames(csvclass, csvmethods, csvfields, outsrgs, side):
             if row['classnotch'] in ['MinecraftServer']:
                 row['classnotch'] = 'net/minecraft/server/%s'%row['classnotch']
             if row['classnotch'] == 'Start':continue
-            methods.append(['%s/%s/%s %s'%(row['package'], row['classname'], row['name'], row['sig']),
+            sig_csv = row['sig']
+            if 'MinecraftApplet' in sig_csv:
+                sig_csv.replace('MinecraftApplet', 'net/minecraft/client/MinecraftApplet')
+            if 'Minecraft' in sig_csv and not 'MinecraftServer' in sig_csv:
+                sig_csv.replace('Minecraft','net/minecraft/client/Minecraft')
+            if 'MinecraftServer' in sig_csv:
+                sig_csv.replace('MinecraftServer', 'net/minecraft/server/MinecraftServer')
+            sig_csv = find_class(classes_library, sig_csv, 'net/minecraft/src/')
+            methods.append(['%s/%s/%s %s'%(row['package'], row['classname'], row['name'], sig_csv),
                             '%s/%s %s'%(row['classnotch'],row['notch'], row['notchsig'])])
 
     #HINT: We append the field elements
@@ -130,3 +139,10 @@ def writesrgsfromcsvnames(csvclass, csvmethods, csvfields, outsrgs, side):
                            '%s/%s'%(row['classnotch'],row['notch'])])
 
     srgshandler.writesrgs(outsrgs, {'PK':packages, 'CL':classes, 'FD':fields, 'MD':methods})
+
+def find_class(classes, signature, package):
+    result = signature
+    for name in classes:
+        if 'L%s;'%name in result:
+            result = result.replace('L%s;'%name, 'L%s%s;'%(package, name))
+    return result
