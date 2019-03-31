@@ -80,8 +80,6 @@ class Commands(object):
         self.exceptor = self.config.get('COMMANDS', 'Exceptor').replace('/', os.sep).replace('\\', os.sep)
         self.specialsource = self.config.get('COMMANDS', 'SpecialSource').replace('/', os.sep).replace('\\', os.sep)
 
-        self.cmdrg = self.config.get('COMMANDS', 'CmdRG', raw=1) % self.cmdjava
-        self.cmdrgreobf = self.config.get('COMMANDS', 'CmdRGReobf', raw=1) % self.cmdjava
         self.cmdjadretro = self.config.get('COMMANDS', 'CmdJadretro', raw=1) % self.cmdjava
         self.cmdrecompclt = self.config.get('COMMANDS', 'CmdRecompClt', raw=1) % self.cmdjavac
         self.cmdrecompsrv = self.config.get('COMMANDS', 'CmdRecompSrv', raw=1) % self.cmdjavac
@@ -616,24 +614,6 @@ class Commands(object):
             shutil.rmtree(os.path.join(pathbinlk[side], 'META-INF'), ignore_errors=True)
             shutil.rmtree(os.path.join(pathbinlk[side], 'net'), ignore_errors=True)
 
-    def applyrg(self, side):
-        """Apply rg to the given side"""
-
-        # add retroguard.jar to copy of client classpath
-        if side == 0:
-            rgconf = self.rgclientconf
-            rgcp = [self.retroguard] + self.cpathclient
-            rgcp = os.pathsep.join(rgcp)
-
-        # add retroguard.jar to copy of server classpath
-        if side == 1:
-            rgconf = self.rgserverconf
-            rgcp = [self.retroguard] + self.cpathserver
-            rgcp = os.pathsep.join(rgcp)
-
-        forkcmd = self.cmdrg.format(classpath=rgcp, conffile=rgconf)
-        self.runcmd(forkcmd)
-
     def applyff(self, side):
         """Apply fernflower to the given side"""
 
@@ -1125,22 +1105,6 @@ class Commands(object):
             srgfile = self.srgsserver
 
         forkcmd = self.cmdspecialsource.format(jarexc=self.specialsource, input=ssinput, output=ssoutput, srg=srgfile)
-        self.runcmd(forkcmd)
-
-    def reobfuscate_retroguard(self, side):
-        # add retroguard.jar to copy of client classpath
-        if side == 0:
-            rgconf = self.rgclientreobconf
-            rgcp = [self.retroguard] + self.cpathclient
-            rgcp = os.pathsep.join(rgcp)
-
-        # add retroguard.jar to copy of server classpath
-        if side == 1:
-            rgconf = self.rgserverreobconf
-            rgcp = [self.retroguard] + self.cpathserver
-            rgcp = os.pathsep.join(rgcp)
-
-        forkcmd = self.cmdrgreobf.format(classpath=rgcp, conffile=rgconf)
         self.runcmd(forkcmd)
 
     def unpackreobfclasses(self, side):
