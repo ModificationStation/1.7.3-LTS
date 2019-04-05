@@ -5,7 +5,7 @@ Created on Fri Apr  8 16:54:36 2011
 @author: ProfMobius
 @version: v1.2
 """
-import sys, time, os
+import time, os
 from optparse import OptionParser
 from commands import Commands
 import recompile
@@ -15,9 +15,6 @@ def main(conffile=None, force_jad=False):
     commands = Commands(conffile)
     # commands.checkupdates()
     commands.checkforupdates()
-
-    commands.logger.info('> Creating Retroguard config files')
-    commands.creatergcfg()
 
     cltdone = decompile_side(0, commands, force_jad)
     srvdone = decompile_side(1, commands, force_jad)

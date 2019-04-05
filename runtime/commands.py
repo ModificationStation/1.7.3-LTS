@@ -162,16 +162,8 @@ class Commands(object):
         self.md5jarsrv = config.get('JAR', 'MD5Server')
 
         # HINT: We read keys relevant to retroguard
-        self.retroguard = config.get('RETROGUARD', 'Location')
-        self.rgconfig = config.get('RETROGUARD', 'RetroConf')
-        self.rgclientconf = config.get('RETROGUARD', 'ClientConf')
-        self.rgserverconf = config.get('RETROGUARD', 'ServerConf')
-        self.rgclientout = config.get('RETROGUARD', 'ClientOut')
-        self.rgserverout = config.get('RETROGUARD', 'ServerOut')
-        self.rgclientlog = config.get('RETROGUARD', 'ClientLog')
-        self.rgserverlog = config.get('RETROGUARD', 'ServerLog')
-        self.rgclientdeoblog = config.get('RETROGUARD', 'ClientDeobLog')
-        self.rgserverdeoblog = config.get('RETROGUARD', 'ServerDeobLog')
+        self.rgclientout = config.get('OBFUSCATING', 'ClientOut')
+        self.rgserverout = config.get('OBFUSCATING', 'ServerOut')
 
         # HINT: We read keys relevant to exceptor
         self.xclientconf = config.get('EXCEPTOR', 'XClientCfg')
@@ -197,10 +189,6 @@ class Commands(object):
         self.srcclient = config.get('OUTPUT', 'SrcClient')
         self.srcserver = config.get('OUTPUT', 'SrcServer')
 
-        # HINT: The packages on the client & server side
-        self.pkgclient = config.get('PACKAGES', 'PkgClient').split(',')
-        self.pkgserver = config.get('PACKAGES', 'PkgServer').split(',')
-
         # HINT: Patcher related configs
         self.patchclient = config.get('PATCHES', 'PatchClient')
         self.patchserver = config.get('PATCHES', 'PatchServer')
@@ -219,8 +207,6 @@ class Commands(object):
             pass
 
         # HINT: Reobf related configs
-        self.saffxclient = config.get('REOBF', 'SAFFXClient')
-        self.saffxserver = config.get('REOBF', 'SAFFXServer')
         self.md5client = config.get('REOBF', 'MD5Client')
         self.md5server = config.get('REOBF', 'MD5Server')
         self.md5reobfclient = config.get('REOBF', 'MD5PreReobfClient')
@@ -235,8 +221,6 @@ class Commands(object):
         self.ignorepkg = config.get('REOBF', 'IgnorePkg').split(',')
         self.dirreobfclt = config.get('REOBF', 'ReobfDirClient')
         self.dirreobfsrv = config.get('REOBF', 'ReobfDirServer')
-        self.clientreoblog = config.get('REOBF', 'ReobfClientLog')
-        self.serverreoblog = config.get('REOBF', 'ReobfServerLog')
         self.fixsound = config.get('REOBF', 'FixSound')
         self.fixstart = config.get('REOBF', 'FixStart')
 
@@ -250,97 +234,6 @@ class Commands(object):
 
         self.mcpversion = version.get('VERSION', 'MCPVersion')
 
-        try:
-            self.rgreobconfig = config.get('RETROGUARD', 'RetroReobConf')
-            self.rgclientreobconf = config.get('RETROGUARD', 'ClientReobConf')
-            self.rgserverreobconf = config.get('RETROGUARD', 'ServerReobConf')
-        except ConfigParser.NoOptionError:
-            pass
-
-    def creatergcfg(self):
-        """Create the files necessary for both deobf and obf RetroGuard"""
-        self.createsinglergcfg()
-        self.createsinglergcfg(True)
-
-    def createsinglergcfg(self, reobf=False):
-        """Create the files necessary for RetroGuard"""
-        if reobf:
-            rgout = open(self.rgreobconfig, 'wb')
-        else:
-            rgout = open(self.rgconfig, 'wb')
-        rgout.write('.option Application\n')
-        rgout.write('.option Applet\n')
-        rgout.write('.option Repackage\n')
-
-        rgout.write('.option Annotations\n')
-        rgout.write('.option MapClassString\n')
-        rgout.write('.attribute LineNumberTable\n')
-        rgout.write('.attribute EnclosingMethod\n')
-        rgout.write('.attribute Deprecated\n')
-
-        if reobf:
-            # this is obfuscated in vanilla and breaks the patches
-            rgout.write('.attribute SourceFile\n')
-
-            # this will mess up the patches with mods:
-            rgout.write('.attribute LocalVariableTable\n')
-
-            # rg doesn't remap generic signatures:
-            rgout.write('.option Generic\n')
-            rgout.write('.attribute LocalVariableTypeTable\n')
-
-        rgout.close()
-
-        if reobf:
-            rgout = open(self.rgclientreobconf, 'w')
-        else:
-            rgout = open(self.rgclientconf, 'w')
-        rgout.write('%s = %s\n' % ('startindex', '0'))
-        rgout.write('%s = %s\n' % ('input', self.jarclient))
-        rgout.write('%s = %s\n' % ('output', self.rgclientout))
-        rgout.write('%s = %s\n' % ('reobinput', self.cmpjarclient))
-        rgout.write('%s = %s\n' % ('reoboutput', self.reobfjarclient))
-        if reobf:
-            rgout.write('%s = %s\n' % ('script', self.rgreobconfig))
-        else:
-            rgout.write('%s = %s\n' % ('script', self.rgconfig))
-        rgout.write('%s = %s\n' % ('log', self.rgclientlog))
-        rgout.write('%s = %s\n' % ('packages', self.srgsclient))
-        rgout.write('%s = %s\n' % ('classes', self.srgsclient))
-        rgout.write('%s = %s\n' % ('fields', self.srgsclient))
-        rgout.write('%s = %s\n' % ('methods', self.srgsclient))
-        rgout.write('%s = %s\n' % ('reob', self.reobsrgclient))
-        rgout.write('%s = %s\n' % ('nplog', self.rgclientdeoblog))
-        rgout.write('%s = %s\n' % ('rolog', self.clientreoblog))
-        for pkg in self.ignorepkg:
-            rgout.write('%s = %s\n' % ('protectedpackage', pkg))
-        rgout.close()
-
-        if reobf:
-            rgout = open(self.rgserverreobconf, 'w')
-        else:
-            rgout = open(self.rgserverconf, 'w')
-        rgout.write('%s = %s\n' % ('startindex', '0'))
-        rgout.write('%s = %s\n' % ('input', self.jarserver))
-        rgout.write('%s = %s\n' % ('output', self.rgserverout))
-        rgout.write('%s = %s\n' % ('reobinput', self.cmpjarserver))
-        rgout.write('%s = %s\n' % ('reoboutput', self.reobfjarserver))
-        if reobf:
-            rgout.write('%s = %s\n' % ('script', self.rgreobconfig))
-        else:
-            rgout.write('%s = %s\n' % ('script', self.rgconfig))
-        rgout.write('%s = %s\n' % ('log', self.rgserverlog))
-        rgout.write('%s = %s\n' % ('packages', self.srgsserver))
-        rgout.write('%s = %s\n' % ('classes', self.srgsserver))
-        rgout.write('%s = %s\n' % ('fields', self.srgsserver))
-        rgout.write('%s = %s\n' % ('methods', self.srgsserver))
-        rgout.write('%s = %s\n' % ('reob', self.reobsrgserver))
-        rgout.write('%s = %s\n' % ('nplog', self.rgserverdeoblog))
-        rgout.write('%s = %s\n' % ('rolog', self.serverreoblog))
-        for pkg in self.ignorepkg:
-            rgout.write('%s = %s\n' % ('protectedpackage', pkg))
-        rgout.close()
-
     def createsrgs(self, side):
         """Write the srgs files."""
         sidelk = {0: self.srgsclient, 1: self.srgsserver}
@@ -348,48 +241,8 @@ class Commands(object):
 
     def createsrgsforreobf(self, side):
         """Write the srgs files."""
-        sidelk = {0: self.srgsclient, 1: self.srgsserver}
+        sidelk = {0: self.reobsrgclient, 1: self.reobsrgserver}
         writesrgsfromcsvnames(self.csvclasses, self.csvmethods, self.csvfields, sidelk[side], side)
-
-    def createsaffx(self, side):
-        """Creates the reobfuscation tables"""
-        saffxlk = {0: self.saffxclient, 1: self.saffxserver}
-
-        ff = open(saffxlk[side], 'w')
-
-        ff.write('[OPTIONS]\n')
-        ff.write('strip_package net/minecraft/src\n\n')
-
-        # HINT: We read the data from the CSVs and dump it in another formating to a SAFFX file
-        with open(self.csvmethods, 'r') as methods_file, open(self.csvfields, 'r') \
-                as fields_file, open(self.csvclasses, 'r') as classes_file:
-            methodsreader = csv.DictReader(methods_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
-            fieldsreader = csv.DictReader(fields_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
-            classesreader = csv.DictReader(classes_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
-
-            ff.write('[CLASSES]\n')
-            for row in classesreader:
-                if row['name'] == 'Start':
-                    continue
-                if int(row['side']) == side:
-                    ff.write('%s/%s %s\n' % (row['package'], row['name'], row['notch']))
-
-            ff.write('[METHODS]\n')
-            for row in methodsreader:
-                if row['classname'] == 'Start':
-                    continue
-                if int(row['side']) == side:
-                    ff.write('%s/%s/%s %s %s\n' % (
-                        row['package'], row['classname'], row['name'], row['notchsig'], row['notch']))
-
-            ff.write('[FIELDS]\n')
-            for row in fieldsreader:
-                if row['classname'] == 'Start':
-                    continue
-                if int(row['side']) == side:
-                    ff.write('%s/%s/%s %s\n' % (row['package'], row['classname'], row['name'], row['notch']))
-
-            ff.close()
 
     def checkjava(self):
         """Check for java and setup the proper directory if needed"""
@@ -601,19 +454,6 @@ class Commands(object):
         if not os.path.exists(outpathlk[side]):
             os.mkdir(outpathlk[side])
 
-    def cleantempbin(self, side):
-        pathbinlk = {0: self.binclienttmp, 1: self.binservertmp}
-
-        if side == 0:
-            shutil.rmtree(os.path.join(pathbinlk[side], 'META-INF'), ignore_errors=True)
-            shutil.rmtree(os.path.join(pathbinlk[side], 'net'), ignore_errors=True)
-            shutil.rmtree(os.path.join(pathbinlk[side], 'com'), ignore_errors=True)
-            shutil.rmtree(os.path.join(pathbinlk[side], 'paulscode'), ignore_errors=True)
-
-        if side == 1:
-            shutil.rmtree(os.path.join(pathbinlk[side], 'META-INF'), ignore_errors=True)
-            shutil.rmtree(os.path.join(pathbinlk[side], 'net'), ignore_errors=True)
-
     def applyff(self, side):
         """Apply fernflower to the given side"""
 
@@ -659,12 +499,12 @@ class Commands(object):
         if side == 0:
             ssinputjar = self.jarclient
             ssoutputjar = self.rgclientout
-            srgfile = self.srgsclient
+            srgfile = self.reobsrgclient
 
         if side == 1:
             ssinputjar = self.jarserver
             ssoutputjar = self.rgserverout
-            srgfile = self.srgsserver
+            srgfile = self.reobsrgserver
 
         forkcmd = self.cmdspecialsource.format(jarexc=self.specialsource, input=ssinputjar, output=ssoutputjar,
                                                srg=srgfile)
@@ -1032,26 +872,6 @@ class Commands(object):
 
                 # HINT: We annotate the GL constants
                 annotate_file(src_file)
-
-    def renamereobsrg(self, side):
-        deoblk = {0: self.rgclientdeoblog, 1: self.rgserverdeoblog}
-        reoblk = {0: self.reobsrgclient, 1: self.reobsrgserver}
-
-        with open(self.csvmethods, 'r') as methods_file, open(self.csvfields, 'r') as fields_file, \
-                open(deoblk[side], 'r') as deoblog_file, open(reoblk[side], 'w') as reobsrg:
-            deoblog = deoblog_file.read()
-            methodsreader = csv.DictReader(methods_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
-            fieldsreader = csv.DictReader(fields_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
-
-            # TODO: A bit too much brute force and a bit slow.
-            for row in methodsreader:
-                if int(row['side']) == side:
-                    deoblog = deoblog.replace(row['searge'], row['name'])
-            for row in fieldsreader:
-                if int(row['side']) == side:
-                    deoblog = deoblog.replace(row['searge'], row['name'])
-
-            reobsrg.write(deoblog)
 
     def gathermd5s(self, side, reobf=False):
         if not reobf:

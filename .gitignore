@@ -15,3 +15,6 @@ bin/
 # Block downloaded files
 runtime/bin/pypy*
 !runtime/bin/
+
+# Block .idea folder
+.idea/
