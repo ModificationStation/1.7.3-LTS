@@ -162,8 +162,8 @@ class Commands(object):
         self.md5jarsrv = config.get('JAR', 'MD5Server')
 
         # HINT: We read keys relevant to retroguard
-        self.rgclientout = config.get('OBFUSCATING', 'ClientOut')
-        self.rgserverout = config.get('OBFUSCATING', 'ServerOut')
+        self.rgclientout = config.get('OBFUSCATE', 'ClientOut')
+        self.rgserverout = config.get('OBFUSCATE', 'ServerOut')
 
         # HINT: We read keys relevant to exceptor
         self.xclientconf = config.get('EXCEPTOR', 'XClientCfg')
@@ -499,12 +499,12 @@ class Commands(object):
         if side == 0:
             ssinputjar = self.jarclient
             ssoutputjar = self.rgclientout
-            srgfile = self.reobsrgclient
+            srgfile = self.srgsclient
 
         if side == 1:
             ssinputjar = self.jarserver
             ssoutputjar = self.rgserverout
-            srgfile = self.reobsrgserver
+            srgfile = self.srgsserver
 
         forkcmd = self.cmdspecialsource.format(jarexc=self.specialsource, input=ssinputjar, output=ssoutputjar,
                                                srg=srgfile)
