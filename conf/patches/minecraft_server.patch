@@ -1269,3 +1269,45 @@ diff -r -U 3 minecraft_server\net\minecraft\src\ThreadSleepForever.java minecraf
          setDaemon(true);
          start();
      }
+diff -r -U 3 minecraft_server/net/minecraft/src/TileEntityChest.java minecraft_server_patched/net/minecraft/src/TileEntityChest.java
+--- minecraft_server/net/minecraft/src/TileEntityChest.java	2019-03-29 14:28:31.000000000 -0700
++++ minecraft_server_patched/net/minecraft/src/TileEntityChest.java	2019-03-29 14:31:14.000000000 -0700
+@@ -103,6 +103,10 @@
+         nbttagcompound.func_399_a("Items", nbttaglist);
+     }
+ 
++    public void func_183_c()
++    {
++    }
++
+     public int func_202_d()
+     {
+         return 64;
+diff -r -U 3 minecraft_server/net/minecraft/src/TileEntityDispenser.java minecraft_server_patched/net/minecraft/src/TileEntityDispenser.java
+--- minecraft_server/net/minecraft/src/TileEntityDispenser.java	2019-03-29 14:28:31.000000000 -0700
++++ minecraft_server_patched/net/minecraft/src/TileEntityDispenser.java	2019-03-29 14:31:18.000000000 -0700
+@@ -126,6 +126,10 @@
+         nbttagcompound.func_399_a("Items", nbttaglist);
+     }
+ 
++    public void func_183_c()
++    {
++    }
++
+     public int func_202_d()
+     {
+         return 64;
+diff -r -U 3 minecraft_server/net/minecraft/src/TileEntityFurnace.java minecraft_server_patched/net/minecraft/src/TileEntityFurnace.java
+--- minecraft_server/net/minecraft/src/TileEntityFurnace.java	2019-03-29 14:28:31.000000000 -0700
++++ minecraft_server_patched/net/minecraft/src/TileEntityFurnace.java	2019-03-29 14:31:07.000000000 -0700
+@@ -109,6 +109,10 @@
+         nbttagcompound.func_399_a("Items", nbttaglist);
+     }
+ 
++    public void func_183_c()
++    {
++    }
++
+     public int func_202_d()
+     {
+         return 64;

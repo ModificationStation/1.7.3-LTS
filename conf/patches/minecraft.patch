@@ -1999,3 +1999,45 @@ diff -r -U 3 minecraft\net\minecraft\src\WorldBlockPositionType.java minecraft_p
          field_1202_a = i;
          field_1201_b = j;
          field_1207_c = k;
+diff -r -U 3 minecraft/net/minecraft/src/TileEntityChest.java minecraft_patched/net/minecraft/src/TileEntityChest.java
+--- minecraft/net/minecraft/src/TileEntityChest.java	2019-03-29 14:28:25.000000000 -0700
++++ minecraft_patched/net/minecraft/src/TileEntityChest.java	2019-03-29 14:29:33.000000000 -0700
+@@ -107,6 +107,10 @@
+     {
+         return 64;
+     }
++   
++    public void func_474_j_() 
++    {
++    }
+ 
+     public boolean func_20070_a_(EntityPlayer entityplayer)
+     {
+diff -r -U 3 minecraft/net/minecraft/src/TileEntityDispenser.java minecraft_patched/net/minecraft/src/TileEntityDispenser.java
+--- minecraft/net/minecraft/src/TileEntityDispenser.java	2019-03-29 14:28:25.000000000 -0700
++++ minecraft_patched/net/minecraft/src/TileEntityDispenser.java	2019-03-29 14:29:38.000000000 -0700
+@@ -125,6 +125,10 @@
+ 
+         nbttagcompound.func_762_a("Items", nbttaglist);
+     }
++   
++    public void func_474_j_() 
++    {
++    }
+ 
+     public int func_470_e()
+     {
+diff -r -U 3 minecraft/net/minecraft/src/TileEntityFurnace.java minecraft_patched/net/minecraft/src/TileEntityFurnace.java
+--- minecraft/net/minecraft/src/TileEntityFurnace.java	2019-03-29 14:28:25.000000000 -0700
++++ minecraft_patched/net/minecraft/src/TileEntityFurnace.java	2019-03-29 14:29:49.000000000 -0700
+@@ -108,6 +108,10 @@
+ 
+         nbttagcompound.func_762_a("Items", nbttaglist);
+     }
++   
++    public void func_474_j_() 
++    {
++    }
+ 
+     public int func_470_e()
+     {

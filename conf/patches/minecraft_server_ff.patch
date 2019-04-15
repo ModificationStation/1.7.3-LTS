@@ -10,3 +10,42 @@ diff -r -U 3 minecraft_server\net\minecraft\src\ItemMap.java minecraft_server_pa
        MapData var4 = (MapData)var2.func_28103_a(MapData.class, "map_" + var1.func_21125_h());
        if(var4 == null) {
           var1.func_28145_b(var2.func_28104_b("map"));
+diff -r -U 3 minecraft_server/net/minecraft/src/TileEntityChest.java minecraft_server_patched/net/minecraft/src/TileEntityChest.java
+--- minecraft_server/net/minecraft/src/TileEntityChest.java	2019-03-29 13:35:16.181036113 -0700
++++ minecraft_server_patched/net/minecraft/src/TileEntityChest.java	2019-03-29 13:42:46.958880202 -0700
+@@ -85,6 +85,9 @@
+ 
+       var1.func_399_a("Items", var2);
+    }
++   
++   public void func_183_c() {
++   }
+ 
+    public int func_202_d() {
+       return 64;
+diff -r -U 3 minecraft_server/net/minecraft/src/TileEntityDispenser.java minecraft_server_patched/net/minecraft/src/TileEntityDispenser.java
+--- minecraft_server/net/minecraft/src/TileEntityDispenser.java	2019-03-29 13:35:16.144949926 -0700
++++ minecraft_server_patched/net/minecraft/src/TileEntityDispenser.java	2019-03-29 13:42:55.814554357 -0700
+@@ -104,6 +104,9 @@
+ 
+       var1.func_399_a("Items", var2);
+    }
++   
++   public void func_183_c() {
++   }
+ 
+    public int func_202_d() {
+       return 64;
+diff -r -U 3 minecraft_server/net/minecraft/src/TileEntityFurnace.java minecraft_server_patched/net/minecraft/src/TileEntityFurnace.java
+--- minecraft_server/net/minecraft/src/TileEntityFurnace.java	2019-03-29 13:35:16.160988231 -0700
++++ minecraft_server_patched/net/minecraft/src/TileEntityFurnace.java	2019-03-29 13:44:08.763686383 -0700
+@@ -173,6 +173,9 @@
+ 
+       }
+    }
++   
++   public void func_183_c() {
++   }
+ 
+    private int func_194_a(ItemStack var1) {
+       if(var1 == null) {

@@ -64,3 +64,42 @@ diff -r -U 3 minecraft\net\minecraft\src\MusInputStream.java minecraft_patched\n
  
        for(int var4 = 0; var4 < var3; ++var4) {
           byte var5 = var1[var2 + var4] = (byte)(var1[var2 + var4] ^ this.field_1516_c >> 8);
+diff -r -U 3 minecraft/net/minecraft/src/TileEntityChest.java minecraft_patched/net/minecraft/src/TileEntityChest.java
+--- minecraft/net/minecraft/src/TileEntityChest.java	2019-03-29 13:34:51.032561024 -0700
++++ minecraft_patched/net/minecraft/src/TileEntityChest.java	2019-03-29 13:41:53.100180687 -0700
+@@ -85,6 +85,9 @@
+ 
+       var1.func_762_a("Items", var2);
+    }
++   
++   public void func_474_j_() {
++   }
+ 
+    public int func_470_e() {
+       return 64;
+diff -r -U 3 minecraft/net/minecraft/src/TileEntityDispenser.java minecraft_patched/net/minecraft/src/TileEntityDispenser.java
+--- minecraft/net/minecraft/src/TileEntityDispenser.java	2019-03-29 13:34:50.976486968 -0700
++++ minecraft_patched/net/minecraft/src/TileEntityDispenser.java	2019-03-29 13:41:42.822988203 -0700
+@@ -104,6 +104,9 @@
+ 
+       var1.func_762_a("Items", var2);
+    }
++   
++   public void func_474_j_() {
++   }
+ 
+    public int func_470_e() {
+       return 64;
+diff -r -U 3 minecraft/net/minecraft/src/TileEntityFurnace.java minecraft_patched/net/minecraft/src/TileEntityFurnace.java
+--- minecraft/net/minecraft/src/TileEntityFurnace.java	2019-03-29 13:34:51.004525281 -0700
++++ minecraft_patched/net/minecraft/src/TileEntityFurnace.java	2019-03-29 13:41:05.583745235 -0700
+@@ -194,6 +194,9 @@
+          return var2 < 256 && Block.field_345_n[var2].field_356_bn == Material.field_1335_c?300:(var2 == Item.field_266_B.field_291_aS?100:(var2 == Item.field_225_k.field_291_aS?1600:(var2 == Item.field_258_aw.field_291_aS?20000:(var2 == Block.field_333_z.field_376_bc?100:0))));
+       }
+    }
++   
++   public void func_474_j_() {
++   }
+ 
+    public boolean func_20070_a_(EntityPlayer var1) {
+       return this.field_824_e.func_603_b(this.field_823_f, this.field_822_g, this.field_821_h) != this?false:var1.func_360_d((double)this.field_823_f + 0.5D, (double)this.field_822_g + 0.5D, (double)this.field_821_h + 0.5D) <= 64.0D;
