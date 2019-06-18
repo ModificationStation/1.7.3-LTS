@@ -9,9 +9,9 @@ echo.
 :: Conirmation
 ::
 
-set /P c=Are you sure you want to run the setup? [Y/N]? 
+set /P c=Are you sure you want to run the setup? [y/N]? 
 if /I "%c%" EQU "Y" goto :start 
-if /I "%c%" EQU "N" goto :end
+goto :end
 
 
 ::
