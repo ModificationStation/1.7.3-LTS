@@ -151,8 +151,10 @@ class Commands(object):
         self.csvfields = config.get('CSV', 'Fields')
 
         # HINT: We read the names of the SRG output
-        self.srgsclient = config.get('SRGS', 'Client')
-        self.srgsserver = config.get('SRGS', 'Server')
+        self.rgsrgsclient = config.get('SRGS', 'RGClient')
+        self.rgsrgsserver = config.get('SRGS', 'RGServer')
+        self.rosrgsclient = config.get('SRGS', 'ROClient')
+        self.rosrgsserver = config.get('SRGS', 'ROServer')
 
         # HINT: We read the position of the jar files
         self.dirnatives = config.get('JAR', 'DirNatives')
@@ -236,7 +238,7 @@ class Commands(object):
 
     def createsrgs(self, side):
         """Write the srgs files."""
-        sidelk = {0: self.srgsclient, 1: self.srgsserver}
+        sidelk = {0: self.rgsrgsclient, 1: self.rgsrgsserver}
         writesrgsfromcsvs(self.csvclasses, self.csvmethods, self.csvfields, sidelk[side], side)
 
     def createsrgsforreobf(self, side):
@@ -499,12 +501,12 @@ class Commands(object):
         if side == 0:
             ssinputjar = self.jarclient
             ssoutputjar = self.rgclientout
-            srgfile = self.srgsclient
+            srgfile = self.rgsrgsclient
 
         if side == 1:
             ssinputjar = self.jarserver
             ssoutputjar = self.rgserverout
-            srgfile = self.srgsserver
+            srgfile = self.rgsrgsserver
 
         forkcmd = self.cmdspecialsource.format(jarexc=self.specialsource, input=ssinputjar, output=ssoutputjar,
                                                srg=srgfile)
@@ -917,14 +919,14 @@ class Commands(object):
         if side == 0:
             ssinput = self.cmpjarclient
             ssoutput = self.reobfjarclient
-            srgfile = self.srgsclient
+            rosrgfile = self.rosrgsclient
 
         if side == 1:
             ssinput = self.cmpjarserver
             ssoutput = self.reobfjarserver
-            srgfile = self.srgsserver
+            rosrgfile = self.rosrgsserver
 
-        forkcmd = self.cmdspecialsource.format(jarexc=self.specialsource, input=ssinput, output=ssoutput, srg=srgfile)
+        forkcmd = self.cmdspecialsource.format(jarexc=self.specialsource, input=ssinput, output=ssoutput, srg=rosrgfile)
         self.runcmd(forkcmd)
 
     def unpackreobfclasses(self, side):
