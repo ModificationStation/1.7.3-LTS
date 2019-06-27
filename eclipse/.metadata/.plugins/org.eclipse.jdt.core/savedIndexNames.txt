@@ -1,0 +1,7 @@
+INDEX VERSION 1.131+C:\Users\calmilamsy\Desktop\1.7.3-LTS-master\src\.metadata\.plugins\org.eclipse.jdt.core
+4047245448.index
+2481243931.index
+3145525894.index
+3468054810.index
+3100375832.index
+2388630522.index

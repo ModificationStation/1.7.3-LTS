@@ -5,7 +5,7 @@ Created on Fri Apr  8 16:54:36 2011
 @author: ProfMobius
 @version: v1.2
 """
-import time, os
+import time, os, shutil
 from optparse import OptionParser
 from commands import Commands
 import recompile
@@ -19,6 +19,7 @@ def main(conffile=None, force_jad=False):
     cltdone = decompile_side(0, commands, force_jad)
     srvdone = decompile_side(1, commands, force_jad)
 
+    currenttime = time.time()
     commands.logger.info('== Post decompiling operations ==')
     if not cltdone or not srvdone:
         commands.logger.info('> Recompiling')
@@ -29,7 +30,20 @@ def main(conffile=None, force_jad=False):
     if not srvdone:
         commands.logger.info('> Generating the md5 (server)')
         commands.gathermd5s(1)
+    commands.logger.info('> Done in %.2f seconds' % (time.time() - currenttime))
 
+    commands.logger.info("> Copying eclipse settings (project)")
+    shutil.copytree("eclipse/.metadata", "src/.metadata")
+    currenttime = time.time()
+    if os.path.exists("src/minecraft"):
+        commands.logger.info("> Copying Eclipse settings (client)")
+        shutil.copy("eclipse/minecraft/.classpath", "src/minecraft/.classpath")
+        shutil.copy("eclipse/minecraft/.project", "src/minecraft/.project")
+    if os.path.exists("src/minecraft_server"):
+        commands.logger.info("> Copying Eclipse settings (server)")
+        shutil.copy("eclipse/minecraft_server/.classpath", "src/minecraft_server/.classpath")
+        shutil.copy("eclipse/minecraft_server/.project", "src/minecraft_server/.project")
+    commands.logger.info('> Done in %.2f seconds' % (time.time() - currenttime))
 
 def decompile_side(side=0, commands=None, force_jad=False):
     use_ff = os.path.exists(commands.fernflower) and not force_jad
