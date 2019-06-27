@@ -9,9 +9,9 @@ echo.
 :: Confirmation
 ::
 
-set /P c=Are you sure you want to run the cleanup? [Y/N]? 
+set /P c=Are you sure you want to run the cleanup? [y/N]? 
 if /I "%c%" EQU "Y" goto :start 
-if /I "%c%" EQU "N" goto :end
+goto :end
 
 ::
 :: Methods

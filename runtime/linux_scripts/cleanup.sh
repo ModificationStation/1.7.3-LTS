@@ -4,7 +4,7 @@ echo MCP Cleanup
 echo -------------
 echo 
 
-read -p 'Are you sure you want to run the cleanup? [Y/N]? ' answer
+read -p 'Are you sure you want to run the cleanup? [y/N]? ' answer
 
 #
 # Methods
