@@ -65,14 +65,6 @@ mkdir jars\bin\natives >> nul
 
 echo Downloading runtimes...
 
-:: Client
-echo  ^> Client
-call :download https://launcher.mojang.com/v1/objects/43db9b498cb67058d2e12d394e6507722e71bb45/client.jar jars\bin\minecraft.jar
-
-:: Server (From BetaCraft, official would be better...)
-echo  ^> Server
-call :download https://betacraft.ovh/server-archive/minecraft/b1.7.3.jar jars\minecraft_server.jar
-
 :: LWJGL 2.8.4
 echo  ^> LWJGL
 call :download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/2.8.4/lwjgl-2.8.4.jar jars\bin\lwjgl.jar
@@ -112,5 +104,7 @@ del /Q jars\bin\natives\jinput_platform.jar >> nul
 :end
 echo Finished^!
 echo.
+
+runtime\bin\python\python_mcp runtime\installminecraft.py
 
 pause
