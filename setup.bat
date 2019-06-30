@@ -91,6 +91,15 @@ call :unzip jars\bin\natives\jinput_platform.jar jars\bin\natives
 echo.
 
 ::
+:: Setup Minecraft config and jars
+::
+
+echo.
+echo Setting up Minecraft...
+
+runtime\bin\python\python_mcp runtime\installminecraft.py
+
+::
 :: Clean up
 ::
 

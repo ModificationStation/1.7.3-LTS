@@ -49,14 +49,6 @@ start() {
     
     echo Downloading runtimes...
     
-    # Client
-    echo ' > Client'
-    download https://launcher.mojang.com/v1/objects/43db9b498cb67058d2e12d394e6507722e71bb45/client.jar jars/bin/minecraft.jar
-    
-    # Server (From BetaCraft, official would be better)
-    echo ' > Server'
-    download https://betacraft.ovh/server-archive/minecraft/b1.7.3.jar jars/minecraft_server.jar
-    
     # LWJGL 2.8.4
     echo ' > LWJGL'
     download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/2.8.4/lwjgl-2.8.4.jar jars/bin/lwjgl.jar
@@ -90,7 +82,15 @@ start() {
         tar -xjf runtime/bin/pypy.tar.bz2 -C runtime/bin/ pypy-6.0.0-linux_x86_64-portable/
         mv runtime/bin/pypy-6.0.0-linux_x86_64-portable/ runtime/bin/pypy_linux
     fi
-    echo
+    
+	#
+	# Setup Minecraft config and jars
+	#
+	
+	echo
+	echo Setting up Minecraft...
+	
+	./runtime/bin/pypy_linux/bin/pypy runtime/installminecraft.py "$@"
     
     #
     # Cleanup

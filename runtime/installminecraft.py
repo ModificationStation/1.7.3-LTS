@@ -51,7 +51,7 @@ class InstallMC:
         :return:
         """
         self.logger.info("> Welcome to the LTS version selector!")
-        self.logger.info("> If you wish to supply your own configuration, close this window.")
+        self.logger.info("> If you wish to supply your own configuration, type \"none\".")
         self.logger.info("> What version would you like to install?")
 
         versions = []
@@ -69,6 +69,9 @@ class InstallMC:
             self.logger.info("> What version would you like?")
 
             inp = str(raw_input(": "))
+
+            if inp == "none":
+                sys.exit()
 
         copytime = time.time()
         self.copydir(os.path.join(self.confdir, inp), self.confdir)
