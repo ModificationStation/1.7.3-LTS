@@ -61,7 +61,7 @@ class InstallMC:
         versionsstring = ""
         for version in os.listdir(self.confdir):
             if os.path.isdir(os.path.join(self.confdir, version)):
-                versionsstring += version.replace(",", ":") + ", "
+                versionsstring += version + ", "
                 versions.append(version)
         versionsstring = versionsstring.strip(", ")
 
@@ -83,12 +83,16 @@ class InstallMC:
 
         self.logger.info("> Downloading Minecraft client...")
         clientdltime = time.time()
-        self.download(minecraftversions.versions["client"][inp]["url"], os.path.join(self.jardir, "bin", "minecraft.jar"))
+        self.download(minecraftversions.versions["client"][inp.split(",")[0]]["url"], os.path.join(self.jardir, "bin", "minecraft.jar"))
         self.logger.info('> Done in %.2f seconds' % (time.time() - clientdltime))
 
-        serverdltime = time.time()
         self.logger.info("> Downloading Minecraft server...")
-        self.download(minecraftversions.versions["server"][inp]["url"], os.path.join(self.jardir, "minecraft_server.jar"))
+        if inp.__contains__(","):
+            ver = inp.split(",")[1]
+        else:
+            ver = inp
+        serverdltime = time.time()
+        self.download(minecraftversions.versions["server"][ver]["url"], os.path.join(self.jardir, "minecraft_server.jar"))
         self.logger.info('> Done in %.2f seconds' % (time.time() - serverdltime))
 
     def download(self, url, dst):

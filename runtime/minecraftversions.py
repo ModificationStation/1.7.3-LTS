@@ -242,6 +242,9 @@ versions = {
         "b1.4_01": {
             "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.4_01.jar"
         },
+        "b1.5_02": {
+            "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.5_02.jar"
+        },
         "b1.6.6": {
             "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.6.6.jar"
         },

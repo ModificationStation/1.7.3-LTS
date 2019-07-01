@@ -1064,13 +1064,13 @@ class Commands(object):
             methods = {}
             for row in methodsreader:
                 # HINT: Only include methods that have a non-empty description
-                if int(row['side']) == side and row['desc']:
+                if int(row['side']) == side and 'desc' in row and row['desc']:
                     methods[row['searge']] = row['desc'].replace('*/', '* /')
 
             fields = {}
             for row in fieldsreader:
                 # HINT: Only include fields that have a non-empty description
-                if int(row['side']) == side and row['desc']:
+                if int(row['side']) == side and 'desc' in row and row['desc']:
                     fields[row['searge']] = row['desc'].replace('*/', '* /')
 
         regexps = {
