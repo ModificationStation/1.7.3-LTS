@@ -1,0 +1,1256 @@
+"PLEASE DO NOT SORT THE FIELD MAP, IT WILL BREAK THE SCRIPTS",,,,,,Can be completed with v1.2.x data. Leave the class and field columns empty.
+Game,,,Server,,,Changed
+Class,Field,Name,Class,Field,Name,Name,Notes
+a,a,field_1718_a,a,a,field_1016_a,xCoord,The x coordinate of this point
+a,b,field_1717_b,a,b,field_1015_b,yCoord,The y coordinate of this point
+a,c,field_1716_c,a,c,field_1014_c,zCoord,The z coordinate of this point
+a,d,field_1715_d,a,d,field_1013_d,hash,A hash of the coordinates used to identify this point
+a,e,field_1714_e,a,e,field_1012_e,index,The index of this point in its assigned path
+a,f,field_1713_f,a,f,field_1011_f,totalPathDistance,The distance along the path to this point
+a,g,field_1712_g,a,g,field_1010_g,distanceToNext,The linear distance to the next point
+a,h,field_1711_h,a,h,field_1009_h,distanceToTarget,The distance to the target
+a,i,field_1710_i,a,i,field_1008_i,previous,The point preceding this in its assigned path
+a,j,field_1709_j,a,j,field_1007_j,isFirst,Indicates this is the origin
+aa,i,field_4231_g,*,*,*,mc,A reference to the Minecraft object.
+ad,d,field_1790_d,*,*,*,worldObj,Reference to the World object.
+ad,e,field_1789_e,*,*,*,dataFolder,The data folder.
+ae,a,field_885_a,ar,a,field_765_a,plantBlockId,The ID of the plant block used in this plant generator.
+ah,a,field_1781_a,*,*,*,soundName
+ah,b,field_1780_b,*,*,*,soundUrl
+aj,a,field_1776_a,aw,a,field_1055_a,xCoord,X coordinate of Vec3D
+aj,b,field_1775_b,aw,b,field_1054_b,yCoord,Y coordinate of Vec3D
+aj,c,field_1779_c,aw,c,field_1058_c,zCoord,Z coordinate of Vec3D
+aj,d,field_1778_d,aw,d,field_1057_d,vectorList,ArrayList of all created vectors
+aj,e,field_1777_e,aw,e,field_1056_e,nextVector,"Next empty index in the vectorList. We don't ever seem to remove vectors from the list, however."
+al,a,field_467_a,ax,a,field_664_a,triggerMobType,The mob type that can trigger this pressure plate. 
+am,a,field_761_a,ay,a,field_399_a,unusedBoolean,Currently unused.
+an,c,field_1125_c,*,*,*,craftMatrix,The craft matrix inventory linked to this result slot.
+ar,c,field_1618_c,*,*,*,unusedList,Currently unused in the code.
+as,a,field_997_a,*,*,*,message1,Unused class. Would contain a message drawn to the center of the screen.
+as,h,field_998_h,*,*,*,message2,Unused class. Would contain a message drawn to the center of the screen.
+ay,a,field_994_a,*,*,*,screenTitle,The title string that is displayed in the top-center of the screen.
+ay,h,field_996_h,*,*,*,parentScreen,A reference to the screen object that created this. Used for navigating between screens.
+ay,i,field_995_i,*,*,*,options,Reference to the GameSettings object.
+az,a,field_1683_a,bl,a,field_770_a,maxSpawns,Maximum number of animals/mobs spawned
+az,b,field_1682_b,bl,b,field_769_b,spawnBaseClass,Base class of spawn types
+az,c,field_1685_c,bl,c,field_772_c,spawnSubclasses,Array of possible subclass spawn types
+az,d,field_1684_d,bl,d,field_771_d,nearbyChunkSet,Set of chunk coordinate integer pairs near to players in which creatures will spawn.
+bd,a,field_829_a,bs,e,field_493_e,delay,The stored delay before a new spawn.
+bd,b,field_828_b,bs,f,field_492_f,entityID,"The string ID of the mobs being spawned from this spawner. Defaults to pig, apparently."
+be,a,field_1770_a,*,*,*,tryCheckOcclusionCapable,Whether or not we should try to check occlusion - defaults to false and is never changed in 1.2.2.
+bf,a,field_1768_a,*,*,*,resourcesFolder,The folder to store the resources in.
+bf,b,field_1767_b,*,*,*,mc,A reference to the Minecraft object.
+bf,c,field_1769_c,*,*,*,closing,Set to true when Minecraft is closing down.
+bg,b,field_450_b,by,a,field_648_b,torchUpdates,An array of when redstone torches became active.  Used for redstone torches to burn out.
+bg,a,field_451_a,by,a,field_649_a,torchActive,Whether the redstone torch is currently active or not.
+bh,b,field_945_b,*,*,*,mc,Reference to the Minecraft object.
+bh,c,field_951_c,*,*,*,width,The width of the screen object.
+bh,d,field_950_d,*,*,*,height,The height of the screen object.
+bh,e,field_949_e,*,*,*,controlList,A list of all the controls added to this container.
+bl,a,field_1765_a,cd,a,field_1005_a,pathLength,The total length of the path
+bl,b,field_1764_b,cd,b,field_1004_b,points, The actual points in the path
+bl,c,field_1766_c,cd,c,field_1006_c,pathIndex,The index of the current point in the path
+bm,a,field_581_a,ce,a,field_137_a,collectedEntityId,The entity on the ground that was picked up.
+bm,b,field_580_b,ce,b,field_136_b,collectorEntityId,The entity that picked up the one from the ground.
+bn,a,field_1763_a,*,*,*,worldObj,Reference to the World object.
+bn,u,field_1738_u,*,*,*,needsUpdate,Boolean for whether this renderer needs to be updated or not
+bo,a,field_760_a,cj,a,field_398_a,sheared,"Set to true if this sheep has been sheared, false otherwise."
+bq,a,field_1729_a,*,*,*,worldObj,Reference to the World object.
+bq,d,field_1730_d,*,*,*,rand,RNG.
+bv,a,field_1724_a,*,*,*,resultId,Item id of the recipe result
+bv,b,field_1723_b,*,*,*,width,Width in number of items
+bv,c,field_1727_c,*,*,*,height,Height in number of items
+bv,d,field_1726_d,*,*,*,ingredientMap,Map of ingredient ids
+bv,e,field_1725_e,*,*,*,resultStack,The resulting stack this recipe produces
+bw,d,field_199_d,*,*,*,rand,RNG.
+by,a,field_1720_a,cy,a,field_982_a,Sky
+by,b,field_1719_b,cy,b,field_981_b,Block
+bz,a,field_573_a,cz,a,field_106_a,xPosition,Block X position.
+bz,b,field_572_b,cz,b,field_105_b,yPosition,Block Y position.
+bz,c,field_579_c,cz,c,field_112_c,zPosition,Block Z position.
+bz,d,field_578_d,cz,d,field_111_d,xSize,The X size of the chunk.
+bz,e,field_577_e,cz,e,field_110_e,ySize,The Y size of the chunk.
+bz,f,field_576_f,cz,f,field_109_f,zSize,The Z size of the chunk.
+bz,g,field_575_g,cz,g,field_108_g,chunk,"The chunk data, compressed using ZLib deflate."
+bz,h,field_574_h,cz,h,field_107_h,chunkSize,The size of the compressed data.
+cc,a,field_1706_a,*,*,*,image,The image data.
+cf,a,field_1698_a,dg,a,field_964_a,minX
+cf,b,field_1697_b,dg,b,field_963_b,minY
+cf,c,field_1704_c,dg,c,field_970_c,minZ
+cf,d,field_1703_d,dg,d,field_969_d,maxX
+cf,e,field_1702_e,dg,e,field_968_e,maxY
+cf,f,field_1701_f,dg,f,field_967_f,maxZ
+cf,h,field_1699_h,dg,h,field_965_h,numBoundingBoxesInUse,Tracks how many bounding boxes are being used
+cf,g,field_1700_g,dg,g,field_966_g,boundingBoxes,List of bounding boxes (not all necessarily being actively used)
+ci,d,field_1061_d,ds,d,field_824_d,worldObj,Reference to the World object.
+cj,a,field_992_a,*,*,*,errorMessage,The error message.
+cj,h,field_993_h,*,*,*,errorDetail,The details about the error.
+ck,b,field_898_b,*,*,*,chunks,An array of 256 chunks.
+ck,c,field_901_c,*,*,*,worldObj,Reference to the World object.
+cn,e,field_1046_e,dy,e,field_811_e,skylightSubtracted,How much light is subtracted from full daylight
+cn,c,field_1048_c,dy,c,field_813_c,worldTime,Minecraft time
+cn,d,field_1047_d,dy,d,field_812_d,snowCovered,Is true if world is a snow world
+cn,I,field_1016_I,dy,H,field_4266_H,nbtCompoundPlayer,Reference to the player object as NBT compound
+cn,H,field_1017_H,dy,G,field_783_G,chunkProvider,Handles chunk operations and caching
+cn,k,field_1040_k,dy,k,field_805_k,playerEntities,Array list of players in the world.
+cn,n,field_1037_n,dy,m,field_803_m,rand,RNG for world.
+cn,o,field_1036_o,dy,n,field_4276_m,spawnX,Spawn point X coordinate
+cn,p,field_4210_n,dy,o,field_4275_n,spawnY,Spawn point Y coordinate
+cn,q,field_1034_q,dy,p,field_4274_o,spawnZ,Spawn point Z coordinate
+cn,u,field_1030_u,dy,t,field_796_t,randomSeed,Random seed for world generator
+cn,v,field_1029_v,dy,u,field_795_u,sizeOnDisk,Size of the world on the harddisk
+cn,y,field_1026_y,dy,x,field_792_x,multiplayerWorld,"Set to true if this is a multiplayer world, false otherwise."
+cn,C,field_1022_C,dy,B,field_788_B,scheduledTickSet,Set of scheduled ticks (used for checking if a tick already exists)
+cn,B,field_1023_B,dy,A,field_789_A,scheduledTickTreeSet,TreeSet of scheduled ticks which is used as a priority queue for the ticks
+cu,a,field_884_a,eg,a,field_762_a,minableBlockId,The block ID of the ore to be placed using this generator.
+cu,b,field_883_b,eg,b,field_761_b,numberOfBlocks,The number of blocks to generate.
+cx,a,field_4187_a,*,*,*,logoBlockLayers,The asterisks spell out the word MINECRAFT. Each entry in the array is one block layer of the logo.
+cx,h,field_6463_h,*,*,*,rand,RNG to pick the splash string.
+cx,i,field_990_i,*,*,*,logoEffects
+cx,j,field_989_j,*,*,*,updateCounter,Counts the number of screen updates.
+cx,l,field_6462_l,*,*,*,splashString,The random string that appears on the menu screen.
+cz,a,field_1674_a,ep,a,field_941_a,worldMap,Used to find obstacles 
+cz,b,field_1673_b,ep,b,field_940_b,path,The path being generated
+cz,c,field_1676_c,ep,c,field_943_c,pointMap,The points in the path
+cz,d,field_1675_d,ep,d,field_942_d,pathOptions,Selection of path points to add to the path
+db,a,field_1672_a,*,*,*,logo,BufferedImage object containing the Majong logo.
+de,a,field_985_a,*,*,*,message,The chat message.
+de,h,field_986_h,*,*,*,updateCounter,Counts the number of screen updates. Used to make the caret flash.
+df,a,field_1671_a,*,*,*,displayLists,An ArrayList that stores the first index and the length of each display list.
+df,b,field_1670_b,*,*,*,textureNames,An ArrayList that stores all the generated texture names.
+dg,a,field_983_a,*,*,*,netHandler,Network object that downloads the terrain data.
+dg,h,field_984_h,*,*,*,updateCounter,Counts the number of screen updates.
+dh,a,field_466_a,ey,a,field_650_a,fallInstantly,Do blocks fall instantly to where they stop or do they fall over time
+di,A,field_268_A,ez,A,field_4175_A,axeDiamond
+di,aa,field_286_aa,ez,aa,field_4189_aa,bootsChain
+di,aA,field_309_aA,ez,aA,field_252_aA,redstone
+di,ab,field_285_ab,ez,ab,field_4188_ab,helmetSteel
+di,aB,field_308_aB,ez,aB,field_251_aB,snowball
+di,ac,field_284_ac,ez,ac,field_4187_ac,plateSteel
+di,aC,field_4031_aC,ez,aC,field_4205_aC,boat
+di,ad,field_283_ad,ez,ad,field_4186_ad,legsSteel
+di,aD,field_306_aD,ez,aD,field_249_aD,leather
+di,ae,field_282_ae,ez,ae,field_4185_ae,bootsSteel
+di,aE,field_305_aE,ez,aE,field_4204_aE,bucketMilk
+di,af,field_281_af,ez,af,field_4184_af,helmetDiamond
+di,aF,field_4030_aF,ez,aF,field_4203_aF,brick
+di,ag,field_280_ag,ez,ag,field_4183_ag,plateDiamond
+di,aG,field_303_aG,ez,aG,field_246_aG,clay
+di,ah,field_279_ah,ez,ah,field_4182_ah,legsDiamond
+di,aH,field_302_aH,ez,aH,field_4202_aH,reed
+di,ai,field_278_ai,ez,ai,field_4181_ai,bootsDiamond
+di,aI,field_4029_aI,ez,aI,field_4201_aI,paper
+di,aj,field_277_aj,ez,aj,field_4180_aj,helmetGold
+di,aJ,field_4028_aJ,ez,aJ,field_4200_aJ,book
+di,ak,field_276_ak,ez,ak,field_4179_ak,plateGold
+di,aK,field_299_aK,ez,aK,field_242_aK,slimeBall
+di,al,field_275_al,ez,al,field_4178_al,legsGold
+di,aL,field_4027_aL,ez,aL,field_4199_aL,minecartCrate
+di,am,field_274_am,ez,am,field_4177_am,bootsGold
+di,aM,field_4026_aM,ez,aM,field_4198_aM,minecartPowered
+di,an,field_273_an,ez,an,field_216_an,flint
+di,aN,field_296_aN,ez,aN,field_239_aN,egg
+di,ao,field_272_ao,ez,ao,field_215_ao,porkRaw
+di,aO,field_4025_aO,ez,aO,field_4197_aO,compass
+di,ap,field_4017_ap,ez,ap,field_4176_ap,porkCooked
+di,aP,field_4024_aP,ez,aP,field_4196_aP,fishingRod
+di,aq,field_270_aq,ez,aq,field_213_aq,painting
+di,aQ,field_293_aQ,ez,aQ,field_236_aQ,record13
+di,ar,field_269_ar,ez,ar,field_212_ar,appleGold
+di,aR,field_4019_aV,ez,aR,field_4191_aV,recordCat
+di,as,field_267_as,ez,as,field_4174_as,sign
+di,aS,field_291_aS,ez,aS,field_234_aS,swiftedIndex,Item index + 256
+di,aT,field_290_aT,ez,aT,field_233_aT,maxStackSize,Maximum size of the stack.
+di,at,field_265_at,ez,at,field_208_at,doorWood
+di,au,field_262_au,ez,au,field_205_au,bucketEmpty
+di,aU,field_289_aU,ez,aU,field_232_aU,maxDamage,Maximum damage an item can handle.
+di,aZ,field_4018_aZ,ez,aV,field_6153_aZ,iconIndex,Icon index in the icons table.
+di,av,field_4016_av,ez,av,field_4170_av,bucketWater
+di,aw,field_258_aw,ez,aw,field_201_aw,bucketLava
+di,aW,field_287_aW,ez,aW,field_230_aW,bFull3D,"If true, render the object in full 3D, like weapons and tools."
+di,ax,field_256_ax,ez,ax,field_199_ax,minecartEmpty
+di,ay,field_254_ay,ez,ay,field_197_ay,saddle
+di,az,field_252_az,ez,az,field_195_az,doorSteel
+di,b,field_234_b,ez,b,field_4154_b,rand,Random
+di,B,field_266_B,ez,B,field_209_B,stick
+di,c,field_233_c,ez,c,field_176_c,itemsList,A 32000 elements Item array.
+di,C,field_264_C,ez,C,field_4173_C,bowlEmpty
+di,d,field_232_d,ez,d,field_4153_d,shovelSteel
+di,D,field_263_D,ez,D,field_4172_D,bowlSoup
+di,e,field_231_e,ez,e,field_4152_e,pickaxeSteel
+di,E,field_261_E,ez,E,field_4171_E,swordGold
+di,f,field_230_f,ez,f,field_4151_f,axeSteel
+di,F,field_259_F,ez,F,field_4169_F,shovelGold
+di,g,field_4014_g,ez,g,field_4150_g,flintAndSteel
+di,G,field_257_G,ez,G,field_4168_G,pickaxeGold
+di,h,field_228_h,ez,h,field_171_h,appleRed
+di,H,field_255_H,ez,H,field_4167_H,axeGold
+di,i,field_227_i,ez,i,field_4149_i,bow
+di,I,field_253_I,ez,I,field_196_I,silk
+di,j,field_226_j,ez,j,field_4148_j,arrow
+di,J,field_251_J,ez,J,field_194_J,feather
+di,k,field_225_k,ez,k,field_168_k,coal
+di,K,field_250_K,ez,K,field_193_K,gunpowder
+di,l,field_224_l,ez,l,field_167_l,diamond
+di,L,field_249_L,ez,L,field_4166_L,hoeWood
+di,m,field_223_m,ez,m,field_166_m,ingotIron
+di,M,field_248_M,ez,M,field_4165_M,hoeStone
+di,n,field_222_n,ez,n,field_4147_n,ingotGold
+di,N,field_247_N,ez,N,field_4164_N,hoeSteel
+di,o,field_221_o,ez,o,field_4146_o,swordSteel
+di,O,field_246_O,ez,O,field_4163_O,hoeDiamond
+di,p,field_220_p,ez,p,field_4145_p,swordWood
+di,P,field_245_P,ez,P,field_4162_P,hoeGold
+di,q,field_219_q,ez,q,field_4144_q,shovelWood
+di,Q,field_244_Q,ez,Q,field_187_Q,seeds
+di,r,field_218_r,ez,r,field_4143_r,pickaxeWood
+di,R,field_243_R,ez,R,field_186_R,wheat
+di,s,field_217_s,ez,s,field_4142_s,axeWood
+di,S,field_242_S,ez,S,field_185_S,bread
+di,t,field_216_t,ez,t,field_4141_t,swordStone
+di,T,field_241_T,ez,T,field_4161_T,helmetLeather
+di,u,field_215_u,ez,u,field_4140_u,shovelStone
+di,U,field_240_U,ez,U,field_4160_U,plateLeather
+di,v,field_214_v,ez,v,field_4139_v,pickaxeStone
+di,V,field_239_V,ez,V,field_4159_V,legsLeather
+di,w,field_213_w,ez,w,field_4138_w,axeStone
+di,W,field_238_W,ez,W,field_4158_W,bootsLeather
+di,x,field_212_x,ez,x,field_4137_x,swordDiamond
+di,X,field_237_X,ez,X,field_4157_X,helmetChain
+di,y,field_211_y,ez,y,field_4136_y,shovelDiamond
+di,Y,field_236_Y,ez,Y,field_4156_Y,plateChain
+di,z,field_210_z,ez,z,field_4135_z,pickaxeDiamond
+di,Z,field_235_Z,ez,Z,field_4155_Z,legsChain
+di,as,field_603_as,ez,t,field_314_t,prevRotationYaw
+di,at,field_602_at,ez,u,field_313_u,prevRotationPitch
+di,ah,field_614_ah,ez,i,field_325_i,prevPosX
+di,ai,field_613_ai,ez,j,field_324_j,prevPosY
+di,aj,field_612_aj,ez,k,field_323_k,prevPosZ
+di,aB,field_645_aB,ez,C,field_302_C,yOffset,The bounding box's y offset
+dk,a,field_1119_a,*,*,*,slotIndex,The index of the slot in the inventory.
+dk,b,field_1118_b,*,*,*,inventory,The inventory we want to extract a slot from.
+dm,b,field_778_b,fc,aj,field_416_aj,inventory,Inventory of the player
+do,a,field_566_a,fe,a,field_78_a,id,The block or item to be placed.
+do,b,field_565_b,fe,b,field_77_b,xPosition,Block X position.
+do,c,field_569_c,fe,c,field_81_c,yPosition,Block Y position.
+do,d,field_568_d,fe,d,field_80_d,zPosition,Block Z position.
+do,e,field_567_e,fe,e,field_79_e,direction,The offset to use for block/item placement.
+du,a,field_564_a,fl,a,field_76_a,time,The world time in minutes.
+dw,a,field_6541_a,*,*,*,instance,The static instance of this class
+dw,b,field_1662_b,*,*,*,recipes,A list of all the recipes added
+dx,a,field_801_a,fn,a,field_429_a,item,The item stack of this EntityItem.
+dx,b,field_800_b,fn,b,field_428_b,age,The age of this EntityItem (used to animate it up and down as well as expire it)
+dx,f,field_802_f,fn,ag,field_430_ag,health,"The health of this EntityItem. (For example, damage for tools)"
+dy,a,field_1096_a,fp,a,field_733_a,byteArray,The byte array stored in the tag.
+dz,a,field_563_a,fv,a,field_75_a,unused,"Unused when sent from a client, can be any random value."
+dz,b,field_562_b,fv,b,field_74_b,id,The block/item id to be equipped.
+e,k,field_1448_k,*,*,*,worldObj,A reference to the World object.
+e,t,field_1439_t,*,*,*,mc,A reference to the Minecraft object.
+ee,a,field_971_a,*,*,*,xSize,The X size of the inventory window in pixels.
+ee,h,field_974_h,*,*,*,ySize,The Y size of the inventory window in pixels.
+ee,i,field_973_i,*,*,*,inventorySlots,A list of the players inventory slots.
+ee,j,field_972_j,*,*,*,itemRenderer,"Stacks renderer. Icons, stack size, health, etc..."
+eh,a,field_561_a,gf,a,field_73_a,xPosition,The player's X position.
+eh,b,field_560_b,gf,b,field_72_b,yPosition,The player's Y position.
+eh,c,field_559_c,gf,c,field_71_c,zPosition,The player's Z position.
+eh,d,field_558_d,gf,d,field_70_d,stance,The player's stance.
+eh,e,field_557_e,gf,e,field_69_e,yaw,The player's yaw rotation.
+eh,f,field_556_f,gf,f,field_68_f,pitch,The player's pitch rotation.
+eh,g,field_555_g,gf,g,field_67_g,onGround,True if the client is on the ground.
+eh,h,field_554_h,gf,h,field_66_h,moving,Boolean set to true if the player is moving.
+eh,i,field_553_i,gf,i,field_65_i,rotating,Boolean set to true if the player is rotating.
+ej,c,field_880_c,gi,c,field_758_c,worldObj,Reference to the World object.
+el,a,field_1087_a,gg,a,field_731_a,key,The UTF string key used to lookup values.
+er,a,field_1652_a,gk,a,field_885_a,Kebab,Art enums (first letter capitalized here)
+er,b,field_1651_b,gk,b,field_884_b,Aztec,Art enums (first letter capitalized here)
+er,c,field_1650_c,gk,c,field_883_c,Alban,Art enums (first letter capitalized here)
+er,d,field_1649_d,gk,d,field_882_d,Aztec2,Art enums (first letter capitalized here)
+er,e,field_1648_e,gk,e,field_881_e,Bomb,Art enums (first letter capitalized here)
+er,f,field_1647_f,gk,f,field_880_f,Plant,Art enums (first letter capitalized here)
+er,g,field_1646_g,gk,g,field_879_g,Wasteland,Art enums (first letter capitalized here)
+er,h,field_1645_h,gk,h,field_878_h,Pool,Art enums (first letter capitalized here)
+er,i,field_1644_i,gk,i,field_877_i,Courbet,Art enums (first letter capitalized here)
+er,j,field_1643_j,gk,j,field_876_j,Sea,Art enums (first letter capitalized here)
+er,k,field_1642_k,gk,k,field_875_k,Sunset,Art enums (first letter capitalized here)
+er,l,field_1641_l,gk,l,field_874_l,Creebet,Art enums (first letter capitalized here)
+er,m,field_1640_m,gk,m,field_873_m,Wanderer,Art enums (first letter capitalized here)
+er,n,field_1639_n,gk,n,field_872_n,Graham,Art enums (first letter capitalized here)
+er,o,field_1638_o,gk,o,field_871_o,Match,Art enums (first letter capitalized here)
+er,p,field_1637_p,gk,p,field_870_p,Bust,Art enums (first letter capitalized here)
+er,q,field_1635_q,gk,q,field_868_q,Stage,Art enums (first letter capitalized here)
+er,r,field_1633_r,gk,r,field_866_r,Void,Art enums (first letter capitalized here)
+er,s,field_1631_s,gk,s,field_864_s,SkullAndRoses,Art enums (first letter capitalized here)
+er,t,field_1629_t,gk,t,field_862_t,Fighters,Art enums (first letter capitalized here)
+er,u,field_1628_u,gk,u,field_861_u,Pointer,Art enums (first letter capitalized here)
+er,v,field_1627_v,gk,v,field_860_v,PigScene,Art enums (first letter capitalized here)
+er,w,field_1626_w,gk,w,field_859_w,Skeleton,Art enums (first letter capitalized here)
+er,x,field_1625_x,gk,x,field_858_x,DonkeyKong,Art enums (first letter capitalized here)
+et,a,field_1622_a,*,*,*,craftMatrix,The crafting matrix inventory (3x3).
+et,b,field_1621_b,*,*,*,craftResult,"The crafting result, size 1."
+eu,a,field_843_a,gm,a,field_496_a,mainInventory,An array of 37 item stacks (but only filled with 36?) indicating the main player inventory (including the visible bar).
+eu,b,field_842_b,gm,b,field_495_b,armorInventory,An array of 4 item stacks containing the currently worn armor pieces.
+eu,c,field_848_c,gm,c,field_500_c,craftingInventory,An array of 4 item stacks containing the items in the crafting area of the player inventory.
+eu,d,field_847_d,gm,d,field_499_d,currentItem,The index of the currently held item (0-8).
+eu,g,field_844_g,gm,f,field_497_f,player,The player whose inventory this is.
+ev,a,field_1615_a,gp,a,field_853_a,stackSize,Size of the stack.
+ev,b,field_1614_b,gp,b,field_852_b,animationsToGo,"Number of animation frames to go when receiving an item (by walking into it, for example)."
+ev,c,field_1617_c,gp,c,field_855_c,itemID,ID of the item.
+ev,d,field_1616_d,gp,d,field_854_d,itemDamage,Damage dealt to the item or number of use. Raise when using items.
+ey,b,field_6528_b,*,*,*,textureMap
+ey,e,field_1605_e,*,*,*,imageData,Stores the image data for the texture.
+ez,a,field_547_a,gv,a,field_59_a,entityId,The entity ID.
+ez,b,field_546_b,gv,b,field_58_b,type,The type of mob.
+ez,c,field_552_c,gv,c,field_64_c,xPosition,The X position of the entity.
+ez,d,field_551_d,gv,d,field_63_d,yPosition,The Y position of the entity.
+ez,e,field_550_e,gv,e,field_62_e,zPosition,The Z position of the entity.
+ez,f,field_549_f,gv,f,field_61_f,yaw,The yaw of the entity.
+ez,g,field_548_g,gv,g,field_60_g,pitch,The pitch of the entity.
+f,a,field_1097_a,l,a,field_739_a,floatValue,The float value for the tag.
+fa,a,field_1596_a,*,*,*,linux,Used in ad to determine OS
+fa,b,field_1595_b,*,*,*,solaris,Used in ad to determine OS
+fa,c,field_1600_c,*,*,*,windows,Used in ad to determine OS
+fa,d,field_1599_d,*,*,*,macos,Used in ad to determine OS
+fa,e,field_1598_e,*,*,*,unknown,Used in ad to determine OS
+fg,a,field_542_a,hd,a,field_54_a,xPosition,Block X position.
+fg,b,field_541_b,hd,b,field_53_b,yPosition,Block Y position.
+fg,c,field_545_c,hd,c,field_57_c,zPosition,Block Z position.
+fg,d,field_544_d,hd,d,field_56_d,face,Punched face of the block.
+fg,e,field_543_e,hd,e,field_55_e,status,"Status of the digging (started, ongoing, broken)."
+fi,a,field_1590_a,hf,a,field_835_a,slots,An array of HashEntries representing the heads of hash slot lists
+fi,b,field_1589_b,hf,b,field_834_b,count,The number of items stored in this map
+fi,c,field_1593_c,hf,c,field_838_c,threshold,The grow threshold 
+fi,d,field_1592_d,hf,d,field_837_d,growFactor, The scale factor used to determine when to grow the table
+fi,e,field_1591_e,hf,e,field_836_e,versionStamp, A serial stamp used to mark changes
+fk,a,field_935_a,*,*,*,width,The width of this control.
+fk,b,field_934_b,*,*,*,height,The height of this control.
+fk,c,field_941_c,*,*,*,xPosition,The x position of this control.
+fk,d,field_940_d,*,*,*,yPosition,The y position of this control.
+fk,e,field_939_e,*,*,*,displayString,The string displayed on this control.
+fk,f,field_938_f,*,*,*,id,ID for this control.
+fk,g,field_937_g,*,*,*,enabled,"True if this control is enabled, false to disable."
+fk,h,field_936_h,*,*,*,enabled2,This is always true. Doesn't do anything currently but looks like it could be for enabling/disabling a control in the future.
+fl,a,field_1588_a,bp,a,field_1031_a,mc,A reference to the Minecraft object.
+fm,a,field_185_a,*,*,*,mainFrame,Reference to the main frame.
+fn,a,field_471_a,hp,a,field_39_a,packetIdToClassMap,Maps packet id to packet class
+fn,b,field_470_b,hp,b,field_38_b,packetClassToIdMap,Maps packet class to packet id
+fn,j,field_472_j,hp,j,field_40_j,isChunkDataPacket,"Only true for Packet51MapChunk, Packet52MultiBlockChange, Packet53BlockChange and Packet59ComplexEntity. Used to separate them into a different send queue."
+fp,a,field_1587_a,*,*,*,mc,A reference to the Minecraft object.
+fp,b,field_1586_b,*,*,*,mcThread,A reference to the Minecraft main thread.
+fr,a,field_1584_a,*,*,*,musicVolume
+fr,A,field_6522_B,*,*,*,optionsFile
+fr,b,field_1583_b,*,*,*,soundVolume
+fr,c,field_1582_c,*,*,*,mouseSensitivity
+fr,d,field_1581_d,*,*,*,invertMouse
+fr,e,field_1580_e,*,*,*,renderDistance
+fr,f,field_1579_f,*,*,*,viewBobbing
+fr,g,field_1578_g,*,*,*,anaglyph
+fr,h,field_1577_h,*,*,*,limitFramerate
+fr,i,field_1576_i,*,*,*,fancyGraphics
+fr,j,field_1575_j,*,*,*,keyBindForward
+fr,k,field_1574_k,*,*,*,keyBindLeft
+fr,l,field_1573_l,*,*,*,keyBindBack
+fr,m,field_1572_m,*,*,*,keyBindRight
+fr,n,field_1571_n,*,*,*,keyBindJump
+fr,o,field_1570_o,*,*,*,keyBindInventory
+fr,p,field_6523_q,*,*,*,keyBindDrop
+fr,q,field_6521_r,*,*,*,keyBindChat
+fr,r,field_6520_s,*,*,*,keyBindToggleFog
+fr,s,field_1565_s,*,*,*,keyBindSneak
+fr,t,field_1564_t,*,*,*,keyBindings
+fr,u,field_1563_u,*,*,*,mc
+fr,v,field_1562_v,*,*,*,numberOfOptions,I believe this is used to correctly line up the buttons in the menu.
+fr,w,field_1561_w,*,*,*,difficulty
+fr,x,field_1560_x,*,*,*,thirdPersonView
+fr,y,field_1559_y,*,*,*,RENDER_DISTANCES,Constant containing an array of the possible view distances.
+fr,z,field_1558_z,*,*,*,DIFFICULTY_LEVELS,Constant containing an array of the possible difficulty levels.
+ft,f,field_894_f,hv,f,field_720_f,chunks,An array of 1024 chunks.
+ft,g,field_893_g,hv,g,field_719_g,worldObj,Reference to the World object.
+fx,a,field_1556_a,if,a,field_744_a,pathPoints,Contains the points in this path
+fx,b,field_1555_b,if,b,field_743_b,count,The number of points in this path
+,t,field_4237_t,,t,field_4281_t,biomeLookupTable
+,s,field_4238_s,,s,field_4282_s,biomeCreatures
+,r,field_4239_r,,r,field_4283_r,biomeMonsters
+,a,field_4256_a,,a,field_4300_a,rainforest
+,p,field_4241_p,,p,field_4285_p,fillerBlock,The block to fill spots in when not on the top
+,o,field_4242_o,,o,field_4286_o,topBlock,The block expected to be on the top of this biome
+,b,field_4255_b,,b,field_4299_b,swampland
+,c,field_4254_c,,c,field_4298_c,seasonalForest
+,d,field_4253_d,,d,field_4297_d,forest
+,e,field_4252_e,,e,field_4296_e,savanna
+,f,field_4251_f,,f,field_4295_f,shrubland
+,g,field_4250_g,,g,field_4294_g,taiga
+,h,field_4249_h,,h,field_4293_h,desert
+,i,field_4248_i,,i,field_4292_i,plains
+,j,field_4247_j,,j,field_4291_j,iceDesert
+,k,field_4246_k,,k,field_4290_k,tundra
+,l,field_4245_l,,l,field_4289_l,hell
+,m,field_6504_m,,m,field_6163_m,biomeName
+fz,f,field_1549_f,*,*,*,worldObj,Reference to the World object.
+g,a,field_186_a,*,*,*,mainFrame,"Reference to the main frame, in this case, the applet window itself."
+ga,b,field_1539_b,im,b,field_693_b,blocks,Byte array of blocks for the chunk.
+ga,d,field_1537_d,im,d,field_691_d,worldObj,Reference to the World object.
+ga,e,field_1536_e,im,e,field_690_e,data,Chunk data
+ga,f,field_1535_f,im,f,field_689_f,skylightMap,Light map for sky. See class le (client) or eo (server).
+ga,g,field_1534_g,im,g,field_688_g,blocklightMap,Light map for blocks. See class le (client) or eo (server).
+ga,h,field_1533_h,im,h,field_687_h,heightMap,Byte array containing height map for the chunk.
+ga,j,field_1531_j,im,j,field_685_j,xPosition,The x coordinate of the chunk.
+ga,k,field_1530_k,im,k,field_684_k,zPosition,The z coordinate of the chunk.
+ga,n,field_1527_n,im,n,field_681_n,isTerrainPopulated,Boolean value indicating if the terrain is populated.
+ga,m,field_1528_m,im,m,field_682_m,entities,List of lists of the entities in the chunk. It is 8 lists partitioned along the Y axis.
+ga,o,field_1526_o,im,o,field_680_o,isModified,Set to true if the chunk has been modified and needs to be updated internally.
+gb,a,field_1337_a,iq,a,field_526_a,air
+gb,b,field_1336_b,iq,b,field_525_b,ground
+gb,c,field_1335_c,iq,c,field_524_c,wood
+gb,d,field_1334_d,iq,d,field_523_d,rock
+gb,e,field_1333_e,iq,e,field_522_e,iron
+gb,f,field_1332_f,iq,f,field_521_f,water
+gb,g,field_1331_g,iq,g,field_520_g,lava
+gb,h,field_4265_h,iq,h,field_519_h,leaves
+gb,i,field_1329_i,iq,i,field_518_i,plants
+gb,j,field_1328_j,iq,j,field_517_j,sponge
+gb,k,field_4264_k,iq,k,field_516_k,cloth
+gb,l,field_1326_l,iq,l,field_515_l,fire
+gb,m,field_1325_m,iq,m,field_514_m,sand
+gb,n,field_1324_n,iq,n,field_513_n,circuits
+gb,o,field_4263_o,iq,o,field_512_o,glass
+gb,p,field_1322_p,iq,p,field_511_p,tnt
+gb,q,field_4262_q,iq,q,field_510_q,unused
+gb,r,field_1320_r,iq,r,field_509_r,ice
+gb,s,field_1319_s,iq,s,field_508_s,snow
+gb,t,field_1318_t,iq,t,field_507_t,builtSnow
+gb,u,field_1317_u,iq,u,field_506_u,cactus
+gb,v,field_1316_v,iq,v,field_505_v,clay
+gb,w,field_4259_y,iq,w,field_4211_y,canBurn,Bool defining if the block can burn or not.
+gc,a,field_968_a,*,*,*,updateCounter,Counts the number of screen updates. Used to make the caret flash.
+gc,h,field_970_h,*,*,*,parentScreen,A reference to the screen object that created this. Used for navigating between screens.
+gc,i,field_969_i,*,*,*,serverAddress,Server address.
+ge,u,field_6409_z,is,aC,field_6118_aF,texture,The file path to the texture of this EntityLiving.
+ge,E,field_717_E,is,aM,field_363_aM,health,"The current health of this EntityLiving. (For example, the health of a pig)"
+ge,G,field_715_G,is,aO,field_361_aO,hurtTime,The amount of time remaining this entity should act 'hurt'. (Visual appearance of red tint)
+ge,J,field_712_J,is,aR,field_358_aR,deathTime,"The amount of time remaining this entity should act 'dead', i.e. have a corpse in the world."
+ge,K,field_711_K,is,aS,field_357_aS,attackTime,"The amount of time remaining this entity is in an attack animation. Default for monsters appears to be 20, but skeletons take 30 to shoot arrows."
+gn,a,field_1095_a,d,a,field_740_a,longValue,The long value for the tag.
+go,a,field_6515_a,*,*,*,description,A description of the error that has occurred.
+go,b,field_6514_b,*,*,*,exception,The Throwable object that was thrown.
+gp,a,field_534_a,c,a,field_143_a,entityId,"The entity ID, in this case it's the player ID."
+gp,b,field_533_b,c,b,field_142_b,name,The player's name.
+gp,c,field_540_c,c,c,field_149_c,xPosition,The player's X position.
+gp,d,field_539_d,c,d,field_148_d,yPosition,The player's Y position.
+gp,e,field_538_e,c,e,field_147_e,zPosition,The player's Z position.
+gp,f,field_537_f,c,f,field_146_f,rotation,The player's rotation.
+gp,g,field_536_g,c,g,field_145_g,pitch,The player's pitch.
+gp,h,field_535_h,c,h,field_144_h,currentItem,The current item the player is holding.
+gr,b,field_1003_b,*,*,*,mc,A reference to the Minecraft object.
+gt,a,field_532_a,e,a,field_141_a,username,The username of the player attempting to connect.
+gu,a,field_840_a,*,*,*,stackList,List of the stacks in the crafting matrix.
+gu,b,field_839_b,*,*,*,nbrSlots,Number of crafting slots.
+gu,c,field_841_c,*,*,*,eventHandler,Class containing the callbacks for the events on_GUIClosed and on_CraftMaxtrixChanged.
+gv,a,field_867_a,f,a,field_764_a,clayBlockId,The block ID for clay.
+gv,b,field_866_b,f,b,field_763_b,numberOfBlocks,The number of blocks to generate.
+gy,b,field_1208_b,*,*,*,rand,RNG.
+gy,c,field_1214_c,*,*,*,disconnected,True if kicked or disconnected from the server.
+gy,d,field_1213_d,*,*,*,netManager,Reference to the NetworkManager object.
+gy,e,field_1212_e,*,*,*,mc,Reference to the Minecraft object.
+h,a,field_1696_a,*,*,*,mcApplet,Reference to the MinecraftApplet object.
+ha,a,field_531_a,k,a,field_129_a,entityId,Unique entity ID.
+ha,b,field_530_b,k,b,field_128_b,xPosition,The item X position.
+ha,c,field_529_c,k,c,field_127_c,yPosition,The item Y position.
+ha,d,field_528_d,k,d,field_126_d,zPosition,The item Z position.
+ha,e,field_527_e,k,e,field_125_e,rotation,The item rotation.
+ha,f,field_526_f,k,f,field_124_f,pitch,The item pitch.
+ha,g,field_525_g,k,g,field_123_g,roll,The item roll.
+ha,h,field_524_h,k,h,field_122_h,itemId,The item ID.
+ha,i,field_523_i,k,i,field_121_i,count,The number of items.
+hf,a,field_522_a,o,a,field_120_a,entityId,"The entity ID, in this case it's the player ID."
+hf,b,field_521_b,o,b,field_119_b,animate
+hi,a,field_6359_a,p,a,field_6088_a,graphicsLevel,"Used to determine how to display leaves based on the graphics level. May also be used in rendering for transparency, not sure."
+hk,a,field_1514_a,*,*,*,buffer
+hk,b,field_1513_b,*,*,*,codec
+hk,c,field_1516_c,*,*,*,hash
+hk,d,field_1515_d,*,*,*,inputStream
+hm,a,field_1094_a,s,a,field_738_a,tagMap,"The key-value pairs for the tag. Each key is a UTF string, each value is a tag."
+hp,a,field_519_a,z,a,field_4024_a,protocolVersion,The protocol version in use. Current version is 2.
+hp,b,field_518_b,z,b,field_113_b,username,The name of the user attempting to login.
+hp,c,field_520_c,z,c,field_4027_c,password,Used to login to password-protected servers.
+hq,a,field_1065_a,*,*,*,mc,A reference to the Minecraft object.
+hs,a,field_837_a,ah,a,field_502_a,name,Name of the chest.
+hs,b,field_836_b,ah,b,field_501_b,upperChest,Inventory object corresponding to double chest upper part
+hs,c,field_838_c,ah,c,field_503_c,lowerChest,Inventory object corresponding to double chest lower part
+ic,a,field_820_a,as,e,field_481_e,nameToClassMap,A HashMap storing string names of classes mapping to the actual java.lang.Class type.
+ic,b,field_819_b,as,f,field_480_f,classToNameMap,A HashMap storing the classes and mapping to the string names (reverse of nameToClassMap).
+ic,e,field_824_e,as,a,field_479_a,worldObj,The reference to the world.
+ic,f,field_823_f,as,b,field_478_b,xCoord,The x coordinate of the tile entity.
+ic,g,field_822_g,as,c,field_483_c,yCoord,The y coordinate of the tile entity.
+ic,h,field_821_h,as,d,field_482_d,zCoord,The z coordinate of the tile entity.
+ie,a,field_966_a,*,*,*,updateCounter2,"Also counts the number of updates, not certain as to why yet."
+ie,h,field_967_h,*,*,*,updateCounter,Counts the number of screen updates.
+ih,a,field_1480_a,*,*,*,linux
+ih,b,field_1479_b,*,*,*,solaris
+ih,c,field_1484_c,*,*,*,windows
+ih,d,field_1483_d,*,*,*,macos
+ih,e,field_6512_e,*,*,*,unknown
+ii,a,field_1478_a,bb,a,field_1053_a,threadSyncObject,Synchronization object used for read and write threads.
+ii,b,field_1477_b,bb,b,field_1052_b,numReadThreads,The number of read threads spawned. Not really used on client side.
+ii,c,field_1476_c,bb,c,field_1051_c,numWriteThreads,The number of write threads spawned. Not really used on client side.
+ii,d,field_1475_d,bb,d,field_1050_d,sendQueueLock,The object used for synchronization on the send queue.
+ii,e,field_1474_e,bb,e,field_1049_e,networkSocket,The socket used by this network manager.
+ii,f,field_1473_f,bb,f,field_1048_f,socketInputStream,The input stream connected to the socket.
+ii,g,field_1472_g,bb,g,field_1047_g,socketOutputStream,The output stream connected to the socket.
+ii,h,field_1471_h,bb,h,field_1046_h,isRunning,Whether the network is currently operational.
+ii,i,field_1470_i,bb,i,field_1045_i,readPackets,Linked list of packets that have been read and are awaiting processing.
+ii,j,field_1469_j,bb,j,field_1044_j,dataPackets,Linked list of packets awaiting sending.
+ii,k,field_1468_k,bb,k,field_1043_k,chunkDataPackets,Linked list of packets with chunk data that are awaiting sending.
+ii,l,field_1467_l,bb,l,field_1042_l,netHandler,A reference to the NetHandler object.
+ii,m,field_1466_m,bb,m,field_1041_m,isServerTerminating,"Whether this server is currently terminating. If this is a client, this is always false."
+ii,n,field_1465_n,bb,n,field_1040_n,writeThread,The thread used for writing.
+ii,o,field_1464_o,bb,o,field_1039_o,readThread,The thread used for reading.
+ii,p,field_1463_p,bb,p,field_1038_p,isTerminating,Whether this network manager is currently terminating (and should ignore further errors).
+ii,q,field_1462_q,bb,q,field_1037_q,terminationReason,A String indicating why the network has shutdown.
+ii,r,field_1461_r,bb,r,field_1036_r,timeSinceLastRead,Counter used to detect read timeouts after 1200 failed attempts to read a packet.
+ii,s,field_1460_s,bb,s,field_1035_s,sendQueueByteLength,The length in bytes of the packets in both send queues (data and chunkData).
+ii,t,field_1459_t,bb,t,field_1034_t,chunkDataSendCounter,Counter used to prevent us from sending too many chunk data packets one after another. The delay appears to be set to 50.
+ij,a,field_517_a,ba,a,field_150_a,message,The message being sent.
+io,a,field_1093_a,bf,a,field_742_a,intValue,The integer value for the tag.
+ip,j,field_1401_j,*,*,*,corners,An array containing the 8 corners of the cube.
+ip,k,field_1400_k,*,*,*,faces,An array containing the 6 faces of the cube.
+,,field_1512_a,*,*,*,instance,The static instance of the Tessellator.
+,,field_1485_z,*,*,*,vboIndex,"The index of the last VBO used. This is used in round-robin fashion, sequentially, through the vboCount vertex buffers."
+,,field_1486_y,*,*,*,vertexBuffers,An IntBuffer used to store the indices of vertex buffer objects.
+,,field_1487_x,*,*,*,useVBO,Whether we are currently using VBO or not.
+,,field_1488_w,*,*,*,isDrawing,Whether this tessellator is currently in draw mode.
+,,field_1489_v,*,*,*,normal,The normal to be applied to the face being drawn.
+,,field_1490_u,*,*,*,zOffset,An offset to be applied along the z-axis for all vertices in this draw call.
+,,field_1491_t,*,*,*,yOffset,An offset to be applied along the y-axis for all vertices in this draw call.
+,,field_1492_s,*,*,*,xOffset,An offset to be applied along the x-axis for all vertices in this draw call.
+,,field_1493_r,*,*,*,drawMode,The draw mode currently being used by the tessellator.
+,,field_1494_B,*,*,*,bufferSize,The size of the buffers used (in integers).
+,,field_1495_q,*,*,*,isColorDisabled,Disables all color information for the following draw call.
+,,field_1496_A,*,*,*,vboCount,Number of vertex buffer objects allocated for use.
+,,field_1497_p,*,*,*,addedVertices,The number of vertices manually added to the given draw call. This differs from vertexCount because it adds extra vertices when converting quads to triangles.
+,,field_1498_o,*,*,*,rawBufferIndex,The index into the raw buffer to be used for the next data.
+,,field_1499_n,*,*,*,hasNormals,Whether the current draw object for this tessellator has normal values.
+,,field_1500_m,*,*,*,hasTexture,Whether the current draw object for this tessellator has texture coordinates.
+,,field_1501_l,*,*,*,hasColor,Whether the current draw object for this tessellator has color values.
+,,field_1502_k,*,*,*,color,The color (RGBA) value to be used for the following draw call.
+,,field_1503_j,*,*,*,textureV,The second coordinate to be used for the texture.
+,,field_1504_i,*,*,*,textureU,The first coordinate to be used for the texture.
+,,field_1505_h,*,*,*,vertexCount,The number of vertices to be drawn in the next draw call. Reset to 0 between draw calls.
+,,field_1506_g,*,*,*,rawBuffer,Raw integer array.
+,,field_1507_f,*,*,*,floatBuffer,"The same memory as byteBuffer, but referenced as an float buffer."
+,,field_1508_e,*,*,*,intBuffer,"The same memory as byteBuffer, but referenced as an integer buffer."
+,,field_1509_d,*,*,*,byteBuffer,The byte buffer used for GL allocation.
+,,field_1510_c,*,*,*,tryVBO,Boolean used to check if we should use vertex buffers. Initialized to false and never changed.
+,,field_1511_b,*,*,*,convertQuadsToTriangles,Boolean used to check whether quads should be drawn as four triangles. Initialized to true and never changed.
+iq,h,field_1388_h,*,*,*,mc,A reference to the Minecraft object.
+it,a,field_1371_a,*,*,*,keyDescription
+it,b,field_1370_b,*,*,*,keyCode
+iv,a,field_965_a,*,*,*,updateCounter,Counts the number of screen updates. Not used.
+ix,a,field_1092_a,bo,a,field_741_a,byteValue,The byte value for the tag.
+iy,a,field_1368_a,*,*,*,scaleFactor
+iy,b,field_1367_b,*,*,*,scaledWidth
+iy,c,field_1369_c,*,*,*,scaledHeight
+iz,b,field_463_b,br,b,field_4088_b,baseIndexInPNG,The base index in terrain.png corresponding to the fancy version of the leaf texture. This is stored so we can switch the displayed version between fancy and fast graphics (fast is this index + 1).
+ja,a,field_961_a,*,*,*,parentScreen,A reference to the screen object that created this. Used for navigating between screens.
+ja,h,field_964_h,*,*,*,message1,First line of text.
+ja,i,field_963_i,*,*,*,message2,Second line of text.
+ja,j,field_962_j,*,*,*,worldNumber,World number to be deleted.
+jd,a,field_689_a,fw,a,field_446_a,fuse,How long the fuse is
+jf,f,field_1363_f,bv,f,field_1020_f,nextTickEntryID,The id number for the next tick entry
+jf,a,field_1361_a,bv,a,field_1018_a,xCoord,X position this tick is occuring at
+jf,b,field_1360_b,bv,b,field_1017_b,yCoord,Y position this tick is occuring at
+jf,c,field_1366_c,bv,c,field_1023_c,zCoord,Z position this tick is occuring at
+jf,e,field_1364_e,bv,e,field_1021_e,scheduledTime,Time this tick is scheduled to occur at
+jf,d,field_1365_d,bv,d,field_1022_d,blockID,blockID of the scheduled tick (ensures when the tick occurs its still for this block)
+jf,g,field_1362_g,bv,g,field_1019_g,tickEntryID,The id of the tick entry
+jh,a,field_1356_a,*,*,*,mc,A reference to the Minecraft object.
+ji,a,field_515_a,cb,a,field_139_a,xPosition,X coordinate of spawn.
+ji,b,field_514_b,cb,b,field_138_b,yPosition,Y coordinate of spawn.
+ji,c,field_516_c,cb,c,field_140_c,zPosition,Z coordinate of spawn.
+jj,b,field_1347_b,*,*,*,worldObj,Reference to the World object.
+jl,a,field_509_a,cf,a,field_131_a,entityId,ID of the entity.
+jl,b,field_508_b,cf,b,field_130_b,xPosition,X position of the entity.
+jl,c,field_513_c,cf,c,field_135_c,yPosition,Y position of the entity.
+jl,d,field_512_d,cf,d,field_134_d,zPosition,Z position of the entity.
+jl,e,field_511_e,cf,e,field_133_e,yaw,Yaw of the entity.
+jl,f,field_510_f,cf,f,field_132_f,pitch,Pitch of the entity.
+jq,a,field_958_a,*,*,*,parentScreen,A reference to the screen object that created this. Used for navigating between screens.
+jq,h,field_960_h,*,*,*,screenTitle,The title string that is displayed in the top-center of the screen.
+jq,i,field_959_i,*,*,*,selected,True if a world has been selected.
+ju,a,field_507_a,ct,a,field_116_a,entityId,ID of the entity to be destroyed on the client.
+k,a,field_1686_a,hu,a,field_773_a,unused,Not used in the current implementation
+ka,a,field_505_a,da,a,field_103_a,xPosition,The X position of the chunk.
+ka,b,field_504_b,da,b,field_102_b,yPosition,The Y position of the chunk.
+ka,c,field_506_c,da,c,field_104_c,mode,If mode is true (1) the client will initialise the chunk. If it is false (0) the client will unload the chunk.
+kc,d,field_1313_d,*,*,*,mainMenu,A reference to the GuiMainMenu.
+kd,d,field_1309_d,*,*,*,buffer
+kg,a,field_688_a,di,a,field_442_a,arrowShake,Seems to be some sort of timer for animating an arrow.
+kg,b,field_687_b,di,b,field_440_b,xTile,The x coordinate of the tile where the arrow is.
+kg,c,field_686_c,di,ad,field_445_ad,yTile,The y coordinate of the tile where the arrow is.
+kg,d,field_685_d,di,ae,field_444_ae,zTile,The z coordinate of the tile where the arrow is.
+kg,e,field_684_e,di,af,field_443_af,inTile,The block type where the arrow is.
+kg,f,field_683_f,di,ag,field_441_ag,inGround,"Whether the arrow is in the ground or not. Stored in NBT as a byte, but a boolean in Java."
+kh,aQ,field_630_aQ,dj,R,field_284_R,rand,RNG.
+kh,aH,field_639_aH,dj,I,field_293_I,fallDistance
+kh,ag,field_615_ag,dj,h,field_326_h,worldObj,Reference to the World object.
+kh,ak,field_611_ak,dj,l,field_322_l,posX,Entity position X
+kh,al,field_610_al,dj,m,field_321_m,posY,Entity position Y
+kh,am,field_609_am,dj,n,field_320_n,posZ,Entity position Z
+kh,an,field_608_an,dj,o,field_319_o,motionX,Entity motion X
+kh,ao,field_607_ao,dj,p,field_318_p,motionY,Entity motion Y
+kh,ap,field_606_ap,dj,q,field_317_q,motionZ,Entity motion Z
+kh,aq,field_605_aq,dj,r,field_316_r,rotationYaw,Entity rotation Yaw
+kh,ar,field_604_ar,dj,s,field_315_s,rotationPitch,Entity rotation Pitch
+kh,aT,field_627_aT,dj,U,field_281_U,fire
+kh,au,field_601_au,dj,v,field_312_v,boundingBox,Axis aligned bounding box.
+kh,av,field_600_av,dj,w,field_311_w,onGround
+kh,aX,field_623_aX,dj,Y,field_277_Y,air
+kh,aG,field_640_aG,dj,H,field_294_H,entityWalks,If this is True as this entity moves it will play footstep sounds and trigger onEntityWalking events
+kh,aD,field_643_aD,dj,E,field_298_E,height,How high this entity is considered to be
+kh,aC,field_644_aC,dj,D,field_300_D,width,How wide this entity is considered to be
+ki,a,field_1091_a,dm,a,field_737_a,tagList,The array list containing the tags encapsulated in this list.
+ki,b,field_1090_b,dm,b,field_736_b,tagType,The type byte for the tags in the list - they must all be of the same type.
+kj,a,field_500_a,dl,a,field_98_a,entityId,Entity ID of the object.
+kj,b,field_499_b,dl,b,field_97_b,xPosition,The X position of the object.
+kj,c,field_503_c,dl,c,field_101_c,yPosition,The Y position of the object.
+kj,d,field_502_d,dl,d,field_100_d,zPosition,The Z position of the object.
+kj,e,field_501_e,dl,e,field_99_e,type,The type of object.
+ko,a,field_1297_a,*,*,*,message,The chat message.
+ko,b,field_1296_b,*,*,*,updateCounter,Counts the number of screen updates.
+kr,a,field_1089_a,dt,a,field_735_a,doubleValue,The double value for the tag.
+kx,g,field_1227_g,*,*,*,worldObj,Reference to the World object.
+kx,k,field_1223_k,*,*,*,options,Reference to the GameSettings object.
+kx,o,field_6501_o,*,*,*,entityRenderMap,A map of entity classes and the associated renderer.
+kz,a,field_1216_a,*,*,*,location,The URL of the image to download.
+kz,b,field_1215_b,*,*,*,buffer,The image buffer to use.
+kz,c,field_1217_c,*,*,*,imageData,The image data.
+ld,a,field_497_a,en,a,field_95_a,id,The item/block ID.
+ld,b,field_496_b,en,b,field_94_b,count,How many to add to the inventory.
+ld,c,field_498_c,en,c,field_96_c,durability,"The durability of the item, not to be used with blocks."
+lg,a,field_316_a,er,a,field_261_a,recordName,The name of the record.
+li,a,field_492_a,et,a,field_90_a,xPosition,Block X position.
+li,b,field_491_b,et,b,field_89_b,yPosition,Block Y position.
+li,c,field_495_c,et,c,field_93_c,zPosition,Block Z position.
+li,d,field_494_d,et,d,field_92_d,type,The new block type for the block.
+li,e,field_493_e,et,e,field_91_e,metadata,Metadata of the block.
+,,field_923_k,*,*,*,zLevel
+lo,l,field_976_l,*,*,*,xSize_lo,"x size of the inventory window in pixels. Defined as float, passed as int"
+lo,m,field_975_m,*,*,*,ySize_lo,"y size of the inventory window in pixels. Defined as float, passed as int."
+lq,a,field_485_a,ex,a,field_83_a,entityId,The ID of this entity.
+lq,b,field_484_b,ex,b,field_82_b,xPosition,The X axis relative movement.
+lq,c,field_490_c,ex,c,field_88_c,yPosition,The Y axis relative movement.
+lq,d,field_489_d,ex,d,field_87_d,zPosition,The Z axis relative movement.
+lq,e,field_488_e,ex,e,field_86_e,yaw,The X axis rotation.
+lq,f,field_487_f,ex,f,field_85_f,pitch,The Y axis rotation.
+lq,g,field_486_g,ex,g,field_84_g,rotating,Boolean set to true if the entity is rotating.
+ls,a,field_1088_a,fb,a,field_734_a,shortValue,The short value for the tag.
+lu,e,field_929_e,*,*,*,chatMessageList,A list with all the chat messages in.
+lu,f,field_928_f,*,*,*,rand,RNG.
+lu,g,field_927_g,*,*,*,mc,Reference to the Minecraft object.
+lu,h,field_926_h,*,*,*,updateCounter,Counts the number of screen updates.
+lw,a,field_954_a,*,*,*,screenTitle,The title string that is displayed in the top-center of the screen.
+lw,h,field_957_h,*,*,*,parentScreen,A reference to the screen object that created this. Used for navigating between screens.
+lw,i,field_956_i,*,*,*,options,Reference to the GameSettings object.
+lw,j,field_955_j,*,*,*,buttonId,The ID of the  button that has been pressed.
+ly,A,field_403_A,ff,A,field_4064_A,bedrock
+ly,aA,field_447_aA,ff,aA,field_644_aA,crops
+ly,aB,field_446_aB,ff,aB,field_643_aB,tilledField
+ly,aC,field_445_aC,ff,aC,field_642_aC,stoneOvenIdle
+ly,ac,field_419_ac,ff,ac,field_616_ac,cloth
+ly,aD,field_444_aD,ff,aD,field_641_aD,stoneOvenActive
+ly,ae,field_417_ae,ff,ae,field_4072_ae,plantYellow,Was dandelion
+ly,aE,field_443_aE,ff,aE,field_4084_aE,signPost
+ly,af,field_416_af,ff,af,field_4071_af,plantRed,Was rose
+ly,aF,field_442_aF,ff,aF,field_639_aF,doorWood
+ly,ag,field_415_ag,ff,ag,field_4070_ag,mushroomBrown,Was mushroomKingBolete
+ly,aG,field_441_aG,ff,aG,field_638_aG,ladder
+ly,ah,field_414_ah,ff,ah,field_4069_ah,mushroomRed,Was mushroomFlyAgaric
+ly,aH,field_440_aH,ff,aH,field_637_aH,minecartTrack
+ly,ai,field_413_ai,ff,ai,field_4068_ai,blockGold
+ly,aI,field_4069_aI,ff,aI,field_6083_aH,stairCompactCobblestone
+ly,aj,field_412_aj,ff,aj,field_4067_aj,blockSteel
+ly,aJ,field_4068_aJ,ff,aJ,field_4082_aJ,signWall
+ly,ak,field_411_ak,ff,ak,field_608_ak,stairDouble
+ly,aK,field_4067_aK,ff,aK,field_6082_aJ,lever
+ly,al,field_410_al,ff,al,field_607_al,stairSingle
+ly,aL,field_4066_aL,ff,aL,field_6081_aK,pressurePlateStone
+ly,am,field_409_am,ff,am,field_6075_al,brick
+ly,aM,field_435_aM,ff,aM,field_632_aM,doorSteel
+ly,an,field_408_an,ff,an,field_605_an,tnt
+ly,aN,field_4065_aN,ff,aN,field_6080_aM,pressurePlatePlanks
+ly,ao,field_407_ao,ff,ao,field_604_ao,bookShelf
+ly,aO,field_433_aO,ff,aO,field_630_aO,oreRedstone
+ly,ap,field_406_ap,ff,ap,field_603_ap,cobblestoneMossy
+ly,aP,field_432_aP,ff,aP,field_629_aP,oreRedstoneGlowing
+ly,aq,field_405_aq,ff,aq,field_602_aq,obsidian
+ly,aQ,field_431_aQ,ff,aQ,field_628_aQ,torchRedstoneIdle
+ly,ar,field_404_ar,ff,ar,field_6074_aq,torchWood
+ly,aR,field_430_aR,ff,aR,field_627_aR,torchRedstoneActive
+ly,as,field_402_as,ff,as,field_599_as,fire
+ly,aS,field_4064_aS,ff,aS,field_6079_aR,button
+ly,at,field_400_at,ff,at,field_597_at,mobSpawner
+ly,aT,field_428_aT,ff,aT,field_625_aT,snow
+ly,au,field_4059_au,ff,au,field_6073_at,stairCompactPlanks
+ly,aU,field_427_aU,ff,aU,field_4077_aU,ice
+ly,av,field_396_av,ff,av,field_593_av,crate
+ly,aV,field_426_aV,ff,aV,field_4076_aV,blockSnow
+ly,aw,field_394_aw,ff,aw,field_591_aw,redstoneWire
+ly,aW,field_425_aW,ff,aW,field_622_aW,cactus
+ly,ax,field_391_ax,ff,ax,field_588_ax,oreDiamond
+ly,aX,field_424_aX,ff,aX,field_621_aX,blockClay
+ly,ay,field_389_ay,ff,ay,field_4060_ay,blockDiamond
+ly,aY,field_423_aY,ff,aY,field_620_aY,reed
+ly,az,field_387_az,ff,az,field_6072_ay,workbench
+ly,aZ,field_422_aZ,ff,aZ,field_619_aZ,jukebox
+ly,B,field_401_B,ff,B,field_598_B,waterStill
+ly,ba,field_4057_ba,ff,ba,field_6078_aZ,fence
+ly,bb,field_378_bb,ff,bb,field_575_bb,blockIndexInTexture,"The index of the texture to be displayed for this block. May vary based on graphics settings. Mostly seems to come from terrain.png, and the index is 0-based (grass is 0)."
+ly,bc,field_376_bc,ff,bc,field_573_bc,blockID,ID of the block.
+ly,be,field_372_be,ff,be,field_569_be,blockHardness,Indicates how many hits with which tool it takes to break a block.
+ly,bl,field_358_bl,ff,bl,field_555_bl,stepSound,Sound of stepping on the block
+ly,bn,field_356_bn,ff,bn,field_553_bn,blockMaterial,Block material definition.
+ly,C,field_399_C,ff,C,field_596_C,waterMoving
+ly,D,field_397_D,ff,D,field_594_D,lavaStill
+ly,e,field_354_e,ff,e,field_551_e,soundPowderFootstep
+ly,E,field_395_E,ff,E,field_592_E,lavaMoving
+ly,f,field_6340_e,ff,f,field_6055_e,soundWoodFootstep
+ly,F,field_393_F,ff,F,field_590_F,sand
+ly,g,field_6339_f,ff,g,field_6054_f,soundGravelFootstep
+ly,G,field_392_G,ff,G,field_4062_G,gravel
+ly,h,field_6338_g,ff,h,field_6053_g,soundGrassFootstep
+ly,H,field_390_H,ff,H,field_4061_H,oreGold
+ly,i,field_6337_h,ff,i,field_6052_h,soundStoneFootstep
+ly,I,field_388_I,ff,I,field_4059_I,oreIron
+ly,j,field_6336_i,ff,j,field_6051_i,soundMetalFootstep
+ly,J,field_386_J,ff,J,field_583_J,oreCoal
+ly,k,field_6335_j,ff,k,field_6050_j,soundGlassFootstep
+ly,K,field_385_K,ff,K,field_582_K,wood
+ly,l,field_6334_k,ff,l,field_6049_k,soundClothFootstep
+ly,L,field_384_L,ff,L,field_581_L,leaves
+ly,m,field_6333_l,ff,m,field_6048_l,soundSandFootstep
+ly,M,field_383_M,ff,M,field_6071_L,sponge
+ly,n,field_345_n,ff,n,field_542_n,blocksList,List of ly/ff (BlockType) containing the already registered blocks.
+ly,N,field_382_N,ff,N,field_4056_N,glass
+ly,u,field_338_u,ff,u,field_535_u,stone
+ly,v,field_337_v,ff,v,field_534_v,grass
+ly,w,field_336_w,ff,w,field_533_w,dirt
+ly,x,field_335_x,ff,x,field_532_x,cobblestone
+ly,y,field_334_y,ff,y,field_531_y,planks
+ly,z,field_333_z,ff,z,field_6047_y,sapling
+ly,t,field_339_t,ff,t,field_536_t,lightValue,Amount of light emitted
+ly,r,field_341_r,ff,r,field_538_r,lightOpacity,How much light is subtracted for going through this block
+ly,q,field_342_q,ff,q,field_539_q,isBlockContainer,Can this block be type casted to a BlockContainer (list indexed on blockIDs)
+ly,o,field_344_o,ff,o,field_541_o,tickOnLoad,List of whether this blockType will run its tick on loading or not
+ly,bo,field_355_bo,ff,bo,field_552_bo,slipperiness,Determines how much velocity is maintained while moving on top of this block
+ly,bf,        field_370_bf,ff,bf,field_567_bf,minX,minimum X for the block bounds (local coordinates)
+ly,bg,field_368_bg,ff,bg,field_565_bg,minY,minimum Y for the block bounds (local coordinates)
+ly,bh,field_366_bh,ff,bh,field_563_bh,minZ,minimum Z for the block bounds (local coordinates)
+ly,bi,field_364_bi,ff,bi,field_561_bi,maxX,maximum X for the block bounds (local coordinates)
+ly,bj,field_362_bj,ff,bj,field_559_bj,maxY,maximum Y for the block bounds (local coordinates)
+ly,bk,field_360_bk,ff,bk,field_557_bk,maxZ,maximum Z for the block bounds (local coordinates)
+lz,d,field_888_d,*,*,*,worldObj,Reference to the World object.
+m,a,field_571_a,r,a,field_118_a,type,The type of inventory being sent. -1 for main inventory. -2 for equipped armour. -3 for crafting slots.
+m,b,field_570_b,r,b,field_117_b,stacks,Array of item stacks.
+mf,a,field_1167_a,fr,a,field_927_a,typeOfHit,"What type of ray trace hit was this? 0 = block, 1 = entity"
+mf,b,field_1166_b,fr,b,field_926_b,blockX,x coordinate of the block ray traced against
+mf,c,field_1172_c,fr,c,field_932_c,blockY,y coordinate of the block ray traced against
+mf,d,field_1171_d,fr,d,field_931_d,blockZ,z coordinate of the block ray traced against
+mf,e,field_1170_e,fr,e,field_930_e,sideHit,Which side was hit. If its -1 then it went the full length of the ray trace.
+mf,f,field_1169_f,fr,f,field_929_f,hitVec,The vector position of the hit
+mf,g,field_1168_g,fr,g,field_928_g,entityHit,The hit entity
+mk,b,field_1159_b,gd,b,field_887_b,worldObj,Reference to the World object.
+mm,c,field_1122_c,*,*,*,guiHandler,Instance of ee used to handle all gui interactions.
+mm,e,field_1121_e,*,*,*,xPos,Left border of the slot in pixel from the left border of the window.
+mm,f,field_1120_f,*,*,*,yPos,Upper border of the slot in pixel from the upper border of the window.
+mn,a,field_952_a,*,*,*,clientHandler,A reference to the NetClientHandler.
+mn,h,field_953_h,*,*,*,cancelled,True if the connection attempt has been cancelled.
+mo,i,field_944_i,*,*,*,sliderValue,The value of this slider control.
+mo,j,field_943_j,*,*,*,dragging,Is this slider control being dragged.
+mo,l,field_942_l,*,*,*,idFloat,Additional ID for this slider control.
+mu,a,field_1109_a,gt,a,field_844_a,data,Byte array of data stored in this holder. Possibly a light map or some chunk data. Data is accessed in 4-bit pieces.
+mv,a,field_759_a,gu,a,field_397_a,rideable,"Set to true if this pig has a saddle, false otherwise."
+mw,a,field_818_a,*,*,*,stackResult,A list of one item containing the result of the crafting formula
+mx,a,field_1106_a,*,*,*,hashEntry,The hash code of this entry
+mx,b,field_1105_b,*,*,*,valueEntry,The object stored in this entry
+mx,c,field_1108_c,*,*,*,nextEntry,The next entry in this slot
+mx,d,field_1107_d,*,*,*,slotHash,The id of the hash slot computed from the hash
+mz,i,field_754_i,*,*,*,timeUntilNextEgg,The time until the next egg is spawned.
+n,a,field_1620_a,*,*,*,craftMatrix,The crafting matrix inventory.
+n,b,field_1619_b,*,*,*,craftResult,The crafting result.
+na,a,field_479_a,hh,a,field_48_a,xPosition,Chunk X position.
+na,b,field_478_b,hh,b,field_47_b,zPosition,Chunk Z position.
+na,c,field_483_c,hh,c,field_52_c,coordinateArray,The coordinates of the blocks to change.
+na,d,field_482_d,hh,d,field_51_d,typeArray,The type for each block change.
+na,e,field_481_e,hh,e,field_50_e,metadataArray,The metadata for each block changed.
+na,f,field_480_f,hh,f,field_49_f,size,The size of the arrays.
+nc,a,field_1102_a,*,*,*,mc,A reference to the Minecraft object.
+nc,b,field_1101_b,*,*,*,hostName,A reference to the Minecraft object.
+nc,c,field_1104_c,*,*,*,port,A reference to the Minecraft object.
+nc,d,field_1103_d,*,*,*,connectingGui,A reference to the GuiConnecting object.
+ne,a,field_1098_a,hj,a,field_732_a,stringValue,The string value for the tag (cannot be empty).
+net/minecraft/client/Minecraft,a,field_184_a,*,*,*,fullscreenMode,"Set to true if fullscreen mode is active, false otherwise."
+net/minecraft/client/Minecraft,c,field_6326_c,*,*,*,displayWidth
+net/minecraft/client/Minecraft,d,field_6325_d,*,*,*,displayHeight
+net/minecraft/client/Minecraft,e,field_6324_e,*,*,*,worldObj,Reference to the World object.
+net/minecraft/client/Minecraft,k,field_6318_k,*,*,*,mcCanvas,The canvas to which everything is rendered.
+net/minecraft/client/Minecraft,J,field_149_J,*,*,*,enableRain,"If true it will be raining in the world (kind of, effect is not finished)"
+net/minecraft/client/Minecraft,p,field_169_p,*,*,*,currentScreen,Reference to the current screen being displayed.
+net/minecraft/client/Minecraft,y,field_6304_y,*,*,*,options,Reference to the game options.
+net/minecraft/client/Minecraft,Z,field_6275_Z,*,*,*,dataFolder,"contains data folder (File) (normally ""%APPDATA%\.minecraft"")"
+net/minecraft/client/Minecraft,A,field_6301_A,*,*,*,sndManager
+net/minecraft/client/Minecraft,z,field_6303_z,*,*,*,mcApplet,Applet instance.
+net/minecraft/client/Minecraft,B,field_6299_B,*,*,*,mouseHelper,Mouse helper instance.
+net/minecraft/client/Minecraft,F,field_6293_H,*,*,*,running,Set to true to keep the game loop running. Set to false by shutdown() to allow the game loop to exit cleanly.
+net/minecraft/client/Minecraft,N,field_6284_Q,*,*,*,downloadResourcesThread,Reference to the download resources thread.
+net/minecraft/client/MinecraftApplet,a,field_6235_a,*,*,*,mcCanvas,Reference to the applet canvas.
+net/minecraft/client/MinecraftApplet,b,field_6234_b,*,*,*,mc,Reference to the Minecraft object.
+net/minecraft/client/MinecraftApplet,c,field_6236_c,*,*,*,mcThread,Reference to the Minecraft main thread.
+nh,a,field_1086_a,hl,a,field_829_a,netManager,Reference to the NetworkManager object.
+ni,a,field_1085_a,hn,a,field_827_a,netManager,Reference to the NetworkManager object.
+nk,a,field_1063_a,ho,a,field_826_a,netManager,Reference to the NetworkManager object.
+nn,a,field_4157_a,hr,a,field_4249_a,liquidBlockId,The ID of the liquid block used in this liquid generator.
+nv,a,field_999_a,*,*,*,screenTitle,The title string that is displayed in the top-center of the screen.
+nv,h,field_1002_h,*,*,*,entitySign,Reference to the sign object.
+nv,i,field_4189_i,*,*,*,updateCounter,Counts the number of screen updates.
+nv,j,field_1000_j,*,*,*,editLine,The number of the line that is being edited.
+nw,j,field_913_j,hy,j,field_706_j,rand,RNG.
+nw,p,field_907_p,hy,p,field_700_p,worldObj,Reference to the World object.
+nw,v,field_4179_v,hy,v,field_4223_v,biomesForGeneration,The biomes that are used to generate the chunk
+ny,a,field_474_a,ib,a,field_43_a,xPosition,Entity X position.
+ny,b,field_473_b,ib,b,field_42_b,yPosition,Entity Y position.
+ny,c,field_477_c,ib,c,field_46_c,zPosition,Entity Z position.
+ny,d,field_476_d,ib,d,field_45_d,entityData,The entity data. This is a compressed (GZipped) NBT file.
+ny,e,field_475_e,ib,e,field_44_e,entityNBT,An NBT representation of the entity.
+ob,a,field_826_a,ig,e,field_485_e,signText,An array of four strings storing the lines of text on the sign.
+ob,b,field_825_b,ig,f,field_484_f,lineBeingEdited,"The index of the line currently being edited. Only used on client side, but defined on both. Note this is only really used when the > < are going to be visible."
+oc,d,field_861_d,ih,ae,field_476_ae,minecartType,"The type of minecart, 2 for powered, 1 for storage."
+oc,e,field_860_e,ih,af,field_475_af,fuel,Minecart fuel amount.  (for powered minecarts)
+oc,f,field_859_f,ih,ag,field_473_ag,pushX,Minecart push in x direction. (for powered minecarts)
+oc,g,field_858_g,ih,ah,field_471_ah,pushZ,Minecart push in z direction.  (for powered minecarts)
+oc,h,field_857_h,ih,ai,field_470_ai,cargoItems,Array of item stacks stored in minecart (for storage minecarts).
+of,a,field_591_a,*,*,*,sndSystem,A reference to the sound system.
+of,b,field_590_b,*,*,*,soundPoolSounds,Sound pool containing sounds.
+of,c,field_589_c,*,*,*,soundPoolStreaming,Sound pool containing streaming audio.
+of,d,field_588_d,*,*,*,soundPoolMusic,Sound pool containing music.
+of,f,field_586_f,*,*,*,options,A reference to the game settings.
+of,g,field_585_g,*,*,*,loaded,Set to true when the SoundManager has been initialised.
+of,h,field_584_h,*,*,*,rand,RNG.
+og,b,field_448_b,il,b,field_645_b,abilityToCatchFire,This is an array indexed by block ID the larger the number in the array the more likely a block type will catch fires
+og,a,field_449_a,il,a,field_646_a,chanceToEncourageFire,The chance this block will encourage nearby blocks to catch on fire
+oh,a,field_582_a,io,a,field_41_a,reason,Displayed to the client when the connection terminates.
+oj,a,field_332_a,ix,a,field_275_a,healAmount,The amount this food item heals the player.
+om,d,field_4219_d,ie,d,field_4305_d,lightBrightnessTable,Light to brightness conversion table
+v,a,field_1188_a,af,a,field_935_a,xCoord
+v,b,field_1187_b,af,b,field_934_b,yCoord
+v,c,field_1190_c,af,c,field_937_c,zCoord
+v,d,field_1189_d,af,d,field_936_d,permutations
+*,*,*,ai,a,field_1060_a,command,The command string.
+*,*,*,ai,b,field_1059_b,commandListener,The CommandListener object associated with this command.
+*,*,*,bm,a,field_1033_a,mcServer,Reference to the MinecraftServer object.
+*,*,*,bn,a,field_1032_a,mcServer,Reference to the MinecraftServer object.
+*,*,*,cl,a,field_1003_a,logger,Reference to the logger.
+*,*,*,cl,b,field_1002_b,worldFile,The world folder where all the world data is stored.
+*,*,*,cq,a,field_995_a,logger,Reference to the logger.
+*,*,*,cq,b,field_994_b,serverProperties,The server properties object.
+*,*,*,cq,c,field_996_c,serverPropertiesFile,The server properties file.
+*,*,*,cu,a,field_986_a,mcServer,Reference to the MinecraftServer object.
+*,*,*,dc,a,field_974_a,logger,Reference to the logger.
+*,*,*,dc,c,field_980_c,mcServer,Reference to the MinecraftServer object.
+*,*,*,dd,a,field_972_a,loginPacket,The login packet to be verified.
+*,*,*,dd,b,field_971_b,loginHandler,The login handler that spawned this thread.
+*,*,*,ea,b,field_419_b,mcServer,Reference to the MinecraftServer object.
+*,*,*,ea,aq,field_409_aq,username,Reference to the MinecraftServer object.
+*,*,*,eb,a,field_953_a,mcServer,Reference to the MinecraftServer object.
+*,*,*,ew,a,field_9_a,logger,The Minecraft logger.
+*,*,*,ew,b,field_8_b,netManager,The underlying network manager for this login handler.
+*,*,*,ew,c,field_7_c,finishedProcessing,Returns if the login handler is finished and can be removed. It is set to true on either error or successful login.
+*,*,*,ew,d,field_6_d,rand,The Random object used to generate serverId hex strings.
+*,*,*,ew,e,field_5_e,mcServer,Reference to the MinecraftServer object.
+*,*,*,ew,f,field_4_f,loginCounter,"Used as a timeout counter, when it reaches 100 the user is kicked for taking too long to log in."
+*,*,*,ew,g,field_3_g,username,The username for this login.
+*,*,*,ew,h,field_2_h,loginPacket,The current login packet.
+*,*,*,ew,i,field_1_i,serverId,The hex string that corresponds to the random number generated as a server ID. Used in online mode.
+*,*,*,fk,a,field_933_a,logger,Reference to the logger.
+*,*,*,fo,a,field_22_a,logger,Reference to the logger.
+*,*,*,fo,b,field_21_b,mcServer,Reference to the MinecraftServer object.
+*,*,*,ft,a,field_925_a,logger,Reference to the logger.
+*,*,*,ft,b,field_924_b,playerEntities,A list of player entities that exist on this server.
+*,*,*,ft,c,field_923_c,mcServer,Reference to the MinecraftServer object.
+*,*,*,ft,d,field_922_d,playerManagerObj,Reference to the PlayerManager object.
+*,*,*,ft,e,field_921_e,maxPlayers,The maximum number of players allowed on this server.
+*,*,*,ft,f,field_920_f,bannedPlayers,A set containing the banned players.
+*,*,*,ft,g,field_919_g,bannedIPs,A set containing the banned IPs.
+*,*,*,ft,h,field_918_h,ops,A set containing the OPs.
+*,*,*,ft,i,field_917_i,bannedPlayersFile,The file that contains the banned players.
+*,*,*,ft,j,field_916_j,bannedIPsFile,The file that contains the banned IPs.
+*,*,*,ft,k,field_915_k,opsFile,The file that contains the OPs.
+*,*,*,ft,l,field_914_l,playerNBTManagerObj,Reference to the PlayerNBTManager object.
+*,*,*,fw,c,field_913_c,mcServer,Reference to the MinecraftServer object.
+*,*,*,gb,a,field_894_a,outputHandler,Reference to the GuiLogOutputHandler.
+*,*,*,gx,a,field_839_a,dateFormat,The date format to use in the console log.
+*,*,*,hg,d,field_832_d,mcServer,Reference to the MinecraftServer object.
+*,*,*,id,a,field_20_a,logger,The logging system.
+*,*,*,id,b,field_19_b,netManager,The underlying network manager for this server handler.
+*,*,*,id,d,field_17_d,mcServer,Reference to the MinecraftServer object.
+*,*,*,id,e,field_16_e,playerEntity,Reference to the EntityPlayerMP object.
+*,*,*,it,a,field_527_a,statsComponent
+*,*,*,h,a,field_955_a,mcServer,Reference to the MinecraftServer object.
+*,*,*,h,b,field_954_b,updateCounter,Counts the number of updates.
+*,*,*,hm,a,field_828_a,netManager,"This was actually an inner class of NetworkManager, so this field is the reference to ""this"" NetworkManager."
+*,*,*,hx,a,field_767_a,memoryUse,An array containing the columns that make up the memory use graph.
+*,*,*,hx,b,field_766_b,updateCounter,Counts the number of updates. Used as the index into the memoryUse array to display the latest value.
+*,*,*,hx,c,field_768_c,displayStrings,An array containing the strings displayed in this stats component.
+*,*,*,net/minecraft/server/MinecraftServer,a,field_6038_a,logger,The logging system.
+*,*,*,net/minecraft/server/MinecraftServer,d,field_6035_d,propertyManagerObj,Reference to the PropertyManager object.
+*,*,*,net/minecraft/server/MinecraftServer,e,field_6034_e,worldMngr,The server world manager.
+*,*,*,net/minecraft/server/MinecraftServer,l,field_6027_l,onlineMode,True if the server is in online mode.
+*,*,*,net/minecraft/server/MinecraftServer,o,field_6023_p,commands,A list containing all the commands entered.
+,,,,,field_6026_m,noAnimals,True if the server has animals turned off
+*,*,*,t,a,field_997_a,mcServer,Reference to the MinecraftServer object.
+*,*,*,v,a,field_993_a,textField,Text field.
+*,*,*,v,b,field_992_b,mcServerGui,Reference to the ServerGui object.
+*,*,*,w,a,field_987_a,mcServerGui,Reference to the ServerGui object.
+,,field_889_c,,,,unusedChunkList,"Only emptied, never added to."
+,,field_6544_a,,,,eligibleChunksForSpawning,The 17x17 area around the player where mobs can spawn
+,,field_4210_n,,,,spawnY,Y-location of spawnpoint
+,,field_4277_d,,,,maxNumberOfEntityType,"For animals/mobs, the maximum number of mobs of that type that will spawn."
+,,field_4209_q,,,,worldProvider,The WorldProvider instance that World uses.
+,,field_6324_e,,,,theWorld,The World instance that Minecraft uses.
+,,field_1032_s,,,,worldAccesses,The list of World accesses currently in use.
+,,field_4055_bb,,,field_4052_bb,pumpkin,A pumpkin
+,,field_4053_bc,,,field_4050_bc,bloodStone
+,,field_4051_bd,,,field_4048_bd,slowSand
+,,field_4049_be,,,field_6065_bd,lightStone
+,,field_4047_bf,,,field_4044_bf,portal,The purple teleport blocks inside the obsidian circle
+,,field_4045_bg,,,field_6062_bf,pumpkinLantern,The Jack-O-Lantern
+,,field_4023_aQ,,,field_4195_aQ,pocketSundial
+,,field_4022_aR,,,field_4194_aR,lightStoneDust
+,,field_4021_aS,,,field_4193_aS,fishRaw
+,,field_4020_aT,,,field_4192_aT,fishCooked
+Render,,field_191_a,,,,renderManager
+Render,,field_193_d,,,,unusedModelBiped
+Render,,field_192_e,,,,unusedRenderBlocks
+RenderManager,,field_1229_e,,,,renderEngine
+RenderItem,,field_201_d,,,,renderBlocks
+RenderItem,,field_200_e,,,,random,The RNG used in RenderItem (for bobbing itemstacks on the ground)
+GuiIngame,,field_930_d,,,,itemRenderer
+Entity,,field_622_aY,,,,skinUrl,The URL the skin of the player is loaded from.
+Minecraft,,field_6322_g,,,,thePlayer,The player who's actually in control of this game.
+EntityPlayer,,field_4129_m,,,,dimension,"Which dimension the player is in (-1 = the Nether, 0 = normal world)"
+Entity,,field_646_aA,,,,isDead,"gets set by setEntityDead, so this must be the flag whether an Entity is dead (inactive may be better term)"
+WorldChunkManager,,field_4198_a,,,field_4259_a,temperature,Temperature that has been loaded into the WorldChunkManager
+WorldChunkManager,,field_4197_b,,,field_4258_b,humidity,How humid the area thats has been loaded
+Minecraft,,field_6315_n,,,,renderEngine
+Minecraft,,field_6313_p,,,,currentScreen
+GuiScreen,,field_6451_g,,,,fontRenderer
+GuiScreen,,field_946_a,,,,selectedButton,the button that was just pressed.
+Minecraft,,field_6304_y,,,,gameSettings,The game settings that currently hold effect.
+Minecraft,,field_6275_Z,,,,minecraftDir,The working dir (OS specific) for minecraft
+GuiMainMenu,,field_6462_l,,,,splashText,The splash message.
+GuiMainMenu,,field_4187_a,,,,minecraftLogo,The minecraft logo (represented by spaces and asterisks)
+GuiMainMenu,,field_6463_h,,,,rand,The RNG used by the Main Menu Screen
+WorldClient,,field_1052_A,,,,sendQueue
+ModelRenderer,*,field_1407_d,*,*,*,walkingRangeOfMotion,*
+EntityPlayer,*,field_772_h,*,*,*,swingProgressInt,An integer version of the swing progress. Only used by the player and ranges from 0 to 8 and divided by 8 to be put into swingProgress.
+EntityPlayer,*,field_773_g,*,*,*,isSwinging,Whether player is currently swinging
+Block,*,field_372_be,*,*,*,blockResistance,Indicates the blocks resistance to explosions.
+Block,*,field_374_bd,*,*,*,blockHardness,Indicates how many hits it takes to break a block.
+Entity,*,field_4079_be,*,*,*,isImmuneToFire,Whether or not the entity can be set on fire
+RedstoneUpdateInfo,*,field_1008_b,*,*,*,y,*
+RedstoneUpdateInfo,*,field_1009_a,*,*,*,x,*
+TileEntityRenderer,*,field_1550_e,*,*,*,renderEngine,The RenderEngine instance used by the TileEntityRenderer
+TileEntityRenderer,*,field_1551_d,*,*,*,staticPlayerZ,The player's current Z position (same as playerZ)
+TileEntityRenderer,*,field_1552_c,*,*,*,staticPlayerY,The player's current Y position (same as playerY)
+TileEntityRenderer,*,field_1553_b,*,*,*,staticPlayerX,The player's current X position (same as playerX)
+GuiScreen,*,field_6451_g,*,*,*,fontRenderer,The FontRenderer used by GuiScreen
+Block,*,field_343_p,*,*,*,allowsAttachmentLookup,An array of 256 booleans corresponding to the result of the allowsAttachment() method for each block ID
+TileEntityFurnace,*,field_833_a,*,*,*,furnaceItemStacks,The ItemStacks that hold the items currently being used in the furnace
+TileEntityFurnace,*,field_832_b,*,*,*,furnaceBurnTime,The number of ticks that the furnace will keep burning
+TileEntityFurnace,*,field_835_c,*,*,*,currentItemBurnTime,The number of ticks that a fresh copy of the currently-burning item would keep the furnace burning for
+TileEntityFurnace,*,field_834_d,*,*,*,furnaceCookTime,The number of ticks that the current item has been cooking for
+RenderEngine,*,field_4281_i,*,*,*,clampTexture,Flag set when a texture should not be repeated
+RenderEngine,*,field_4280_j,*,*,*,blurTexture,Flag set when a texture should use blurry resizing
+Timer,*,field_1380_a,*,*,*,ticksPerSecond,The number of timer ticks per second of real time
+TileEntityRenderer,*,field_1543_l,*,*,*,playerZ,The player's Z position in this rendering context
+RedstoneUpdateInfo,*,field_1010_d,*,*,*,updateTime,*
+TileEntityRenderer,*,field_1541_n,*,*,*,fontRenderer,The FontRenderer instance used by the TileEntityRenderer
+TileEntityRenderer,*,field_1546_i,*,*,*,playerPitch,The player's pitch in this rendering context
+TileEntityRenderer,*,field_1545_j,*,*,*,playerX,The player's X position in this rendering context
+TileEntityRenderer,*,field_1544_k,*,*,*,playerY,The player's Y position in this rendering context
+TileEntityRenderer,*,field_1548_g,*,*,*,entityPlayer,A reference to the EntityPlayer viewing this TileEntity
+RedstoneUpdateInfo,*,field_1011_c,*,*,*,z,*
+EntityCreature,*,field_751_f,*,*,*,playerToAttack,The Player this EntityCreature will attack next.
+Chunk,*,field_1538_c,*,*,*,isChunkLoaded,Whether or not this Chunk is currently loaded into the World
+RenderGlobal,*,field_1447_l,*,*,*,renderEngine,The RenderEngine instance used by RenderGlobal
+TileEntityRenderer,*,field_6517_m,*,*,*,specialRendererMap,A mapping of TileEntitySpecialRenderers used for each TileEntity that has one
+ItemTool,*,field_325_aX,*,*,*,blocksEffectiveAgainst,Array of blocks the tool has extra effect against.
+Item,*,field_4015_b,*,*,*,itemRand,The RNG used by the Item subclasses.
+ThreadDownloadImageData,*,field_1708_c,*,*,*,textureName,"The GL texture name associated with this image, or -1 if the texture has not been allocated"
+ThreadDownloadImageData,*,field_1705_b,*,*,*,referenceCount,Number of open references to this ThreadDownloadImageData
+ThreadDownloadImageData,*,field_1707_d,*,*,*,textureSetupComplete,"True if the texture has been allocated and the image copied to the texture.  This is reset if global rendering settings change, so that setupTexture will be called again."
+World,*,field_1039_l,*,*,*,difficultySetting,Option > Difficulty setting (0 - 3)
+Chunk,*,field_1525_p,*,*,*,neverSave,Set to true if this Chunk should never be saved (e.g. in multiplayer)
+Chunk,*,field_1523_r,*,*,*,hasEntities,Whether this Chunk has any Entities and thus requires saving on every tick
+Chunk,*,field_1522_s,*,*,*,lastSaveTime,The time according to World.worldTime when this chunk was last saved
+Chunk,*,field_1529_l,*,*,*,chunkTileEntityMap,A Map of ChunkPositions to TileEntities in this chunk
+ItemBucket,*,field_331_a,*,*,*,isFull,field for checking if the bucket has been filled.
+RenderEngine,*,field_1606_d,*,*,*,singleIntBuffer,An IntBuffer storing 1 int used as scratch space in RenderEngine
+RenderEngine,*,field_1607_c,*,*,*,textureNameToImageMap,A mapping from GL texture names (integers) to BufferedImage instances
+RenderEngine,*,field_1602_h,*,*,*,options,Reference to the GameSettings object
+RenderEngine,*,field_1603_g,*,*,*,urlToImageDataMap,A mapping from image URLs to ThreadDownloadImageData instances
+RenderEngine,*,field_1609_a,*,*,*,useMipmaps,Use mipmaps for all bound textures (unused at present)
+World,*,field_1049_b,*,*,*,loadedTileEntityList,A list of all TileEntities in all currently-loaded chunks
+ModelBiped,*,field_1280_g,*,*,*,bipedLeftLeg,*
+ModelBiped,*,field_1281_f,*,*,*,bipedRightLeg,*
+ModelBiped,*,field_1282_e,*,*,*,bipedLeftArm,*
+ModelBiped,*,field_1283_d,*,*,*,bipedRightArm,*
+ModelBiped,*,field_1286_a,*,*,*,bipedHead,*
+ChunkLoader,*,field_1199_b,*,*,*,createIfNecessary,"If true, ChunkLoader will create the needed directories and file for a chunk. (true for WorldProvider, WorldProviderHell; false for WorldProviderIso)"
+ChunkProviderIso,*,field_900_d,*,*,*,chunkLoader,The IChunkLoader used by ChunkProviderIso.
+WorldClient,*,field_1052_A,*,*,*,sendQueue,The packets that need to be sent to the server.
+EntityList,*,field_1613_c,*,*,*,IDtoClassMapping,provides a mapping between an entityID and an Entity Class
+EntityList,*,field_1612_d,*,*,*,classToIDMapping,provides a mapping between en Entity Class and an entity ID
+EntityList,*,field_1611_a,*,*,*,stringToClassMapping,Provides a mapping between entity classes and a string
+EntityList,*,field_1610_b,*,*,*,classToStringMapping,Provides a mapping between a string and an entity classes
+EntitySkeleton,*,field_4119_a,*,*,*,defaultHeldItem,The ItemStack that any Skeleton holds (a bow).
+TileEntitySignRenderer,*,field_1413_b,*,*,*,signModel,The SignModel instance used by the TileEntitySignRenderer
+TileEntityRenderer,*,field_1554_a,*,*,*,instance,The static instance of TileEntityRenderer
+TileEntitySpecialRenderer,*,field_6509_a,*,*,*,tileEntityRenderer,The TileEntityRenderer instance associated with this TileEntitySpecialRenderer
+Item,*,field_291_aS,*,*,*,shiftedIndex,Item index + 256
+BlockSign,*,field_455_a,*,*,*,signEntityClass,*
+BlockSign,*,field_454_b,*,*,*,isFreestanding,Whether this is a freestanding sign or a wall-mounted sign
+BlockRedstoneWire,*,field_453_a,*,*,*,wiresProvidePower,"When false, power transmission methods do not look at other redstone wires.  Used internally during updateCurrentStrength."
+GuiMainMenu,*,field_6463_h,*,*,*,rand,The RNG used by the Main Menu Screen.
+EntityPigZombie,*,field_4117_a,*,*,*,angerLevel,Above zero if this PigZombie is Angry.
+EntityPigZombie,*,field_4116_b,*,*,*,randomSoundDelay,A random delay until this PigZombie next makes a sound.
+InventoryPlayer,*,field_846_e,*,*,*,draggingItemStack,The ItemStack that is currently being dragged around by the mouse
+World,*,field_4211_j,*,*,*,autosavePeriod,The number of ticks in between automatic chunk saves
+WorldProvider,*,field_4215_b,*,*,*,worldChunkMgr,World chunk manager being used to generate chunks
+WorldProvider,*,field_4216_a,*,*,*,worldObj,world object being used
+EntityPigZombie,*,field_4118_c,*,*,*,defaultHeldItem,"The ItemStack that any PigZombie holds (a gold sword, in fact)."
+Entity,*,field_617_ae,*,*,*,riddenByEntity,The entity that is riding this entity
+Entity,*,field_616_af,*,*,*,ridingEntity,The entity we are currently riding
+GuiScreen,*,field_946_a,*,*,*,selectedButton,The button that was just pressed.
+EntityCreeper,*,field_766_c,*,*,*,fuseTime,The number of cycles for the creeper to wait until exploding
+TileEntityRenderer,*,field_1547_h,*,*,*,playerYaw,The player's yaw in this rendering context
+Entity,*,field_637_aJ,*,*,*,lastTickPosY,"The entity's Y coordinate at the previous tick, used to calculate position during rendering routines"
+Entity,*,field_636_aK,*,*,*,lastTickPosZ,"The entity's Z coordinate at the previous tick, used to calculate position during rendering routines"
+Entity,*,field_638_aI,*,*,*,lastTickPosX,"The entity's X coordinate at the previous tick, used to calculate position during rendering routines"
+ChunkCoordIntPair,*,field_188_b,*,*,*,chunkZPos,The Z position of this Chunk Coordinate Pair
+Minecraft,*,field_6313_p,*,*,*,currentScreen,The GuiScreen that's being displayed at the moment.
+Minecraft,*,field_6315_n,*,*,*,renderEngine,The RenderEngine instance used by Minecraft
+ChunkProviderLoadOrGenerate,*,field_895_e,*,*,*,chunkLoader,The IChunkLoader used by this ChunkProviderLoadOrGenerate.
+ChunkProviderLoadOrGenerate,*,field_890_b,*,*,*,lastQueriedChunkZPos,The last Z position of a chunk that was returned from func_553_b
+World,*,field_1050_a,*,*,*,loadedEntityList,A list of all Entities in all currently-loaded chunks
+RenderManager,*,field_1233_a,*,*,*,instance,The static instance of RenderManager.
+EntityLiving,*,field_718_D,*,*,*,swingProgress,*
+EntityLiving,*,field_719_C,*,*,*,prevSwingProgress,*
+ChunkProviderClient,*,field_886_b,*,*,*,chunkMapping,The mapping between ChunkCoordinates and Chunks that ChunkProviderClient maintains.
+ChunkProviderClient,*,field_887_a,*,*,*,blankChunk,The completely empty chunk used by ChunkProviderClient when field_886_b doesn't contain the requested coordinates.
+ChunkLoader,*,field_1200_a,*,*,*,saveDir,The root directory from where the chunks are saved (this will be the World1-5 dirs)
+GuiMainMenu,*,field_4187_a,*,*,*,minecraftLogo,The Minecraft Logo (represented by spaces and asterisks)
+Timer,*,field_1378_c,*,*,*,renderPartialTicks,"How much time has elapsed since the last tick, in ticks, for use by display rendering routines (range: 0.0 - 1.0).  This field is frozen if the display is paused to eliminate jitter."
+Timer,*,field_1379_b,*,*,*,elapsedTicks,"How many full ticks have turned over since the last call to updateTimer(), capped at 10."
+Timer,*,field_1372_i,*,*,*,timeSyncAdjustment,"A ratio used to sync the high-resolution clock to the system clock, updated once per second"
+Timer,*,field_1373_h,*,*,*,lastSyncHRClock,"The time reported by the high-resolution clock at the last sync, in milliseconds"
+Timer,*,field_1374_g,*,*,*,lastSyncSysClock,"The time reported by the system clock at the last sync, in milliseconds"
+Timer,*,field_1375_f,*,*,*,lastHRTime,"The time reported by the high-resolution clock at the last call of updateTimer(), in seconds"
+Timer,*,field_1376_e,*,*,*,elapsedPartialTicks,"How much time has elapsed since the last tick, in ticks (range: 0.0 - 1.0)."
+Timer,*,field_1377_d,*,*,*,timerSpeed,A multiplier to make the timer (and therefore the game) go faster or slower.  0.5 makes the game run at half-speed.
+EntityCreeper,*,field_765_d,*,*,*,creeperState,"The state of the creeper (-1=Dormant,1=BlowingUp,2=CoolingDown)"
+EntityCreeper,*,field_764_a,*,*,*,timeSinceIgnited,The amount of time since the creeper was close enough to the player to ignite
+EntityCreeper,*,field_763_b,*,*,*,lastActiveTime,"Time when this creeper was last in an active state (Messed up code here, probably causes creeper animation to go weird)"
+ChunkCoordIntPair,*,field_189_a,*,*,*,chunkXPos,The X position of this Chunk Coordinate Pair
+ChunkProviderLoadOrGenerate,*,field_897_c,*,*,*,blankChunk,"A completely empty Chunk, used by ChunkProviderLoadOrGenerate when there's no ChunkProvider."
+ChunkProviderLoadOrGenerate,*,field_896_d,*,*,*,chunkProvider,The IChunkProvider used by this ChunkProviderLoadOrGenerate.
+ChunkProviderLoadOrGenerate,*,field_892_h,*,*,*,lastQueriedChunk,The last Chunk that was returned from func_553_b
+ChunkProviderLoadOrGenerate,*,field_891_a,*,*,*,lastQueriedChunkXPos,The last X position of a chunk that was returned from func_553_b
+*,*,*,Block,*,field_569_be,blockResistance,Indicates the blocks resistance to explosions.
+*,*,*,ItemTool,*,field_265_aX,blocksEffectiveAgainst,Array of blocks the tool has extra effect against.
+*,*,*,Block,*,field_571_bd,blockHardness,Indicates how many hits it takes to break a block.
+
+ModelRenderer,*,field_1406_e,*,*,*,rotateAngleY,"*"
+ModelRenderer,*,field_1407_d,*,*,*,rotateAngleX,"*"
+ModelRenderer,*,field_1404_g,*,*,*,mirror,"*"
+ModelRenderer,*,field_1405_f,*,*,*,rotateAngleZ,"*"
+ModelRenderer,*,field_1408_c,*,*,*,offsetZ,"*"
+ModelRenderer,*,field_1409_b,*,*,*,offsetY,"*"
+Minecraft,*,field_6298_C,*,*,*,texturePackList,"The TexturePackLister used by this instance of Minecraft..."
+Render,*,field_195_d,*,*,*,unusedModelBiped,"*"
+Render,*,field_203_d,*,*,*,unusedRenderBlocks,"*"
+RenderPlayer,*,field_206_i,*,*,*,armorFilenamePrefix,"*"
+RenderBlocks,*,field_1774_c,*,*,*,flipTexture,"Set to true if the texture should be flipped horizontally during render*Face"
+RenderBlocks,*,field_1771_b,*,*,*,overrideBlockTexture,"If set to >=0, all block faces will be rendered using this texture index"
+RenderBlocks,*,field_1772_a,*,*,*,blockAccess,"The IBlockAccess used by this instance of RenderBlocks"
+RenderBlocks,*,field_1773_d,*,*,*,renderAllFaces,"If true, renders all faces on all blocks rather than using the logic in Block.shouldSideBeRendered.  Unused."
+ModelRenderer,*,field_1396_o,*,*,*,displayList,"The GL display list rendered by the Tessellator for this model"
+ModelRenderer,*,field_1397_n,*,*,*,compiled,"*"
+EntityCreature,*,field_749_a,*,*,*,pathToEntity,"*"
+Minecraft,*,field_6286_O,*,*,*,glCapabilities,"Checks OpenGL capabilities (as of 1.2.3_04 effectively unused)."
+Minecraft,*,field_6283_R,*,*,*,ticksRan,"Number of ticks ran since the program was started."
+Block,*,field_343_p,*,*,*,opaqueCubeLookup,"An array of 256 booleans corresponding to the result of the isOpaqueCube() method for each block ID"
+EntityCreature,*,field_750_g,*,*,*,hasAttacked,"returns true if a creature has attacked recently only used for creepers and skeletons"
+TexturePackList,*,field_6537_e,*,*,*,mc,"The Minecraft instance used by this TexturePackList"
+TexturePackList,*,field_6536_f,*,*,*,texturePackDir,"The directory the texture packs will be loaded from."
+TexturePackList,*,field_6534_a,*,*,*,selectedTexturePack,"The TexturePack that will be used."
+EntityFish,*,field_6380_t,*,*,*,velocityZ,"*"
+EntityFish,*,field_6381_s,*,*,*,velocityY,"*"
+EntityFish,*,field_6382_r,*,*,*,velocityX,"*"
+NoiseGeneratorOctaves,*,field_1192_a,*,*,*,generatorCollection,"Collection of noise generation functions.  Output is combined to produce different octaves of noise."
+TextureWaterFX,*,field_1154_k,*,*,*,tickCounter,"*"
+EntityPlayer,*,field_4128_n,*,*,*,fishEntity,"*"
+ItemPickaxe,*,field_329_aX,*,*,*,blocksEffectiveAgainst,"*"
+ItemTool,*,field_324_aY,*,*,*,efficiencyOnProperMaterial,"*"
+ItemAxe,*,field_327_aX,*,*,*,blocksEffectiveAgainst,"*"
+ItemSpade,*,field_326_aX,*,*,*,blocksEffectiveAgainst,"*"
+ItemTool,*,field_323_aZ,*,*,*,damageVsEntity,"*"
+ItemTool,*,field_322_a,*,*,*,ingredientQuality,"*"
+EntityPlayerSP,*,field_788_bg,*,*,*,mc,"*"
+Material,*,field_4261_w,*,*,*,pumpkin,"pumpkin"
+Entity,*,field_9283_av,*,*,*,prevPosZ,"*"
+Entity,*,field_9284_au,*,*,*,prevPosY,"*"
+Entity,*,field_9285_at,*,*,*,prevPosX,"*"
+Entity,*,field_9288_aU,*,*,*,fallDistance,"*"
+Entity,*,field_9289_aT,*,*,*,entityWalks,"*"
+TexturePackList,*,field_6533_b,*,*,*,availableTexturePacks,"The list of the available texture packs."
+ItemBlock,*,field_330_a,*,*,*,blockID,"The block ID of the Block associated with this ItemBlock"
+ModelGhast,*,field_4257_b,*,*,*,tentacles,"*"
+ModelGhast,*,field_4258_a,*,*,*,body,"*"
+Material,*,field_4259_y,*,*,*,canBurn,"Bool defining if the block can burn or not."
+Entity,*,field_9292_aO,*,*,*,yOffset,"*"
+Entity,*,field_9298_aH,*,*,*,onGround,"*"
+Packet8,*,field_9275_a,*,*,*,healthMP,"Variable used for incoming health packets"
+World,*,field_1058_B,*,*,*,scheduledTickTreeSet,"*"
+World,*,field_1056_C,*,*,*,scheduledTickSet,"*"
+ModelRenderer,*,field_1398_m,*,*,*,textureOffsetY,"The Y offset into the texture used for displaying this model"
+ModelRenderer,*,field_1399_l,*,*,*,textureOffsetX,"The X offset into the texture used for displaying this model"
+Block,*,field_9248_k,*,*,*,soundClothFootstep,"*"
+Block,*,field_9249_j,*,*,*,soundGlassFootstep,"*"
+Minecraft,*,field_9244_k,*,*,*,mcCanvas,"*"
+Block,*,field_9247_l,*,*,*,soundSandFootstep,"*"
+Minecraft,*,field_9241_z,*,*,*,mcApplet,"*"
+ModelRenderer,*,field_1410_a,*,*,*,offsetX,"*"
+ItemArmor,*,field_314_bb,*,*,*,maxDamageArray,"Holds the 'base' maxDamage that each armorType have."
+ItemArmor,*,field_310_a,*,*,*,armorLevel,"Stores the armor level: 0 is leather, 1 is chain or gold, 2 is steel and 3 is diamond."
+ItemArmor,*,field_311_aZ,*,*,*,renderIndex,"Used on RenderPlayer to select the correspondent armor to be rendered on the player: 0 is cloth, 1 is chain, 2 is iron, 3 is diamond and 4 is gold."
+ItemArmor,*,field_313_aX,*,*,*,armorType,"Stores the armor type: 0 is helmet, 1 is plate, 2 is legs and 3 is boots"
+ItemSword,*,field_319_a,*,*,*,weaponDamage,"*"
+ModelQuadraped,*,field_1262_h,*,*,*,leg3,"*"
+ModelQuadraped,*,field_1263_g,*,*,*,leg2,"*"
+ModelQuadraped,*,field_1261_i,*,*,*,leg4,"*"
+ModelQuadraped,*,field_1266_d,*,*,*,head,"*"
+ModelCow,*,field_1267_b,*,*,*,horn1,"*"
+ModelQuadraped,*,field_1264_f,*,*,*,leg1,"*"
+ModelQuadraped,*,field_1265_e,*,*,*,body,"*"
+ModelCow,*,field_1268_a,*,*,*,udders,"*"
+ModelCow,*,field_1269_c,*,*,*,horn2,"*"
+Session,*,field_1666_b,*,*,*,inventory,"*"
+Session,*,field_1667_a,*,*,*,registeredBlocksList,"*"
+SoundPool,*,field_1660_d,*,*,*,nameToSoundPoolEntriesMapping,"Maps a name (can be sound/newsound/streaming/music/newmusic) to a list of SoundPoolEntry's."
+SoundPool,*,field_1661_c,*,*,*,rand,"The RNG used by SoundPool."
+Block,*,field_9253_f,*,*,*,soundGravelFootstep,"*"
+Block,*,field_9252_g,*,*,*,soundGrassFootstep,"*"
+Block,*,field_9251_h,*,*,*,soundStoneFootstep,"*"
+Block,*,field_9250_i,*,*,*,soundMetalFootstep,"*"
+Block,*,field_9254_e,*,*,*,soundWoodFootstep,"*"
+BlockFurnace,*,field_456_a,*,*,*,isActive,"True if this is an active furnace, false if idle"
+BlockStairs,*,field_452_a,*,*,*,modelBlock,"The block that is used as model for the stair."
+ModelCreeper,*,field_1271_a,*,*,*,head,"*"
+ModelCreeper,*,field_1270_b,*,*,*,unusedModel,"*"
+ModelCreeper,*,field_1273_f,*,*,*,leg3,"*"
+ModelCreeper,*,field_1272_g,*,*,*,leg4,"*"
+ModelCreeper,*,field_1275_d,*,*,*,leg1,"*"
+ModelCreeper,*,field_1274_e,*,*,*,leg2,"*"
+ModelCreeper,*,field_1276_c,*,*,*,body,"*"
+Entity,*,field_9312_bd,*,*,*,rand,"*"
+EntityArrow,*,field_9316_f,*,*,*,inTile,"*"
+EntityArrow,*,field_9317_e,*,*,*,zTile,"*"
+EntityArrow,*,field_9315_g,*,*,*,inGround,"*"
+EntityArrow,*,field_9318_d,*,*,*,yTile,"*"
+EntityArrow,*,field_9319_c,*,*,*,xTile,"*"
+FontRenderer,*,field_1307_b,*,*,*,charWidth,"Array of width of all the characters in default.png"
+GameSettings,*,field_6524_j,*,*,*,skin,"The name of the selected texture pack."
+EntityMinecart,*,field_9418_e,*,*,*,fuel,"*"
+EntityMinecart,*,field_9417_f,*,*,*,pushX,"*"
+EntityMinecart,*,field_9416_g,*,*,*,pushZ,"*"
+Minecraft,*,field_9237_P,*,*,*,timer,"*"
+Entity,*,field_9305_bk,*,*,*,air,"*"
+Entity,*,field_9304_bm,*,*,*,isImmuneToFire,"*"
+Entity,*,field_9309_bg,*,*,*,fire,"*"
+TexturePackList,*,field_6539_c,*,*,*,defaultTexturePack,"The default texture pack."
+GuiIngame,*,field_9421_h,*,*,*,updateCounter,"*"
+GuiIngame,*,field_9422_g,*,*,*,mc,"*"
+GuiIngame,*,field_9423_f,*,*,*,rand,"*"
+PositionTexureVertex,*,field_1656_c,*,*,*,texturePositionY,"*"
+PositionTexureVertex,*,field_1655_a,*,*,*,vector3D,"*"
+PositionTexureVertex,*,field_1654_b,*,*,*,texturePositionX,"*"
+MathHelper,*,field_1653_a,*,*,*,SIN_TABLE,"A table of sin values computed from 0 (inclusive) to 2*pi (exclusive), with steps of 2*PI / 65536."
+SoundPool,*,field_1659_e,*,*,*,allSoundPoolEntries,"A list of all SoundPoolEntries that have been loaded."
+SoundPool,*,field_1658_a,*,*,*,numberOfSoundPoolEntries,"The number of soundPoolEntry's. This value is computed but never used (should be equal to allSoundPoolEntries.size())."
+EntityLiving,*,field_9336_ak,*,*,*,isJumping,"used to check whether entity is jumping."
+EntityLiving,*,field_9337_J,*,*,*,health,"*"
+EntityLiving,*,field_9330_P,*,*,*,attackTime,"*"
+EntityLiving,*,field_9339_I,*,*,*,swingProgress,"*"
+ItemArmor,*,field_315_ba,*,*,*,damageReduceAmmountArray,"Holds the ammount of damage that the each armorType have."
+ItemArmor,*,field_312_aY,*,*,*,damageReduceAmmount,"Holds the ammount of damage that the armor reduce at full durability."
+Minecraft,*,field_6305_x,*,*,*,objectMouseOver,"The ray trace hit that the mouse is over."
+Minecraft,*,field_6308_u,*,*,*,ingameGUI,"*"
+TexturePackCustom,*,field_6495_f,*,*,*,texturePackName,"The allocated OpenGL texture name for this texture pack, or -1 if it hasn't been allocated yet."
+TexturePackDefault,*,field_6491_e,*,*,*,texturePackName,"The allocated OpenGL for this TexturePack, or -1 if it hasn't been loaded yet."
+World,*,field_9435_j,*,*,*,autosavePeriod,"*"
+World,*,field_9434_r,*,*,*,worldAccesses,"*"
+Minecraft,*,field_6312_q,*,*,*,loadingScreen,"*"
+Minecraft,*,field_6314_o,*,*,*,fontRenderer,"The font renderer used for displaying and measuring text."
+TexturePackBase,*,field_6487_a,*,*,*,texturePackFileName,"The file name of the texture pack, or Default if not from a custom texture pack."
+TexturePackBase,*,field_6486_b,*,*,*,firstDescriptionLine,"The first line of the texture pack description (read from the pack.txt file)"
+TexturePackBase,*,field_6489_c,*,*,*,secondDescriptionLine,"The second line of the texture pack description (read from the pack.txt file)"
+Block,*,field_4063_aU,*,*,*,blockIce,"*"
+EntityLiving,*,field_9357_z,*,*,*,texture,"*"
+ImageBufferDownload,*,field_1344_c,*,*,*,imageHeight,"*"
+ImageBufferDownload,*,field_1343_a,*,*,*,imageData,"*"
+ImageBufferDownload,*,field_1342_b,*,*,*,imageWidth,"*"
+ChunkPosition,*,field_1110_b,*,*,*,y,"The y coordinate of this ChunkPosition"
+ChunkPosition,*,field_1111_a,*,*,*,x,"The x coordinate of this ChunkPosition"
+ChunkPosition,*,field_1112_c,*,*,*,z,"The z coordinate of this ChunkPosition"
+EntityLiving,*,field_9341_H,*,*,*,prevSwingProgress,"*"
+Block,*,field_416_af,*,*,*,plantRed,"Was rose"
+NetClientHandler,*,field_1211_f,*,*,*,worldClient,"*"
+EntityPlayer,*,field_9370_g,*,*,*,score,"*"
+*,*,*,ServerConfigurationManager,*,field_9253_e,maxPlayers,"the maximum amount of players that can be connected"
+*,*,*,ServerConfigurationManager,*,field_9251_j,ipBanFile,"the file which contains the list of banned IPs"
+*,*,*,ServerConfigurationManager,*,field_9250_k,opFile,"the file which contains the list of ops"
+*,*,*,Block,*,field_9028_e,soundWoodFootstep,"*"
+*,*,*,Entity,*,field_9092_m,prevPosX,"*"
+*,*,*,Block,*,field_9024_i,soundMetalFootstep,"*"
+*,*,*,Block,*,field_9025_h,soundStoneFootstep,"*"
+*,*,*,Block,*,field_9026_g,soundGrassFootstep,"*"
+*,*,*,Block,*,field_9027_f,soundGravelFootstep,"*"
+*,*,*,Block,*,field_9022_k,soundClothFootstep,"*"
+*,*,*,Block,*,field_9052_aM,pressurePlatePlanks,"*"
+*,*,*,Entity,*,field_9093_l,worldObj,"*"
+*,*,*,World,*,field_803_m,rand,"RNG for World."
+*,*,*,World,*,field_804_l,monstersEnabled,"Whether monsters are enabled or not. (1 = on, 0 = off)"
+*,*,*,World,*,field_9208_H,nbtCompoundPlayer,"*"
+*,*,*,Entity,*,field_9089_x,prevRotationYaw,"*"
+*,*,*,MinecraftServer,*,field_6033_f,configManager,"the server config manager for this server"
+*,*,*,Block,*,field_9051_aR,button,"*"
+*,*,*,Block,*,field_9044_ay,workbench,"*"
+*,*,*,Block,*,field_9045_at,stairCompactPlanks,"*"
+*,*,*,Block,*,field_9043_L,sponge,"*"
+*,*,*,Block,*,field_9021_l,soundSandFootstep,"*"
+*,*,*,Block,*,field_9023_j,soundGlassFootstep,"*"
+*,*,*,Vec3D,*,field_1055_a,xCoord,"X coordinate of Vec3D"
+*,*,*,PathEntity,*,field_1004_b,points,"The actual points in the path"
+*,*,*,Entity,*,field_9081_ad,air,"*"
+*,*,*,Entity,*,field_9086_A,onGround,"*"
+*,*,*,Entity,*,field_9088_y,prevRotationPitch,"*"
+*,*,*,World,*,field_821_y,field_821,"the chunk provider that generates the chunks for this world"
+*,*,*,Block,*,field_9046_aq,torchWood,"*"
+*,*,*,Block,*,field_9047_al,brick,"*"
+*,*,*,Block,*,field_9055_aH,stairCompactCobblestone,"*"
+*,*,*,Block,*,field_9054_aJ,lever,"*"
+*,*,*,Block,*,field_9053_aK,pressurePlateStone,"*"
+*,*,*,Entity,*,field_9091_n,prevPosY,"*"
+*,*,*,Entity,*,field_9076_H,yOffset,"*"
+*,*,*,Entity,*,field_9073_M,entityWalks,"*"
+*,*,*,Entity,*,field_9072_N,fallDistance,"*"
+*,*,*,Entity,*,field_9090_o,prevPosZ,"*"
