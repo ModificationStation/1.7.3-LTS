@@ -1,10 +1,11 @@
 import sys
 import shutil
 import os.path
-from commands import Commands
 import ConfigParser
 import logging
 import time
+import minecraftversions
+import urllib2
 
 class InstallMC:
     _default_config = 'conf/mcp.cfg'
@@ -13,6 +14,7 @@ class InstallMC:
         self.conffile = conffile
         self.readconf()
         self.confdir = self.config.get("DEFAULT", "DirConf")
+        self.jardir = self.config.get("DEFAULT", "DirJars")
         self.mcplogfile = self.config.get('MCP', 'LogFile')
         self.mcperrlogfile = self.config.get('MCP', 'LogFileErr')
         self.startlogger()
@@ -50,6 +52,7 @@ class InstallMC:
         Main entry function.
         :return:
         """
+        print(sys.version)
         self.logger.info("> Welcome to the LTS version selector!")
         self.logger.info("> If you wish to supply your own configuration, type \"none\".")
         self.logger.info("> What version would you like to install?")
@@ -73,14 +76,42 @@ class InstallMC:
             if inp == "none":
                 sys.exit()
 
+        self.logger.info("> Copying config.")
         copytime = time.time()
         self.copydir(os.path.join(self.confdir, inp), self.confdir)
         self.logger.info('> Done in %.2f seconds' % (time.time() - copytime))
 
+        self.logger.info("> Downloading Minecraft client...")
+        clientdltime = time.time()
+        self.download(minecraftversions.versions["client"][inp]["url"], os.path.join(self.jardir, "bin", "minecraft.jar"))
+        self.logger.info('> Done in %.2f seconds' % (time.time() - clientdltime))
+
+        serverdltime = time.time()
+        self.logger.info("> Downloading Minecraft server...")
+        self.download(minecraftversions.versions["server"][inp]["url"], os.path.join(self.jardir, "minecraft_server.jar"))
+        self.logger.info('> Done in %.2f seconds' % (time.time() - serverdltime))
+
+    def download(self, url, dst):
+        # Because legacy code is stupid.
+        try:
+            f = urllib2.urlopen(url)
+            print("> Downloading \"" + url + "\"...")
+
+            path = os.path.abspath(os.path.dirname(dst))
+            if not os.path.exists(path):
+                os.makedirs(path)
+
+            # Open our local file for writing
+            with open(dst, "wb") as local_file:
+                local_file.write(f.read())
+            self.logger.info("> Done!")
+        except Exception:
+            print("Unable to download \"" + url + "\"")
+
     def copydir(self, src, dst, replace=True):
         """
-        Shutil's built in movetree function raises an exception if dir exists.
-        This is basically movetree minus the exceptions and added logging.
+        Shutil's built in copytree function raises an exception if src exists.
+        This is basically copytree minus the exceptions and added logging.
         :param dir:
         :return:
         """
