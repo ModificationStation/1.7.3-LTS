@@ -114,6 +114,4 @@ del /Q jars\bin\natives\jinput_platform.jar >> nul
 echo Finished^!
 echo.
 
-runtime\bin\python\python_mcp runtime\installminecraft.py
-
 pause
