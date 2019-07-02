@@ -100,7 +100,7 @@ class Cleanup:
 
         print("> Deleting system specific files from root...")
         systime = time.time()
-        for file in ["cleanup", "decompile", "recompile", "reobfuscate", "startclient", "startserver", "updatemcp", "updatemd5"]:
+        for file in ["decompile", "recompile", "reobfuscate", "startclient", "startserver", "updatemcp", "updatemd5"]:
             os.unlink(file + "." + self.systemext)
         print('> Done in %.2f seconds' % (time.time() - systime))
 
