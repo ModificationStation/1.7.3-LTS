@@ -15,6 +15,8 @@ class InstallMC:
         self.readconf()
         self.confdir = self.config.get("DEFAULT", "DirConf")
         self.jardir = self.config.get("DEFAULT", "DirJars")
+        self.tempdir = self.config.get("DEFAULT", "DirTemp")
+        self.logdir = self.config.get("DEFAULT", "DirLogs")
         self.mcplogfile = self.config.get('MCP', 'LogFile')
         self.mcperrlogfile = self.config.get('MCP', 'LogFileErr')
         self.startlogger()
@@ -25,6 +27,8 @@ class InstallMC:
         Code copied from commands.py:92
         :return:
         """
+        if not os.path.exists(self.logdir):
+            os.makedirs(self.logdir)
         self.logger = logging.getLogger('MCPLog')
         self.logger.setLevel(logging.DEBUG)
         # create file handler which logs even debug messages
@@ -93,6 +97,11 @@ class InstallMC:
             ver = inp
         serverdltime = time.time()
         self.download(minecraftversions.versions["server"][ver]["url"], os.path.join(self.jardir, "minecraft_server.jar"))
+
+        self.logger.info("> Making sure temp exists...")
+        if not os.path.exists(self.tempdir):
+            os.makedirs(self.tempdir)
+
         self.logger.info('> Done in %.2f seconds' % (time.time() - serverdltime))
 
     def download(self, url, dst):
