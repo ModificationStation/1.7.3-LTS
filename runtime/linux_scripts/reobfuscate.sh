@@ -1,2 +1,2 @@
 #!/bin/bash
-./runtime/bin/pypy_linux/bin/pypy runtime/reobfuscate.py "$@"
+./runtime/bin/python/bin/pypy runtime/reobfuscate.py "$@"

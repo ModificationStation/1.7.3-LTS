@@ -53,7 +53,7 @@ start() {
 	echo
 	echo Setting up LTS workspace...
 
-	./runtime/bin/pypy_linux/bin/pypy runtime/setuplts.py "$@"
+	./runtime/bin/python/bin/pypy runtime/setuplts.py "$@"
 
     echo
     echo Finished!
