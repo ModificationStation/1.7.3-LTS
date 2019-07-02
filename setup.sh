@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo 'Initial 1.7.3-LTS Setup'
+echo "Initial LTS Setup"
 echo -------------------
 echo 
 
-read -p 'Are you sure you want to run the setup? [Y/N]? ' answer
+read -p "Are you sure you want to run the setup? [Y/N]? " answer
 
 #
 # Methods
@@ -22,90 +22,40 @@ unpack() {
 
 start() {
     #
-    # Copying scripts to the root folder
+    # Downloading natives
     #
-    
-    echo 
-    echo Copying scripts...
-    echo 
-    
-    # https://www.shellscript.sh/tips/cp-t/  :^)
-    find runtime/linux_scripts -name "*.sh" -print0 | xargs -0 cp -t ./
-    find . -maxdepth 1 -name "*.sh" | xargs -I{} chmod -v 755 {}
-    
-    #
-    # Create folders
-    #
-    
-    echo 
-    echo Creating folders...
-    echo 
-    
-    mkdir -p jars/bin/natives/
-    
-    #
-    # Download runtimes
-    #
-    
-    echo Downloading runtimes...
-    
-    # LWJGL 2.8.4
-    echo ' > LWJGL'
-    download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/2.8.4/lwjgl-2.8.4.jar jars/bin/lwjgl.jar
-    download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl_util/2.8.4/lwjgl_util-2.8.4.jar jars/bin/lwjgl_util.jar
-    download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-linux.jar jars/bin/natives/lwjgl_platform.jar
-    
-    # jinput 2.05
-    echo ' > jinput'
-    download http://central.maven.org/maven2/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar jars/bin/jinput.jar
-    download http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-linux.jar jars/bin/natives/jinput_platform.jar
-    
-    # PyPy 2.7.13
-    if [ ! -d runtime/bin/pypy_linux/ ]; then
-        echo ' > PyPy 6.0.0'
-        download https://bitbucket.org/squeaky/portable-pypy/downloads/pypy-6.0.0-linux_x86_64-portable.tar.bz2 runtime/bin/pypy.tar.bz2
+
+    # PyPy 3.6.1
+    if [ ! -d runtime/bin/python/ ]; then
+        echo "> Downloading PyPy 7.1.1 on Python 3.6.1"
+        download https://bitbucket.org/squeaky/portable-pypy/downloads/pypy3.6-7.1.1-beta-linux_x86_64-portable.tar.bz2 runtime/bin/pypy.tar.bz2
     fi
-    
+
     #
     # Unzipping natives
     #
-    
+
     echo
     echo Unzipping natives
-    
-    echo ' > lwjgl_platform.jar'
-    unpack jars/bin/natives/lwjgl_platform.jar jars/bin/natives
-    echo ' > jinput_platform.jar'
-    unpack jars/bin/natives/jinput_platform.jar jars/bin/natives
-    if [ ! -d runtime/bin/pypy_linux/ ]; then
-        echo ' > PyPy 6.0.0'
-        tar -xjf runtime/bin/pypy.tar.bz2 -C runtime/bin/ pypy-6.0.0-linux_x86_64-portable/
-        mv runtime/bin/pypy-6.0.0-linux_x86_64-portable/ runtime/bin/pypy_linux
-    fi
-    
-	#
-	# Setup Minecraft config and jars
-	#
-	
-	echo
-	echo Setting up Minecraft...
-	
-	./runtime/bin/pypy_linux/bin/pypy runtime/installminecraft.py "$@"
-    
-    #
-    # Cleanup
-    #
-    
-    echo  Cleaning up...
-    echo 
 
-    rm -R jars/bin/natives/META-INF>/dev/null
-    rm jars/bin/natives/lwjgl_platform.jar
-    rm jars/bin/natives/jinput_platform.jar
-    if [ -d runtime/bin/pypy.tar.bz2 ]; then
+    if [ ! -d runtime/bin/python/ ]; then
+        echo "> PyPy 7.1.1 on Python 3.6.1"
+        tar -xjf runtime/bin/pypy.tar.bz2 -C runtime/bin/ pypy/
+        mv runtime/bin/pypy/ runtime/bin/python
+        rm runtime/bin/pypy/
         rm runtime/bin/pypy.tar.bz2
     fi
-    
+
+	#
+	# Setup LTS workspace
+	#
+
+	echo
+	echo Setting up LTS workspace...
+
+	./runtime/bin/pypy_linux/bin/pypy runtime/setuplts.py "$@"
+
+    echo
     echo Finished!
     exit
 }

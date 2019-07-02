@@ -1,3 +1,3 @@
 @echo off
-runtime\bin\python\python_mcp runtime\updatemd5.py %*
+runtime\bin\python\python runtime\updatemd5.py %*
 pause

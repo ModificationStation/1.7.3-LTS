@@ -1,2 +1,4 @@
 @echo off
-runtime\bin\python\python_mcp runtime\cleanup.py %*
+runtime\bin\python\python runtime\cleanup.py %*
+
+del  /F/Q/S /runtime/bin/python > nul

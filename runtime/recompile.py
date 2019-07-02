@@ -5,8 +5,11 @@ Created on Fri Apr  8 16:54:36 2011
 @author: ProfMobius
 @version: v1.0
 """
-import sys, time
+import time
+import os
+import sys
 from optparse import OptionParser
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))  # Workaround for python 3.6's obtuse import system.
 from commands import Commands
 
 

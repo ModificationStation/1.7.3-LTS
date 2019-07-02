@@ -5,15 +5,17 @@ Created on Fri Apr  8 16:54:36 2011
 @author: ProfMobius
 @version: v1.2
 """
-import time, os
+import time
+import os
+import sys
 from optparse import OptionParser
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))  # Workaround for python 3.6's obtuse import system.
 from commands import Commands
-import recompile
+import recompile as recompile
 
 
 def main(conffile=None, force_jad=False):
     commands = Commands(conffile)
-    # commands.checkupdates()
     commands.checkforupdates()
 
     cltdone = decompile_side(0, commands, force_jad)
@@ -76,15 +78,12 @@ def decompile_side(side=0, commands=None, force_jad=False):
                 commands.applypatches(side)
             else:
                 commands.applyffpatches(side)
-            ## LTS JAVADOC
+            # LTS JAVADOC
             commands.logger.info('> Adding javadoc')
             commands.process_javadoc(side)
-            ## LTS END JAVADOC
+            # LTS END JAVADOC
             commands.logger.info('> Renaming sources')
             commands.rename(side)
-            # Broken. What is that?
-            # commands.logger.info('> Creating reobfuscation tables')
-            # commands.renamereobsrg(side)
             commands.logger.info('> Done in %.2f seconds' % (time.time() - currenttime))
     else:
         if side == 0:

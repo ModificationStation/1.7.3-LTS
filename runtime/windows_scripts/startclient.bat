@@ -1,3 +1,3 @@
 @echo off
-runtime\bin\python\python_mcp runtime\startclient.py %*
+runtime\bin\python\python runtime\startclient.py %*
 pause

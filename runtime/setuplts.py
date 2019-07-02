@@ -1,11 +1,15 @@
 import sys
 import shutil
 import os.path
-import ConfigParser
+import configparser
 import logging
 import time
+import urllib.request
+import traceback
+import platform
+import zipfile
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))  # Workaround for python 3.6's obtuse import system.
 import minecraftversions
-import urllib2
 
 class InstallMC:
     _default_config = 'conf/mcp.cfg'
@@ -13,6 +17,10 @@ class InstallMC:
     def __init__(self, conffile=None):
         self.conffile = conffile
         self.readconf()
+        if platform.system() == "Windows":
+            self.platform = "windows"
+        else:
+            self.platform = "linux"
         self.confdir = self.config.get("DEFAULT", "DirConf")
         self.jardir = self.config.get("DEFAULT", "DirJars")
         self.tempdir = self.config.get("DEFAULT", "DirTemp")
@@ -57,7 +65,52 @@ class InstallMC:
         :return:
         """
         print(sys.version)
-        self.logger.info("> Welcome to the LTS version selector!")
+
+        self.logger.info("> Welcome to the LTS setup script!")
+        self.logger.info("> This script will automatically set up your MCP workspace.")
+
+        self.logger.info("> Setting up your workspace...")
+
+        self.logger.info("> Making sure temp exists...")
+        if not os.path.exists(self.tempdir):
+            os.makedirs(self.tempdir)
+        self.logger.info("> Making sure jars/bin/natives exists.")
+        if not os.path.exists(os.path.join(self.jardir, "bin", "natives")):
+            os.makedirs(os.path.join(self.jardir, "bin", "natives"))
+
+        self.logger.info("> Downloading LWJGL...")
+        self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/2.8.4/lwjgl-2.8.4.jar", os.path.join(self.jardir, "bin", "lwjgl.jar"))
+        self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl_util/2.8.4/lwjgl_util-2.8.4.jar", os.path.join(self.jardir, "bin", "lwjgl_util.jar"))
+        if self.platform == "win":
+            self.logger.info("> Downloading LWJGL natives for windows...")
+            self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-windows.jar", os.path.join(self.jardir, "bin", "lwjgl_natives.zip"))
+        else:
+            self.logger.info("> Downloading LWJGL natives for linux...")
+            self.download("http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-linux.jar", os.path.join(self.jardir, "bin", "lwjgl_natives.zip"))
+
+        self.logger.info("> Downloading JInput...")
+        self.download("http://central.maven.org/maven2/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar", os.path.join(self.jardir, "bin", "jinput.jar"))
+        if self.platform == "win":
+            self.logger.info("> Downloading JInput natives for windows...")
+            self.download("http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-windows.jar", os.path.join(self.jardir, "bin", "jinput_natives.zip"))
+        else:
+            self.logger.info("> Downloading JInput natives for linux...")
+            self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-linux.jar", os.path.join(self.jardir, "bin", "jinput_natives.zip"))
+
+        self.logger.info("> Extracting natives...")
+        nativezip = zipfile.ZipFile(os.path.join(self.jardir, "bin", "lwjgl_natives.zip"))
+        nativezip.extractall(os.path.join(self.jardir, "bin", "natives"))
+        nativezip = zipfile.ZipFile(os.path.join(self.jardir, "bin", "jinput_natives.zip"))
+        nativezip.extractall(os.path.join(self.jardir, "bin", "natives"))
+
+        self.logger.info("> Setting up minecraft...")
+        self.setupmc()
+
+        self.logger.info("> Copying scripts...")
+        for file in os.listdir(os.path.join("runtime", self.platform + "_scripts")):
+            shutil.copy2(os.path.join("runtime", self.platform + "_scripts", file), ".")
+
+    def setupmc(self):
         self.logger.info("> If you wish to supply your own configuration, type \"none\".")
         self.logger.info("> Any two versions joined by a comma (b1.5_01,1.5_02) are client vs server version.")
         self.logger.info("> What version would you like to install?")
@@ -71,15 +124,14 @@ class InstallMC:
         versionsstring = versionsstring.strip(", ")
 
         inp = ""
-
         while inp not in versions:
             self.logger.info("> Current versions are: " + versionsstring)
             self.logger.info("> What version would you like?")
 
-            inp = str(raw_input(": "))
+            inp = str(input(": "))
 
             if inp == "none":
-                sys.exit()
+                return
 
         self.logger.info("> Copying config.")
         copytime = time.time()
@@ -88,7 +140,8 @@ class InstallMC:
 
         self.logger.info("> Downloading Minecraft client...")
         clientdltime = time.time()
-        self.download(minecraftversions.versions["client"][inp.split(",")[0]]["url"], os.path.join(self.jardir, "bin", "minecraft.jar"))
+        self.download(minecraftversions.versions["client"][inp.split(",")[0]]["url"],
+                      os.path.join(self.jardir, "bin", "minecraft.jar"))
         self.logger.info('> Done in %.2f seconds' % (time.time() - clientdltime))
 
         self.logger.info("> Downloading Minecraft server...")
@@ -97,36 +150,31 @@ class InstallMC:
         else:
             ver = inp
         serverdltime = time.time()
-        self.download(minecraftversions.versions["server"][ver]["url"], os.path.join(self.jardir, "minecraft_server.jar"))
+        self.download(minecraftversions.versions["server"][ver]["url"],
+                      os.path.join(self.jardir, "minecraft_server.jar"))
         self.logger.info('> Done in %.2f seconds' % (time.time() - serverdltime))
-
-        self.logger.info("> Making sure temp exists...")
-        if not os.path.exists(self.tempdir):
-            os.makedirs(self.tempdir)
-
 
     def download(self, url, dst):
         # Because legacy code is stupid.
         try:
-            f = urllib2.urlopen(url)
             print("> Downloading \"" + url + "\"...")
+            response = urllib.request.urlopen(url)
+            data = response.read()
+            with open(dst, "wb") as file:
+                file.write(data)
 
-            path = os.path.abspath(os.path.dirname(dst))
-            if not os.path.exists(path):
-                os.makedirs(path)
-
-            # Open our local file for writing
-            with open(dst, "wb") as local_file:
-                local_file.write(f.read())
             self.logger.info("> Done!")
-        except Exception:
-            print("Unable to download \"" + url + "\"")
+        except:
+            traceback.print_exc()
+            print("> Unable to download \"" + url + "\"")
 
     def copydir(self, src, dst, replace=True):
         """
         Shutil's built in copytree function raises an exception if src exists.
         This is basically copytree minus the exceptions and added logging.
-        :param dir:
+        :param src:
+        :param dst:
+        :param replace:
         :return:
         """
         for file in os.listdir(src):
@@ -141,10 +189,7 @@ class InstallMC:
                     shutil.copy2(os.path.join(src, file), dst)
                     self.logger.debug("> Copied file \"" + os.path.join(src, file) + "\".")
             else:
-                try:
-                    os.makedirs(os.path.join(dst, file))
-                except:
-                    pass
+                os.makedirs(os.path.join(dst, file))
                 self.copydir(os.path.join(src, file), os.path.join(dst, file))
 
     def readconf(self):
@@ -153,13 +198,14 @@ class InstallMC:
         Code copied from commands.py:126
         :return:
         """
-        config = ConfigParser.SafeConfigParser()
+        config = configparser.ConfigParser()
         with open(self._default_config) as config_file:
-            config.readfp(config_file)
+            config.read_file(config_file)
         if self.conffile is not None:
             config.read(self.conffile)
         self.config = config
 
+
 if __name__ == '__main__':
-    instmc = InstallMC()
-    instmc.start()
+    installmc = InstallMC()
+    installmc.start()

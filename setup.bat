@@ -1,7 +1,7 @@
 @echo off
-title Initial 1.7.3-LTS Setup
+title Initial LTS Setup
 
-echo Initial 1.7.3-LTS Setup
+echo Initial LTS Setup
 echo -------------------
 echo.
 
@@ -39,79 +39,38 @@ exit /b
 :start
 
 ::
-:: Copying scripts to the root folder
-::
-
-echo.
-echo Copying scripts...
-echo.
-
-xcopy /Y runtime\windows_scripts\*.bat . >> nul
-
-
-::
-:: Create folders
-::
-
-echo.
-echo Creating folders...
-echo.
-
-mkdir jars\bin\natives >> nul
-
-::
 :: Download runtimes
 ::
-
+echo.
 echo Downloading runtimes...
 
-:: LWJGL 2.8.4
-echo  ^> LWJGL
-call :download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/2.8.4/lwjgl-2.8.4.jar jars\bin\lwjgl.jar
-call :download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl_util/2.8.4/lwjgl_util-2.8.4.jar jars\bin\lwjgl_util.jar
-call :download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-windows.jar jars\bin\natives\lwjgl_platform.jar
-
-:: jinput 2.0.5
-echo  ^> jinput
-call :download http://central.maven.org/maven2/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar jars\bin\jinput.jar
-call :download http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-windows.jar jars\bin\natives\jinput_platform.jar
-
+:: Python 3.6.1
+echo ^> Python 3.6.1 embeddable zip.
+call :download https://www.python.org/ftp/python/3.6.1/python-3.6.1-embed-win32.zip runtime\bin\python.zip
 
 ::
 :: Unzipping natives
 ::
 
 echo.
-echo Unzipping natives...
+echo Unzipping runtimes...
 
-echo  ^> lwjgl_platform.jar
-call :unzip jars\bin\natives\lwjgl_platform.jar jars\bin\natives
-echo  ^> jinput_platform.jar
-call :unzip jars\bin\natives\jinput_platform.jar jars\bin\natives
+:: Python 3.6.1
+echo ^> python.zip
+call :unzip runtime\bin\python.zip runtime\bin\python
+del runtime\bin\python.zip
+
+::
+:: Setup LTS workspace
+::
+
 echo.
+echo Setting up LTS workspace...
 
-::
-:: Setup Minecraft config and jars
-::
-
-echo.
-echo Setting up Minecraft...
-
-runtime\bin\python\python_mcp runtime\installminecraft.py
-
-::
-:: Clean up
-::
-
-echo Cleaning up...
-echo.
-
-rmdir /S /Q jars\bin\natives\META-INF >> nul
-del /Q jars\bin\natives\lwjgl_platform.jar >> nul
-del /Q jars\bin\natives\jinput_platform.jar >> nul
+runtime\bin\python\python runtime\setuplts.py
 
 :end
-echo Finished^!
 echo.
+echo Finished^!
 
 pause

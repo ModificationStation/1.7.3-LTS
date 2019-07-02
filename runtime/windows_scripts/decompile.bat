@@ -1,3 +1,3 @@
 @echo off
-runtime\bin\python\python_mcp runtime\decompile.py %*
+runtime\bin\python\python runtime\decompile.py %*
 pause

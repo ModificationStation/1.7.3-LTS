@@ -2,7 +2,7 @@ import shutil
 import os
 import sys
 import time
-import ConfigParser
+import configparser
 import platform
 
 
@@ -10,6 +10,7 @@ class Cleanup:
     _default_config = 'conf/mcp.cfg'
 
     def __init__(self, conffile=None):
+        print(os.getcwd())
         self.conffile = conffile
         self.readconf()
         self.confdir = self.config.get("DEFAULT", "DirConf")
@@ -33,12 +34,12 @@ class Cleanup:
         """
         print("> Welcome to the LTS cleanup script!")
         print("> Are you sure you want to clean up your workspace? [y/N]")
-        inp = raw_input(": ")
+        inp = input(": ")
         if inp != "y":
             sys.exit(0)
         print("> Are you *REALLY* sure you want to clean up your workspace? [y/N]")
         print("> This deletes ALL your source files and jars! This is NOT recoverable!")
-        inp = raw_input(": ")
+        inp = input(": ")
         if inp != "y":
             sys.exit(0)
 
@@ -105,7 +106,7 @@ class Cleanup:
 
         print("> Done!")
         print("> Press enter to continue...")
-        raw_input()
+        input()
 
     def readconf(self):
         """
@@ -113,13 +114,12 @@ class Cleanup:
         Code copied from commands.py:126
         :return:
         """
-        config = ConfigParser.SafeConfigParser()
+        config = configparser.ConfigParser()
         with open(self._default_config) as config_file:
-            config.readfp(config_file)
+            config.read_file(config_file)
         if self.conffile is not None:
             config.read(self.conffile)
         self.config = config
-
 
 if __name__ == '__main__':
     cleanup = Cleanup()
