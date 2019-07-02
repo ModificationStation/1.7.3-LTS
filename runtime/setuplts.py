@@ -69,16 +69,17 @@ class InstallMC:
         self.logger.info("> Welcome to the LTS setup script!")
         self.logger.info("> This script will automatically set up your MCP workspace.")
 
-        self.logger.info("> Setting up your workspace...")
+        self.logger.info("\n> Setting up your workspace...")
 
-        self.logger.info("> Making sure temp exists...")
+        self.logger.info("\n> Making sure temp exists...")
         if not os.path.exists(self.tempdir):
             os.makedirs(self.tempdir)
         self.logger.info("> Making sure jars/bin/natives exists.")
         if not os.path.exists(os.path.join(self.jardir, "bin", "natives")):
             os.makedirs(os.path.join(self.jardir, "bin", "natives"))
 
-        self.logger.info("> Downloading LWJGL...")
+        self.logger.info("\n> Downloading LWJGL...")
+        libtime = time.time()
         self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/2.8.4/lwjgl-2.8.4.jar", os.path.join(self.jardir, "bin", "lwjgl.jar"))
         self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl_util/2.8.4/lwjgl_util-2.8.4.jar", os.path.join(self.jardir, "bin", "lwjgl_util.jar"))
         if self.platform == "win":
@@ -88,7 +89,7 @@ class InstallMC:
             self.logger.info("> Downloading LWJGL natives for linux...")
             self.download("http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-linux.jar", os.path.join(self.jardir, "bin", "lwjgl_natives.zip"))
 
-        self.logger.info("> Downloading JInput...")
+        self.logger.info("\n> Downloading JInput...")
         self.download("http://central.maven.org/maven2/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar", os.path.join(self.jardir, "bin", "jinput.jar"))
         if self.platform == "win":
             self.logger.info("> Downloading JInput natives for windows...")
@@ -96,17 +97,20 @@ class InstallMC:
         else:
             self.logger.info("> Downloading JInput natives for linux...")
             self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-linux.jar", os.path.join(self.jardir, "bin", "jinput_natives.zip"))
+        self.logger.info('> Done in %.2f seconds' % (time.time() - libtime))
 
-        self.logger.info("> Extracting natives...")
+        self.logger.info("\n> Extracting natives...")
+        exttime = time.time()
         nativezip = zipfile.ZipFile(os.path.join(self.jardir, "bin", "lwjgl_natives.zip"))
         nativezip.extractall(os.path.join(self.jardir, "bin", "natives"))
         nativezip = zipfile.ZipFile(os.path.join(self.jardir, "bin", "jinput_natives.zip"))
         nativezip.extractall(os.path.join(self.jardir, "bin", "natives"))
+        self.logger.info('> Done in %.2f seconds' % (time.time() - exttime))
 
-        self.logger.info("> Setting up minecraft...")
+        self.logger.info("\n> Setting up minecraft...")
         self.setupmc()
 
-        self.logger.info("> Copying scripts...")
+        self.logger.info("\n> Copying scripts...")
         for file in os.listdir(os.path.join("runtime", self.platform + "_scripts")):
             shutil.copy2(os.path.join("runtime", self.platform + "_scripts", file), ".")
 
