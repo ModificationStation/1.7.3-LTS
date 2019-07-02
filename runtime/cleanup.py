@@ -3,7 +3,6 @@ import os
 import sys
 import time
 import ConfigParser
-import traceback
 import platform
 
 
@@ -49,10 +48,9 @@ class Cleanup:
         jartime = time.time()
         # Delete jars while keeping server.properties.
         if os.path.exists(self.jardir):
-            try:
-                shutil.copy2(os.path.join(self.jardir, "server.properties"), self.tempdir)
-            except:
-                traceback.print_exc()
+            if not os.path.exists(self.tempdir):
+                os.makedirs(self.tempdir)
+            shutil.copy2(os.path.join(self.jardir, "server.properties"), self.tempdir)
             shutil.rmtree(self.jardir)
             os.makedirs(self.jardir)
             if os.path.exists(os.path.join(self.tempdir, "server.properties")):
@@ -102,7 +100,6 @@ class Cleanup:
         print("> Deleting system specific files from root...")
         systime = time.time()
         for file in ["cleanup", "decompile", "recompile", "reobfuscate", "startclient", "startserver", "updatemcp", "updatemd5"]:
-            print(file)
             os.unlink(file + "." + self.systemext)
         print('> Done in %.2f seconds' % (time.time() - systime))
 

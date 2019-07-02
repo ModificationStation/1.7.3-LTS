@@ -59,6 +59,7 @@ class InstallMC:
         print(sys.version)
         self.logger.info("> Welcome to the LTS version selector!")
         self.logger.info("> If you wish to supply your own configuration, type \"none\".")
+        self.logger.info("> Any two versions joined by a comma (b1.5_01,1.5_02) are client vs server version.")
         self.logger.info("> What version would you like to install?")
 
         versions = []
@@ -92,17 +93,17 @@ class InstallMC:
 
         self.logger.info("> Downloading Minecraft server...")
         if inp.__contains__(","):
-            ver = inp.split(",")[1]
+            ver = inp.split(",")[0][0] + inp.split(",")[1]
         else:
             ver = inp
         serverdltime = time.time()
         self.download(minecraftversions.versions["server"][ver]["url"], os.path.join(self.jardir, "minecraft_server.jar"))
+        self.logger.info('> Done in %.2f seconds' % (time.time() - serverdltime))
 
         self.logger.info("> Making sure temp exists...")
         if not os.path.exists(self.tempdir):
             os.makedirs(self.tempdir)
 
-        self.logger.info('> Done in %.2f seconds' % (time.time() - serverdltime))
 
     def download(self, url, dst):
         # Because legacy code is stupid.
