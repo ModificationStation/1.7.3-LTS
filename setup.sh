@@ -41,8 +41,7 @@ start() {
     if [ ! -d runtime/bin/python/ ]; then
         echo "> PyPy 7.1.1 on Python 3.6.1"
         tar -xjf runtime/bin/pypy.tar.bz2 -C runtime/bin/ pypy/
-        mv runtime/bin/pypy/ runtime/bin/python
-        rm runtime/bin/pypy/
+        mv runtime/bin/pypy3.6-7.1.1-beta-linux_x86_64-portable/ runtime/bin/python
         rm runtime/bin/pypy.tar.bz2
     fi
 
