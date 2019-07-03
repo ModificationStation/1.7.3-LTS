@@ -45,8 +45,8 @@ class Commands(object):
         if not Commands._single:
             Commands._single = True
 
-        if sys.version_info[0] == 3:
-            print('ERROR : Python3 is not supported yet.')
+        if sys.version_info[0] < 3:
+            print('ERROR : Python versions lower than 3 are not supported.')
             sys.exit(1)
 
         self.conffile = conffile
