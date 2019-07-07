@@ -4,6 +4,7 @@ import sys
 import time
 import configparser
 import platform
+import traceback
 
 
 class Cleanup:
@@ -33,6 +34,7 @@ class Cleanup:
         :return:
         """
         print("> Welcome to the LTS cleanup script!")
+        print("> This script will delete your workspace and set most of it to factory defaults.")
         print("> Are you sure you want to clean up your workspace? [y/N]")
         inp = input(": ")
         if inp != "y":
@@ -91,7 +93,7 @@ class Cleanup:
         print("> Deleting non-default config...")
         conftime = time.time()
         if os.path.exists(self.confdir):
-            if os.path.exists(os.path.join(self.confdir, "patches")):
+            if os.path.exists(os.path.join(self.confdir, "patches")) and os.path.isdir(os.path.join(self.confdir, "patches")):
                 shutil.rmtree(os.path.join(self.confdir, "patches"))
             for file in os.listdir(self.confdir):
                 if os.path.isfile(os.path.join(self.confdir, file)) and file not in ["mcp.cfg", "version.cfg"]:
@@ -101,7 +103,8 @@ class Cleanup:
         print("> Deleting system specific files from root...")
         systime = time.time()
         for file in ["decompile", "recompile", "reobfuscate", "startclient", "startserver", "updatemcp", "updatemd5"]:
-            os.unlink(file + "." + self.systemext)
+            if os.path.exists(file + "." + self.systemext) and os.path.isfile(file + "." + self.systemext):
+                os.unlink(file + "." + self.systemext)
         print('> Done in %.2f seconds' % (time.time() - systime))
 
         print("> Done!")
@@ -123,4 +126,8 @@ class Cleanup:
 
 if __name__ == '__main__':
     cleanup = Cleanup()
-    cleanup.start()
+    try:
+        cleanup.start()
+    except:
+        traceback.print_exc()
+        sys.exit(1)

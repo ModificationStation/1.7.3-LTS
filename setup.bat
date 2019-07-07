@@ -8,9 +8,11 @@ echo.
 ::
 :: Conirmation
 ::
-
-set /P c=Are you sure you want to run the setup? [y/N]? 
-if /I "%c%" EQU "Y" goto :start 
+echo Input 's' if you want to only copy the .bat files.
+echo Are you sure you want to run the setup? [y/N/s]?
+set /p c=": "
+if /I "%c%" EQU "Y" goto :start
+if /I "%c%" EQU "S" goto :scriptsonly
 goto :end
 
 
@@ -36,6 +38,13 @@ rem     output path: Output folder
 runtime\bin\7z.exe x -y -o%2 %1 >>nul
 exit /b
 
+:scriptsonly
+
+echo.
+echo ^> Setting up LTS workspace...
+runtime\bin\python\python runtime\setuplts.py scriptsonly %*
+goto :end
+
 :start
 
 ::
@@ -46,31 +55,39 @@ echo Downloading runtimes...
 
 :: Python 3.6.1
 echo ^> Python 3.6.1 embeddable zip.
-call :download https://www.python.org/ftp/python/3.6.1/python-3.6.1-embed-win32.zip runtime\bin\python.zip
+if exist "runtime\bin\python\python.exe" (
+    echo ^> Skipping Python. Already exists.
+) else (
+    call :download https://www.python.org/ftp/python/3.6.1/python-3.6.1-embed-win32.zip runtime\bin\python.zip
+)
 
 ::
 :: Unzipping natives
 ::
 
 echo.
-echo Unzipping runtimes...
+echo ^Unzipping runtimes...
 
 :: Python 3.6.1
 echo ^> python.zip
-call :unzip runtime\bin\python.zip runtime\bin\python
-del runtime\bin\python.zip
+if exist "runtime\bin\python\python.exe" (
+    echo ^> Skipping Python. Already exists.
+) else (
+    call :unzip runtime\bin\python.zip runtime\bin\python
+    del runtime\bin\python.zip
+)
 
 ::
 :: Setup LTS workspace
 ::
 
 echo.
-echo Setting up LTS workspace...
+echo ^> Setting up LTS workspace...
 
-runtime\bin\python\python runtime\setuplts.py
+runtime\bin\python\python runtime\setuplts.py %*
 
 :end
 echo.
-echo Finished^!
+echo Finished!
 
 pause

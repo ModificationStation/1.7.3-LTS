@@ -4,7 +4,8 @@ echo "Initial LTS Setup"
 echo -------------------
 echo 
 
-read -p "Are you sure you want to run the setup? [Y/N]? " answer
+echo "Input 's' if you want to only copy the .sh files."
+read -p "Are you sure you want to run the setup? [y/N/s]? " answer
 
 #
 # Methods
@@ -18,6 +19,10 @@ download() {
 # Unpack (zip, output)
 unpack() {
     unzip -qqod $2 $1
+}
+
+scriptsonly() {
+	./runtime/bin/python/bin/pypy runtime/setuplts.py scriptsonly "$@"
 }
 
 start() {
@@ -62,6 +67,8 @@ start() {
 case "$answer" in
     [yY])
         start ;;
+    [sS])
+        scriptsonly ;;
     *)
         exit ;;
 esac

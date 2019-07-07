@@ -18,13 +18,13 @@ import re
 import subprocess
 import configparser
 import urllib.request
+from hashlib import md5
+from textwrap import TextWrapper  # LTS
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))  # Workaround for python 3.6's obtuse import system.
 from filehandling.srgsexport import writesrgsfromcsvs
 from filehandling.srgsexport import writesrgsfromcsvnames
 from pylibs.annotate_gl_constants import annotate_file
 from pylibs.whereis import whereis
-from hashlib import md5
-from textwrap import TextWrapper  # LTS
 
 warnings.simplefilter('ignore')
 
@@ -378,50 +378,15 @@ class Commands(object):
         except AttributeError:
             pass
 
-    # Set silent to true be default for now.
-    def checkupdates(self, silent=True):
-        results = []
-        # HINT: Each local entry is of the form dict[filename]=(md5,modificationtime)
-        md5lcldict = {}
-        for path, dirlist, filelist in os.walk('.'):
-            for trgfile in filelist:
-                with open(os.path.join(path, trgfile), 'rb') as trgfile_file:
-                    md5lcldict[os.path.join(path, trgfile).replace(os.sep, '/').replace('./', '')] = \
-                        (md5(trgfile_file.read()).hexdigest(),
-                         os.stat(os.path.join(path, trgfile)).st_mtime
-                         )
-
-        try:
-            md5srvlist = urllib.request.urlopen('http://mcp.ocean-labs.de/files/mcprolling/mcp.md5').readlines()
-            md5srvdict = {}
-        except IOError:
-            return []
-
-        # HINT: Each remote entry is of the form dict[filename]=(md5,modificationtime)
-        for entry in md5srvlist:
-            md5srvdict[entry.split()[0]] = (entry.split()[1], float(entry.split()[2]), entry.split()[3])
-
-        for key, value in md5srvdict.items():
-            # HINT: If the remote entry is not in the local table, append
-            if not key in md5lcldict:
-                results.append([key, value[0], value[1], value[2]])
-                continue
-            # HINT: If the remote entry has a different MD5 checksum and modtime is > local entry modtime
-            if not md5lcldict[key][0] == value[0] and value[1] > md5lcldict[key][1]:
-                results.append([key, value[0], value[1], value[2]])
-
-        if results and not silent:
-            self.logger.warning('!! Updates available. Please run updatemcp to get them. !!')
-
-        return results
-
     # LTS Check for updates
     def checkforupdates(self, silent=False):
+        """
         try:
             latestversionconf = configparser.ConfigParser()
-            url = urllib.request.urlopen(
-                'https://raw.githubusercontent.com/ModificationStation/1.7.3-LTS/master/conf/version.cfg')
-            latestversionconf.read_file(url)
+            url = urllib.request.urlopen('https://raw.githubusercontent.com/ModificationStation/1.7.3-LTS/master/conf/version.cfg')
+            content = url.read().decode("UTF-8")
+            print(content)
+            latestversionconf.read_file(content)
 
             self.latestversion = latestversionconf.get('VERSION', 'MCPVersion')
 
@@ -438,7 +403,8 @@ class Commands(object):
             result = True
         else:
             result = False
-        return result
+        return result"""
+        return False
 
     def cleanbindirs(self, side):
         pathbinlk = {0: self.binclient, 1: self.binserver}
@@ -571,7 +537,7 @@ class Commands(object):
         while True:
             o = p.stdout.readline()
             retcode = p.poll()
-            if o == '' and retcode is not None:
+            if retcode is not None:
                 break
             if o != '':
                 linebuffer.append(o.strip())
@@ -618,7 +584,7 @@ class Commands(object):
         while True:
             o = p.stdout.readline()
             retcode = p.poll()
-            if o == '' and retcode is not None:
+            if retcode is not None:
                 break
             if o != '':
                 linebuffer.append(o.strip())
@@ -677,7 +643,7 @@ class Commands(object):
         while True:
             o = p.stdout.readline()
             retcode = p.poll()
-            if o == '' and retcode is not None:
+            if retcode is not None:
                 break
             if o != '':
                 linebuffer.append(o.strip())
@@ -732,11 +698,10 @@ class Commands(object):
         self.logger.debug("runcmd: '" + forkcmd + "'")
         p = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         linebuffer = []
-        retcode = None
         while True:
             o = p.stdout.readline()
             retcode = p.poll()
-            if o == '' and retcode is not None:
+            if retcode is not None:
                 break
             if o != '':
                 linebuffer.append(o.strip())
