@@ -38,12 +38,12 @@ class Cleanup:
         print("> Are you sure you want to clean up your workspace? [y/N]")
         inp = input(": ")
         if inp != "y":
-            sys.exit(0)
+            sys.exit(1)
         print("> Are you *REALLY* sure you want to clean up your workspace? [y/N]")
         print("> This deletes ALL your source files and jars! This is NOT recoverable!")
         inp = input(": ")
         if inp != "y":
-            sys.exit(0)
+            sys.exit(1)
 
         print("> Commencing the purge of the universe...")
 
@@ -128,6 +128,7 @@ if __name__ == '__main__':
     cleanup = Cleanup()
     try:
         cleanup.start()
+        sys.exit(0)
     except:
         traceback.print_exc()
         sys.exit(1)

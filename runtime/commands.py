@@ -75,7 +75,7 @@ class Commands(object):
     # HINT: This is for the singleton pattern. We either create a new instance or return the current one
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
-            cls._instance = super(Commands, cls).__new__(cls, *args, **kwargs)
+            cls._instance = super(Commands, cls).__new__(cls)
         return cls._instance
 
     def readcommands(self):
@@ -535,7 +535,7 @@ class Commands(object):
         errormsgs = []
         retcode = None
         while True:
-            o = p.stdout.readline()
+            o = p.stdout.readline().decode("utf-8")
             retcode = p.poll()
             if retcode is not None:
                 break
@@ -549,7 +549,7 @@ class Commands(object):
             self.logger.warning('%s failed.' % forkcmd)
             self.logger.warning('Return code : %d' % retcode)
             for line in linebuffer:
-                if b'saving rejects' in line:
+                if 'saving rejects' in line:
                     errormsgs.append(line)
                 self.logger.debug(line)
 
@@ -641,7 +641,7 @@ class Commands(object):
         errormsgs = []
         retcode = None
         while True:
-            o = p.stdout.readline()
+            o = p.stdout.readline().decode("utf-8")
             retcode = p.poll()
             if retcode is not None:
                 break
@@ -666,7 +666,7 @@ class Commands(object):
             self.logger.error('')
             for line in errormsgs:
                 self.logger.error(line)
-                if b'^' in line:
+                if '^' in line:
                     self.logger.error('')
             self.logger.error('==================')
             self.logger.error('')
@@ -699,7 +699,7 @@ class Commands(object):
         p = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         linebuffer = []
         while True:
-            o = p.stdout.readline()
+            o = p.stdout.readline().decode("utf-8")
             retcode = p.poll()
             if retcode is not None:
                 break
@@ -721,20 +721,24 @@ class Commands(object):
         pclient = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         msgs = []
         while True:
-            o = pclient.stdout.readline()
+            o = pclient.stdout.readline().decode("utf-8")
             returnvalue = pclient.poll()
-            if o == '' and returnvalue is not None:
+            if returnvalue is not None:
                 break
             if o != '':
                 self.loggermc.debug(o.strip())
                 msgs.append(o.strip())
 
-        if returnvalue != 0:
-            for msg in msgs:
-                self.logger.error(msg)
+        if returnvalue == 0:
+            for line in msgs:
+                self.logger.debug(line)
         else:
-            for msg in msgs:
-                self.logger.debug(msg)
+            self.logger.error('%s failed.' % forkcmd)
+            self.logger.error('Return code : %d' % returnvalue)
+            for line in msgs:
+                self.logger.error(line)
+
+        return returnvalue
 
     def extractjar(self, side):
         """Unzip the jar file to the bin directory defined in the config file"""

@@ -18,3 +18,4 @@ runtime/bin/pypy*
 
 # Block .idea folder
 .idea/
+runtime/bin/python/
