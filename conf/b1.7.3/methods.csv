@@ -1060,6 +1060,7 @@
 "func_31006_g","isInvalid","g","()Z","()Z","TileEntity","ow","net/minecraft/src","0",
 "func_31005_i","invalidate","i","()V","()V","TileEntity","ow","net/minecraft/src","0",
 "func_31004_j","validate","j","()V","()V","TileEntity","ow","net/minecraft/src","0",
+"func_474_j_","onInventoryChanged","y_","()V","()V","TileEntity","ow","net/minecraft/src","0",
 "func_30003_j","updateFlow","j","(LWorld;III)V","(Lfd;III)V","BlockFlowing","om","net/minecraft/src","0",
 "func_299_g","flowIntoBlock","h","(LWorld;IIII)V","(Lfd;IIII)V","BlockFlowing","om","net/minecraft/src","0",
 "func_300_a","calculateFlowCost","b","(LWorld;IIIII)I","(Lfd;IIIII)I","BlockFlowing","om","net/minecraft/src","0",

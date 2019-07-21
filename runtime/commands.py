@@ -549,7 +549,7 @@ class Commands(object):
             self.logger.warning('%s failed.' % forkcmd)
             self.logger.warning('Return code : %d' % retcode)
             for line in linebuffer:
-                if 'saving rejects' in line:
+                if b'saving rejects' in line:
                     errormsgs.append(line)
                 self.logger.debug(line)
 
@@ -666,7 +666,7 @@ class Commands(object):
             self.logger.error('')
             for line in errormsgs:
                 self.logger.error(line)
-                if '^' in line:
+                if b'^' in line:
                     self.logger.error('')
             self.logger.error('==================')
             self.logger.error('')
@@ -714,6 +714,7 @@ class Commands(object):
             self.logger.error('Return code : %d' % retcode)
             for line in linebuffer:
                 self.logger.error(line)
+        return retcode
 
     def runmc(self, forkcmd):
         self.logger.debug("runmc: '" + forkcmd + "'")
