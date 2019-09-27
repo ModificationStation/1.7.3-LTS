@@ -123,14 +123,15 @@ class InstallMC:
     def setupmc(self):
         self.logger.info("> If you wish to supply your own configuration, type \"none\".")
         self.logger.info("> Any two versions joined by a comma (b1.5_01,1.5_02) are client vs server version.")
+        self.logger.info("> Only b1.7.3 is supported as of now.")
 
-        versions = []
-        versionsstring = ""
-        for version in os.listdir(self.confdir):
-            if os.path.isdir(os.path.join(self.confdir, version)) and version not in ["patches"]:
-                versionsstring += version + ", "
-                versions.append(version)
-        versionsstring = versionsstring.strip(", ")
+        versions = ["b1.7.3"]
+        versionsstring = "b1.7.3"
+        #for version in os.listdir(self.confdir):
+        #    if os.path.isdir(os.path.join(self.confdir, version)) and version not in ["patches"]:
+        #        versionsstring += version + ", "
+        #        versions.append(version)
+        #versionsstring = versionsstring.strip(", ")
 
         inp = ""
         while inp not in versions:

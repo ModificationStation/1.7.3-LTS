@@ -37,12 +37,12 @@ class Cleanup:
         print("> This script will delete your workspace and set most of it to factory defaults.")
         print("> Are you sure you want to clean up your workspace? [y/N]")
         inp = input(": ")
-        if inp != "y":
+        if inp.lower() != "y":
             sys.exit(1)
         print("> Are you *REALLY* sure you want to clean up your workspace? [y/N]")
         print("> This deletes ALL your source files and jars! This is NOT recoverable!")
         inp = input(": ")
-        if inp != "y":
+        if inp.lower() != "y":
             sys.exit(1)
 
         print("> Commencing the purge of the universe...")

@@ -252,8 +252,38 @@ class Commands(object):
 
     def createsrgsforreobf(self, side):
         """Write the srgs files."""
+        srclk = {0: self.dirtemp + "/client_recomp.jar", 1: self.dirtemp + "/server_recomp.jar"}
         sidelk = {0: self.reobsrgclient, 1: self.reobsrgserver}
         writesrgsfromcsvnames(self.csvclasses, self.csvmethods, self.csvfields, sidelk[side], side)
+
+        existingclasses = self.parsesrgforclasses(sidelk[side])
+        with open(sidelk[side], "r") as file:
+            text = file.read()
+        text += self.generatesrgfornewclasses(srclk[side], existingclasses)
+        with open(sidelk[side], "w") as file:
+            file.write(text)
+
+    def parsesrgforclasses(self, srg):
+        classes = []
+        with open(srg, "r") as file:
+            for line in file:
+                if line.startswith("CL: "):
+                    entry = line.split(" ")
+                    classes.append(entry[1])
+
+        return classes
+
+    def generatesrgfornewclasses(self, jarpath, existingclasses):
+        with zipfile.ZipFile(jarpath, "r") as zipjar:
+            text = ""
+            for file in zipjar.namelist():
+                if file.endswith(".class"):
+                    file = file[:-6]
+                if file not in existingclasses and not file.__contains__(" ") and file.startswith("net/minecraft/src"):
+                    print("Found new class: \"" + file + "\", adding to SRG.")
+                    text += "\n\nCL: " + file + " " + file.split("net/minecraft/src/")[-1]
+        return text
+
 
     def checkjava(self):
         """Check for java and setup the proper directory if needed"""
@@ -380,6 +410,7 @@ class Commands(object):
 
     # LTS Check for updates
     def checkforupdates(self, silent=False):
+        # Disabled due to an issue with configparser.
         """
         try:
             latestversionconf = configparser.ConfigParser()
@@ -488,17 +519,21 @@ class Commands(object):
                                                srg=srgfile)
         self.runcmd(forkcmd)
 
-    def applyjad(self, side):
+    def applyjad(self, side, ppath=None):
         """Decompile the code using jad"""
         pathbinlk = {0: self.binclienttmp, 1: self.binservertmp}
         pathsrclk = {0: self.srcclient, 1: self.srcserver}
 
+        if ppath:
+            pathsrclk[0] = ppath + "/" + pathsrclk[0]
+            pathsrclk[1] = ppath + "/" + pathsrclk[1]
+
         # HINT: We delete the old sources and recreate it
         if os.path.exists(pathsrclk[side]):
             shutil.rmtree(pathsrclk[side])
-        os.mkdir(pathsrclk[side])
+        os.makedirs(pathsrclk[side])
 
-        # HINT: We go throught the packages and apply jad to the directory
+        # HINT: We go through the packages and apply jad to the directory
         pkglist = []
         for path, dirlist, filelist in os.walk(pathbinlk[side]):
             if glob.glob(os.path.join(path, '*.class')):
@@ -804,7 +839,7 @@ class Commands(object):
                             for line in in_file:
                                 out_file.write(line.rstrip() + '\r\n')
 
-    def rename(self, side):
+    def rename(self, side, reverse=False):
         """Rename the sources using the CSV data"""
         pathsrclk = {0: self.srcclient, 1: self.srcserver}
 

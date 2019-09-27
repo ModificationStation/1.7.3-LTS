@@ -10,7 +10,7 @@ def readsrgs(filename):
     """Reads a Searge RG script and returns a dictionnary of lists for packages, classes, methods and fields"""
 
     packages=[]; classes=[]; methods=[]; fields=[]
-    srgsdata = open(filename,'rb').read().splitlines()
+    srgsdata = open(filename,'r').read().splitlines()
 
     for row in srgsdata:
         row = row.strip()

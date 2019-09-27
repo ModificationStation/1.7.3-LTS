@@ -12,7 +12,6 @@ from optparse import OptionParser
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))  # Workaround for python 3.6's obtuse import system.
 from commands import Commands
 import recompile as recompile
-commands = Commands()
 
 
 def main(conffile=None, force_jad=False):
