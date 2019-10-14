@@ -123,15 +123,15 @@ class InstallMC:
     def setupmc(self):
         self.logger.info("> If you wish to supply your own configuration, type \"none\".")
         self.logger.info("> Any two versions joined by a comma (b1.5_01,1.5_02) are client vs server version.")
-        self.logger.info("> Only b1.7.3 is supported as of now.")
+        self.logger.info("> Only b1.7.3 is \"officially\" supported as of now.")
 
-        versions = ["b1.7.3"]
-        versionsstring = "b1.7.3"
-        #for version in os.listdir(self.confdir):
-        #    if os.path.isdir(os.path.join(self.confdir, version)) and version not in ["patches"]:
-        #        versionsstring += version + ", "
-        #        versions.append(version)
-        #versionsstring = versionsstring.strip(", ")
+        versionsstring = ""
+        versions = []
+        for version in os.listdir(self.confdir):
+            if os.path.isdir(os.path.join(self.confdir, version)) and version != "patches" and not os.path.exists(os.path.join(self.confdir, version, "DISABLED")):
+                versionsstring += version + ", "
+                versions.append(version)
+        versionsstring = versionsstring.strip(", ")
 
         inp = ""
         while inp not in versions:
@@ -167,7 +167,7 @@ class InstallMC:
     def download(self, url, dst):
         # Because legacy code is stupid.
         try:
-            print("> Downloading \"" + url + "\"...")
+            self.logger.info("> Downloading \"" + url + "\"...")
             response = urllib.request.urlopen(url)
             data = response.read()
             with open(dst, "wb") as file:

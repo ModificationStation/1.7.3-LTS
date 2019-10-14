@@ -6,6 +6,9 @@ versions = {
         "b1.8": {
             "url": "https://launcher.mojang.com/v1/objects/3139e9c29b2c74f59ea04de760ac2af5bc21b410/client.jar"
         },
+        "b1.7.3-cb": {
+            "url": "https://launcher.mojang.com/v1/objects/43db9b498cb67058d2e12d394e6507722e71bb45/client.jar"
+        },
         "b1.7.3": {
             "url": "https://launcher.mojang.com/v1/objects/43db9b498cb67058d2e12d394e6507722e71bb45/client.jar"
         },
@@ -253,6 +256,9 @@ versions = {
         },
         "b1.7.3": {
             "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.7.3.jar"
+        },
+        "b1.7.3-cb": {
+            "url": "https://files.pymcl.net/archive/craftbukkit/b1.7.3/bin/craftbukkit-1060-6f67ce03005ab3f51cb0f6401c5bd8a1996497f0.jar"
         },
         "b1.8.1": {
             "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.8.1.jar"

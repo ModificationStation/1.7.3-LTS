@@ -2,10 +2,7 @@
 
 echo "Initial LTS Setup"
 echo -------------------
-echo 
-
-echo "Input 's' if you want to only copy the .sh files."
-read -p "Are you sure you want to run the setup? [y/N/s]? " answer
+echo
 
 #
 # Methods
@@ -64,11 +61,25 @@ start() {
     exit
 }
 
-case "$answer" in
-    [yY])
-        start ;;
-    [sS])
-        scriptsonly ;;
-    *)
-        exit ;;
-esac
+if [ -d runtime/bin/python/ ]; then
+    echo "Input 's' if you want to only copy the .sh files."
+    read -p "Are you sure you want to run the setup? [y/N/s]? " answer
+
+    case "$answer" in
+        [yY])
+            start ;;
+        [sS])
+            scriptsonly ;;
+        *)
+            exit ;;
+    esac
+else
+    read -p "Are you sure you want to run the setup? [y/N]? " answer
+
+    case "$answer" in
+        [yY])
+            start ;;
+        *)
+            exit ;;
+    esac
+fi

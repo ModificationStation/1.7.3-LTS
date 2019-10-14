@@ -6,19 +6,35 @@ echo -------------------
 echo.
 
 ::
-:: Conirmation
+:: Confirmation
 ::
-echo Input 's' if you want to only copy the .bat files.
-echo Are you sure you want to run the setup? [y/N/s]?
-set /p c=": "
-if /I "%c%" EQU "Y" goto :start
-if /I "%c%" EQU "S" goto :scriptsonly
+if exist "runtime\bin\python\python.exe" (
+    goto :areyousurepython
+) else (
+    goto :areyousure
+)
+
 goto :end
 
 
 ::
 :: Methods
 ::
+
+rem Ask user confirmation.
+:areyousure
+echo Are you sure you want to run the setup? [y/N]?
+set /p c=": "
+if /I "%c%" EQU "Y" goto :start
+goto :end
+
+:areyousurepython
+echo Input 's' if you want to only copy the .bat files.
+echo Are you sure you want to run the setup? [y/N/s]?
+set /p c=": "
+if /I "%c%" EQU "Y" goto :start
+if /I "%c%" EQU "S" goto :scriptsonly
+goto :end
 
 rem Download function
 rem Arguments: 

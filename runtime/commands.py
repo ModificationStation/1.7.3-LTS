@@ -294,17 +294,17 @@ class Commands(object):
                 self.cmdjavac = 'javac.exe'
                 return
             else:
-                import _winreg
-                for flag in [_winreg.KEY_WOW64_64KEY, _winreg.KEY_WOW64_32KEY]:
+                import winreg
+                for flag in [winreg.KEY_WOW64_64KEY, winreg.KEY_WOW64_32KEY]:
                     try:
-                        k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "Software\\JavaSoft\\Java Development Kit", 0,
-                                            _winreg.KEY_READ | flag)
-                        version, _ = _winreg.QueryValueEx(k, "CurrentVersion")
+                        k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, "Software\\JavaSoft\\Java Development Kit", 0,
+                                            winreg.KEY_READ | flag)
+                        version, _ = winreg.QueryValueEx(k, "CurrentVersion")
                         k.Close()
-                        k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,
+                        k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,
                                             "Software\\JavaSoft\\Java Development Kit\\%s" % version, 0,
-                                            _winreg.KEY_READ | flag)
-                        path, _ = _winreg.QueryValueEx(k, "JavaHome")
+                                            winreg.KEY_READ | flag)
+                        path, _ = winreg.QueryValueEx(k, "JavaHome")
                         k.Close()
                         if subprocess.call('"%s" 1>NUL 2>NUL' % os.path.join(path, "bin", "javac.exe"),
                                            shell=True) == 2:
@@ -653,22 +653,26 @@ class Commands(object):
             os.mkdir(pathbinlk[side])
 
         # HINT: We create the list of source directories based on the list of packages
-        pkglist = ''
+        self.logger.info("> Gathering class list.")
+        pkglist = ""
         for path, dirlist, filelist in os.walk(pathsrclk[side]):
-            if glob.glob(os.path.join(path, '*.java')):
-                pkglist += os.path.join(path, '*.java') + ' '
+            globlist = glob.glob(os.path.join(path, '*.java'))
+            for file in globlist:
+                pkglist += os.path.join(file) + '\n'
+        with open(self.dirtemp + "/recompclasslist.txt", "w") as file:
+            file.write(pkglist)
 
         # HINT: We have to split between client & server because both have different arguments
         forkcmd = ''
         if side == 0:
             cpc = os.pathsep.join(self.cpathclient)
             forkcmd = cmdlk[side].format(classpath=cpc, sourcepath=pathsrclk[side], outpath=pathbinlk[side],
-                                         pkgs=pkglist, fixes=self.fixesclient)
+                                         pkgs="@temp/recompclasslist.txt", fixes=self.fixesclient)
 
         if side == 1:
             cps = os.pathsep.join(self.cpathserver)
             forkcmd = cmdlk[side].format(classpath=cps, sourcepath=pathsrclk[side], outpath=pathbinlk[side],
-                                         pkgs=pkglist)
+                                         pkgs="@temp/recompclasslist.txt")
 
         self.logger.debug("recompile: '" + forkcmd + "'")
         p = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
