@@ -19,6 +19,8 @@ class InstallMC:
         self.readconf()
         if platform.system() == "Windows":
             self.platform = "windows"
+        elif platform.system() == "Darwin":
+            self.platform = "macosx"
         else:
             self.platform = "linux"
         self.confdir = self.config.get("DEFAULT", "DirConf")
@@ -83,25 +85,35 @@ class InstallMC:
             for file in os.listdir(os.path.join("runtime", self.platform + "_scripts")):
                 shutil.copy2(os.path.join("runtime", self.platform + "_scripts", file), ".")
         else:
+            natives = {
+                "windows": {
+                    "lwjgl": "http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-windows.jar",
+                    "jinput": "http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-windows.jar"
+                },
+                "macosx": {
+                    # macOS requires a newer LWJGL version
+                    "lwjgl": "http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.9.0/lwjgl-platform-2.9.0-natives-osx.jar",
+                    "jinput": "http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-osx.jar"
+                },
+                "linux": {
+                    "lwjgl": "http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-linux.jar",
+                    "jinput": "http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-linux.jar"
+                }
+            }
+            lwjgl_version = "2.9.0" if self.platform == "macosx" else "2.8.4"
             self.logger.info("\n> Downloading LWJGL...")
             libtime = time.time()
-            self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/2.8.4/lwjgl-2.8.4.jar", os.path.join(self.jardir, "bin", "lwjgl.jar"))
-            self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl_util/2.8.4/lwjgl_util-2.8.4.jar", os.path.join(self.jardir, "bin", "lwjgl_util.jar"))
-            if self.platform == "win":
-                self.logger.info("> Downloading LWJGL natives for windows...")
-                self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-windows.jar", os.path.join(self.jardir, "bin", "lwjgl_natives.zip"))
-            else:
-                self.logger.info("> Downloading LWJGL natives for linux...")
-                self.download("http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-linux.jar", os.path.join(self.jardir, "bin", "lwjgl_natives.zip"))
+            self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/" + lwjgl_version + "/lwjgl-" + lwjgl_version + ".jar", os.path.join(self.jardir, "bin", "lwjgl.jar"))
+            self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl_util/" + lwjgl_version + "/lwjgl_util-" + lwjgl_version + ".jar", os.path.join(self.jardir, "bin", "lwjgl_util.jar"))
+            
+            self.logger.info("> Downloading LWJGL natives for your platform...")
+            self.download(natives[self.platform]["lwjgl"], os.path.join(self.jardir, "bin", "lwjgl_natives.zip"))
 
             self.logger.info("\n> Downloading JInput...")
             self.download("http://central.maven.org/maven2/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar", os.path.join(self.jardir, "bin", "jinput.jar"))
-            if self.platform == "win":
-                self.logger.info("> Downloading JInput natives for windows...")
-                self.download("http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-windows.jar", os.path.join(self.jardir, "bin", "jinput_natives.zip"))
-            else:
-                self.logger.info("> Downloading JInput natives for linux...")
-                self.download("http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-linux.jar", os.path.join(self.jardir, "bin", "jinput_natives.zip"))
+            self.logger.info("> Downloading JInput natives for your platform...")
+            self.download(natives[self.platform]["jinput"], os.path.join(self.jardir, "bin", "jinput_natives.zip"))
+
             self.logger.info('> Done in %.2f seconds' % (time.time() - libtime))
 
             self.logger.info("\n> Extracting natives...")
@@ -113,8 +125,10 @@ class InstallMC:
             self.logger.info('> Done in %.2f seconds' % (time.time() - exttime))
 
             self.logger.info("\n> Copying scripts...")
-            for file in os.listdir(os.path.join("runtime", self.platform + "_scripts")):
-                shutil.copy2(os.path.join("runtime", self.platform + "_scripts", file), ".")
+            scripts_dir = 'unix_scripts' if self.platform != 'windows' else 'windows_scripts'
+
+            for file in os.listdir(os.path.join("runtime", scripts_dir)):
+                shutil.copy2(os.path.join("runtime", scripts_dir, file), ".")
 
             self.logger.info("\n> Setting up minecraft...")
             self.setupmc()
