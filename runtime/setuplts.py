@@ -112,7 +112,7 @@ class InstallMC:
             self.logger.info("\n> Downloading JInput...")
             self.download("http://central.maven.org/maven2/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar", os.path.join(self.jardir, "bin", "jinput.jar"))
             self.logger.info("> Downloading JInput natives for your platform...")
-            self.download(natives[self.platform]["jinput"], os.path.join(self.jardir, "bin", "junit_natives.zip"))
+            self.download(natives[self.platform]["jinput"], os.path.join(self.jardir, "bin", "jinput_natives.zip"))
 
             self.logger.info('> Done in %.2f seconds' % (time.time() - libtime))
 
