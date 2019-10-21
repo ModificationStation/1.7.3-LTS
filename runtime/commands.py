@@ -570,7 +570,7 @@ class Commands(object):
         errormsgs = []
         retcode = None
         while True:
-            o = p.stdout.readline().decode("utf-8")
+            o = p.stdout.readline().decode(sys.stdout.encoding)
             retcode = p.poll()
             if retcode is not None:
                 break
@@ -680,7 +680,7 @@ class Commands(object):
         errormsgs = []
         retcode = None
         while True:
-            o = p.stdout.readline().decode("utf-8")
+            o = p.stdout.readline().decode(sys.stdout.encoding)
             retcode = p.poll()
             if retcode is not None:
                 break
@@ -738,7 +738,7 @@ class Commands(object):
         p = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         linebuffer = []
         while True:
-            o = p.stdout.readline().decode("utf-8")
+            o = p.stdout.readline().decode(sys.stdout.encoding)
             retcode = p.poll()
             if retcode is not None:
                 break
@@ -760,7 +760,7 @@ class Commands(object):
         pclient = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         msgs = []
         while True:
-            o = pclient.stdout.readline().decode("utf-8")
+            o = pclient.stdout.readline().decode(sys.stdout.encoding)
             returnvalue = pclient.poll()
             if returnvalue is not None:
                 break

@@ -9,9 +9,9 @@ echo.
 :: Confirmation
 ::
 if exist "runtime\bin\python\python.exe" (
-    goto :areyousurepython
+    call :areyousurepython
 ) else (
-    goto :areyousure
+    call :areyousure
 )
 
 goto :end
@@ -23,18 +23,22 @@ goto :end
 
 rem Ask user confirmation.
 :areyousure
-echo Are you sure you want to run the setup? [y/N]?
-set /p c=": "
-if /I "%c%" EQU "Y" goto :start
-goto :end
+echo ^> Are you sure you want to run the setup? [y/N]?
+set /p answer=": "
+if /I "%answer%" EQU "Y" goto :start
+exit /b
 
 :areyousurepython
-echo Input 's' if you want to only copy the .bat files.
-echo Are you sure you want to run the setup? [y/N/s]?
-set /p c=": "
-if /I "%c%" EQU "Y" goto :start
-if /I "%c%" EQU "S" goto :scriptsonly
-goto :end
+echo ^> Input 's' if you want to only copy the .bat files.
+echo ^> Input 'c' if you want to use a custom python command.
+echo ^> Input 'i' if you want to use a custom python command and only copy the .bat files.
+echo ^> Are you sure you want to run the setup? [y/N/s/c/i]?
+set /p answer=": "
+if /I "%answer%" EQU "Y" call :start
+if /I "%answer%" EQU "S" call :scriptsonly
+if /I "%answer%" EQU "C" call :setpython
+if /I "%answer%" EQU "I" call :setpythonscriptsonly
+exit /b
 
 rem Download function
 rem Arguments: 
@@ -58,8 +62,13 @@ exit /b
 
 echo.
 echo ^> Setting up LTS workspace...
-runtime\bin\python\python runtime\setuplts.py scriptsonly %*
-goto :end
+if "%~1" == "" (
+    runtime\bin\python\python runtime\setuplts.py scriptsonly
+} else (
+    echo ! Running custom python command! Some things may not work correctly!
+    "%~1" runtime\setuplts.py scriptsonly "%~1"
+)
+exit /b
 
 :start
 
@@ -67,14 +76,16 @@ goto :end
 :: Download runtimes
 ::
 echo.
-echo Downloading runtimes...
+echo ^> Downloading runtimes...
 
 :: Python 3.6.1
-echo ^> Python 3.6.1 embeddable zip.
-if exist "runtime\bin\python\python.exe" (
-    echo ^> Skipping Python. Already exists.
-) else (
-    call :download https://www.python.org/ftp/python/3.6.1/python-3.6.1-embed-win32.zip runtime\bin\python.zip
+if "%~1" == "" (
+    echo ^> Python 3.6.1 embeddable zip.
+    if exist "runtime\bin\python\python.exe" (
+        echo ^> Skipping Python. Already exists.
+    ) else (
+        call :download https://www.python.org/ftp/python/3.6.1/python-3.6.1-embed-win32.zip runtime\bin\python.zip
+    )
 )
 
 ::
@@ -82,15 +93,17 @@ if exist "runtime\bin\python\python.exe" (
 ::
 
 echo.
-echo ^Unzipping runtimes...
+echo ^> Unzipping runtimes...
 
 :: Python 3.6.1
-echo ^> python.zip
-if exist "runtime\bin\python\python.exe" (
-    echo ^> Skipping Python. Already exists.
-) else (
-    call :unzip runtime\bin\python.zip runtime\bin\python
-    del runtime\bin\python.zip
+if "%~1" == "" (
+    echo ^> python.zip
+    if exist "runtime\bin\python\python.exe" (
+        echo ^> Skipping Python. Already exists.
+    ) else (
+        call :unzip runtime\bin\python.zip runtime\bin\python
+        del runtime\bin\python.zip
+    )
 )
 
 ::
@@ -100,7 +113,25 @@ if exist "runtime\bin\python\python.exe" (
 echo.
 echo ^> Setting up LTS workspace...
 
-runtime\bin\python\python runtime\setuplts.py %*
+if "%~1" == "" (
+    runtime\bin\python\python runtime\setuplts.py
+) else (
+    echo ! Running custom python command! Some things may not work correctly!
+    "%~1" runtime\setuplts.py "%~1"
+)
+exit /b
+
+:setpython
+echo Enter the path to your desired python install.
+set /p answer=": "
+call :start "%answer%"
+exit /b
+
+:setpythonscriptsonly
+echo Enter the path to your desired python install.
+set /p answer=": "
+call :scriptsonly "%answer%"
+exit /b
 
 :end
 echo.

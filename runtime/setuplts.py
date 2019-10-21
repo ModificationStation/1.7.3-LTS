@@ -66,7 +66,7 @@ class InstallMC:
         Main entry function.
         :return:
         """
-        print(sys.version)
+        self.logger.info("> Python: " + sys.version)
 
         self.logger.info("> Welcome to the LTS setup script!")
         self.logger.info("> This script will automatically set up your MCP workspace.")
@@ -231,13 +231,25 @@ class InstallMC:
             config.read(self.conffile)
         self.config = config
 
+    def writeCommand(self, command):
+        if os.path.exists("runtime/command"):
+            os.unlink("runtime/command")
+
+        with open("runtime/command", "w") as file:
+            file.write(command)
+
 
 if __name__ == '__main__':
     installmc = InstallMC()
-    try:
+
+    if sys.argv.__len__() == 1:
         if sys.argv[1] == "scriptsonly":
             installmc.start(True)
         else:
+            installmc.writeCommand(sys.argv[0])
             installmc.start()
-    except:
+    elif sys.argv.__len__() == 2:
+        installmc.writeCommand(sys.argv[1])
+        installmc.start(True)
+    else:
         installmc.start()

@@ -18,4 +18,9 @@ runtime/bin/pypy*
 
 # Block .idea folder
 .idea/
+
+# Block python runtime.
 runtime/bin/python/
+
+# Block command file.
+runtime/command
