@@ -569,12 +569,18 @@ class Commands(object):
         linebuffer = []
         errormsgs = []
         retcode = None
+        errored = False
         while True:
-            o = p.stdout.readline().decode(sys.stdout.encoding)
+            if not errored:
+                try:
+                    o = p.stdout.readline().decode(sys.stdout.encoding)
+                except:
+                    self.logger.warning("Failed to log program output! Program is still running, but will not be logged.")
+                    errored = True
             retcode = p.poll()
             if retcode is not None:
                 break
-            if o != '':
+            if not errored and o != '':
                 linebuffer.append(o.strip())
 
         if retcode == 0:
@@ -616,12 +622,18 @@ class Commands(object):
         linebuffer = []
         errormsgs = []
         retcode = None
+        errored = False
         while True:
-            o = p.stdout.readline()
+            if not errored:
+                try:
+                    o = p.stdout.readline().decode(sys.stdout.encoding)
+                except:
+                    self.logger.warning("Failed to log program output! Program is still running, but will not be logged.")
+                    errored = True
             retcode = p.poll()
             if retcode is not None:
                 break
-            if o != '':
+            if not errored and o != '':
                 linebuffer.append(o.strip())
 
         if retcode == 0:
@@ -679,12 +691,18 @@ class Commands(object):
         linebuffer = []
         errormsgs = []
         retcode = None
+        errored = False
         while True:
-            o = p.stdout.readline().decode(sys.stdout.encoding)
+            if not errored:
+                try:
+                    o = p.stdout.readline().decode(sys.stdout.encoding)
+                except:
+                    self.logger.warning("Failed to log program output! Program is still running, but will not be logged.")
+                    errored = True
             retcode = p.poll()
             if retcode is not None:
                 break
-            if o != '':
+            if not errored and o != '':
                 linebuffer.append(o.strip())
 
         if retcode == 0:
@@ -737,12 +755,18 @@ class Commands(object):
         self.logger.debug("runcmd: '" + forkcmd + "'")
         p = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         linebuffer = []
+        errored = False
         while True:
-            o = p.stdout.readline().decode(sys.stdout.encoding)
+            if not errored:
+                try:
+                    o = p.stdout.readline().decode(sys.stdout.encoding)
+                except:
+                    self.logger.warning("Failed to log program output! Program is still running, but will not be logged.")
+                    errored = True
             retcode = p.poll()
             if retcode is not None:
                 break
-            if o != '':
+            if not errored and o != '':
                 linebuffer.append(o.strip())
 
         if retcode == 0:
@@ -759,12 +783,18 @@ class Commands(object):
         self.logger.debug("runmc: '" + forkcmd + "'")
         pclient = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         msgs = []
+        errored = False
         while True:
-            o = pclient.stdout.readline().decode(sys.stdout.encoding)
-            returnvalue = pclient.poll()
+            if not errored:
+                try:
+                    o = pclient.stdout.readline().decode(sys.stdout.encoding)
+                except:
+                    self.logger.warning("Failed to log program output! Program is still running, but will not be logged.")
+                    errored = True
+            returnvalue = p.poll()
             if returnvalue is not None:
                 break
-            if o != '':
+            if not errored and o != '':
                 self.loggermc.debug(o.strip())
                 msgs.append(o.strip())
 
