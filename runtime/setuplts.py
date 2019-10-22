@@ -242,14 +242,14 @@ class InstallMC:
 if __name__ == '__main__':
     installmc = InstallMC()
 
-    if sys.argv.__len__() == 1:
+    if sys.argv.__len__() == 2:
         if sys.argv[1] == "scriptsonly":
             installmc.start(True)
         else:
-            installmc.writeCommand(sys.argv[0])
+            installmc.writeCommand(sys.argv[1])
             installmc.start()
-    elif sys.argv.__len__() == 2:
-        installmc.writeCommand(sys.argv[1])
+    elif sys.argv.__len__() == 3:
+        installmc.writeCommand(sys.argv[2])
         installmc.start(True)
     else:
         installmc.start()
