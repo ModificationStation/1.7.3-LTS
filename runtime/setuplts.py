@@ -66,10 +66,15 @@ class InstallMC:
         Main entry function.
         :return:
         """
-        self.logger.info("> Python: " + sys.version)
+        self.logger.info("\n> Python: " + sys.version)
 
         self.logger.info("> Welcome to the LTS setup script!")
         self.logger.info("> This script will automatically set up your MCP workspace.")
+
+        if os.path.exists("src"):
+            self.logger.info("\n! /src exists! Aborting.")
+            self.logger.info("! Run cleanup in order to run setup again.")
+            sys.exit()
 
         self.logger.info("\n> Setting up your workspace...")
 
