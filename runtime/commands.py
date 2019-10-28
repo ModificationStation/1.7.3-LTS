@@ -791,7 +791,7 @@ class Commands(object):
                 except:
                     self.logger.warning("Failed to log program output! Program is still running, but will not be logged.")
                     errored = True
-            returnvalue = p.poll()
+            returnvalue = pclient.poll()
             if returnvalue is not None:
                 break
             if not errored and o != '':
