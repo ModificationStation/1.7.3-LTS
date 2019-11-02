@@ -9,15 +9,22 @@ import fnmatch
 import warnings
 import sys
 import logging
-import os, shutil, zipfile, glob, csv, re, subprocess
-import ConfigParser
-import urllib
+import os
+import shutil
+import zipfile
+import glob
+import csv
+import re
+import subprocess
+import configparser
+import urllib.request
+from hashlib import md5
+from textwrap import TextWrapper  # LTS
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))  # Workaround for python 3.6's obtuse import system.
 from filehandling.srgsexport import writesrgsfromcsvs
 from filehandling.srgsexport import writesrgsfromcsvnames
 from pylibs.annotate_gl_constants import annotate_file
 from pylibs.whereis import whereis
-from hashlib import md5
-from textwrap import TextWrapper  # LTS
 
 warnings.simplefilter('ignore')
 
@@ -33,11 +40,13 @@ class Commands(object):
 
     def __init__(self, conffile=None):
         # HINT: This is for the singleton pattern. If we already did __init__, we skip it
-        if Commands._single: return
-        if not Commands._single: Commands._single = True
+        if Commands._single:
+            return
+        if not Commands._single:
+            Commands._single = True
 
-        if sys.version_info[0] == 3:
-            print('ERROR : Python3 is not supported yet.')
+        if sys.version_info[0] < 3:
+            print('ERROR : Python versions lower than 3 are not supported.')
             sys.exit(1)
 
         self.conffile = conffile
@@ -66,7 +75,7 @@ class Commands(object):
     # HINT: This is for the singleton pattern. We either create a new instance or return the current one
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
-            cls._instance = super(Commands, cls).__new__(cls, *args, **kwargs)
+            cls._instance = super(Commands, cls).__new__(cls)
         return cls._instance
 
     def readcommands(self):
@@ -125,9 +134,9 @@ class Commands(object):
 
     def readconf(self):
         """Read the configuration file to setup some basic paths"""
-        config = ConfigParser.SafeConfigParser()
+        config = configparser.ConfigParser()
         with open(self._default_config) as config_file:
-            config.readfp(config_file)
+            config.read_file(config_file)
         if self.conffile is not None:
             config.read(self.conffile)
         self.config = config
@@ -142,7 +151,7 @@ class Commands(object):
             self.dirreobf = config.get('DEFAULT', 'DirReobf')
             self.dirlib = config.get('DEFAULT', 'DirLib')
             self.dirffout = config.get('DEFAULT', 'DirFFOut')
-        except ConfigParser.NoOptionError:
+        except configparser.NoOptionError:
             pass
 
         # HINT: We read the position of the CSV files
@@ -205,7 +214,7 @@ class Commands(object):
             self.cpathclient = config.get('RECOMPILE', 'ClassPathClient').split(',')
             self.fixesclient = config.get('RECOMPILE', 'ClientFixes')
             self.cpathserver = config.get('RECOMPILE', 'ClassPathServer').split(',')
-        except ConfigParser.NoOptionError:
+        except configparser.NoOptionError:
             pass
 
         # HINT: Reobf related configs
@@ -230,9 +239,9 @@ class Commands(object):
         self.mcperrlogfile = config.get('MCP', 'LogFileErr')
 
         # LTS Updater
-        version = ConfigParser.SafeConfigParser()
+        version = configparser.ConfigParser()
         with open('conf/version.cfg') as version_file:
-            version.readfp(version_file)
+            version.read_file(version_file)
 
         self.mcpversion = version.get('VERSION', 'MCPVersion')
 
@@ -243,8 +252,38 @@ class Commands(object):
 
     def createsrgsforreobf(self, side):
         """Write the srgs files."""
+        srclk = {0: self.dirtemp + "/client_recomp.jar", 1: self.dirtemp + "/server_recomp.jar"}
         sidelk = {0: self.reobsrgclient, 1: self.reobsrgserver}
         writesrgsfromcsvnames(self.csvclasses, self.csvmethods, self.csvfields, sidelk[side], side)
+
+        existingclasses = self.parsesrgforclasses(sidelk[side])
+        with open(sidelk[side], "r") as file:
+            text = file.read()
+        text += self.generatesrgfornewclasses(srclk[side], existingclasses)
+        with open(sidelk[side], "w") as file:
+            file.write(text)
+
+    def parsesrgforclasses(self, srg):
+        classes = []
+        with open(srg, "r") as file:
+            for line in file:
+                if line.startswith("CL: "):
+                    entry = line.split(" ")
+                    classes.append(entry[1])
+
+        return classes
+
+    def generatesrgfornewclasses(self, jarpath, existingclasses):
+        with zipfile.ZipFile(jarpath, "r") as zipjar:
+            text = ""
+            for file in zipjar.namelist():
+                if file.endswith(".class"):
+                    file = file[:-6]
+                if file not in existingclasses and not file.__contains__(" ") and file.startswith("net/minecraft/src"):
+                    print("Found new class: \"" + file + "\", adding to SRG.")
+                    text += "\n\nCL: " + file + " " + file.split("net/minecraft/src/")[-1]
+        return text
+
 
     def checkjava(self):
         """Check for java and setup the proper directory if needed"""
@@ -255,17 +294,17 @@ class Commands(object):
                 self.cmdjavac = 'javac.exe'
                 return
             else:
-                import _winreg
-                for flag in [_winreg.KEY_WOW64_64KEY, _winreg.KEY_WOW64_32KEY]:
+                import winreg
+                for flag in [winreg.KEY_WOW64_64KEY, winreg.KEY_WOW64_32KEY]:
                     try:
-                        k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "Software\\JavaSoft\\Java Development Kit", 0,
-                                            _winreg.KEY_READ | flag)
-                        version, _ = _winreg.QueryValueEx(k, "CurrentVersion")
+                        k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, "Software\\JavaSoft\\Java Development Kit", 0,
+                                            winreg.KEY_READ | flag)
+                        version, _ = winreg.QueryValueEx(k, "CurrentVersion")
                         k.Close()
-                        k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,
+                        k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,
                                             "Software\\JavaSoft\\Java Development Kit\\%s" % version, 0,
-                                            _winreg.KEY_READ | flag)
-                        path, _ = _winreg.QueryValueEx(k, "JavaHome")
+                                            winreg.KEY_READ | flag)
+                        path, _ = winreg.QueryValueEx(k, "JavaHome")
                         k.Close()
                         if subprocess.call('"%s" 1>NUL 2>NUL' % os.path.join(path, "bin", "javac.exe"),
                                            shell=True) == 2:
@@ -315,7 +354,7 @@ class Commands(object):
             md5jar = md5(jar_file.read()).hexdigest()
 
         if not md5jar == md5jarlk[side]:
-            self.logger.warn('!! Modified jar detected. Unpredictable results !!')
+            self.logger.warning('!! Modified jar detected. Unpredictable results !!')
             self.logger.debug('md5: ' + md5jar)
 
         return True
@@ -369,49 +408,16 @@ class Commands(object):
         except AttributeError:
             pass
 
-    def checkupdates(self, silent=False):
-        results = []
-        # HINT: Each local entry is of the form dict[filename]=(md5,modificationtime)
-        md5lcldict = {}
-        for path, dirlist, filelist in os.walk('.'):
-            for trgfile in filelist:
-                with open(os.path.join(path, trgfile), 'rb') as trgfile_file:
-                    md5lcldict[os.path.join(path, trgfile).replace(os.sep, '/').replace('./', '')] = \
-                        (md5(trgfile_file.read()).hexdigest(),
-                         os.stat(os.path.join(path, trgfile)).st_mtime
-                         )
-
-        try:
-            md5srvlist = urllib.urlopen('http://mcp.ocean-labs.de/files/mcprolling/mcp.md5').readlines()
-            md5srvdict = {}
-        except IOError:
-            return []
-
-        # HINT: Each remote entry is of the form dict[filename]=(md5,modificationtime)
-        for entry in md5srvlist:
-            md5srvdict[entry.split()[0]] = (entry.split()[1], float(entry.split()[2]), entry.split()[3])
-
-        for key, value in md5srvdict.items():
-            # HINT: If the remote entry is not in the local table, append
-            if not key in md5lcldict:
-                results.append([key, value[0], value[1], value[2]])
-                continue
-            # HINT: If the remote entry has a different MD5 checksum and modtime is > local entry modtime
-            if not md5lcldict[key][0] == value[0] and value[1] > md5lcldict[key][1]:
-                results.append([key, value[0], value[1], value[2]])
-
-        if results and not silent:
-            self.logger.warning('!! Updates available. Please run updatemcp to get them. !!')
-
-        return results
-
     # LTS Check for updates
     def checkforupdates(self, silent=False):
+        # Disabled due to an issue with configparser.
+        """
         try:
-            latestversionconf = ConfigParser.SafeConfigParser()
-            url = urllib.urlopen(
-                'https://raw.githubusercontent.com/ModificationStation/1.7.3-LTS/master/conf/version.cfg')
-            latestversionconf.readfp(url)
+            latestversionconf = configparser.ConfigParser()
+            url = urllib.request.urlopen('https://raw.githubusercontent.com/ModificationStation/1.7.3-LTS/master/conf/version.cfg')
+            content = url.read().decode("UTF-8")
+            print(content)
+            latestversionconf.read_file(content)
 
             self.latestversion = latestversionconf.get('VERSION', 'MCPVersion')
 
@@ -428,7 +434,8 @@ class Commands(object):
             result = True
         else:
             result = False
-        return result
+        return result"""
+        return False
 
     def cleanbindirs(self, side):
         pathbinlk = {0: self.binclient, 1: self.binserver}
@@ -512,17 +519,21 @@ class Commands(object):
                                                srg=srgfile)
         self.runcmd(forkcmd)
 
-    def applyjad(self, side):
+    def applyjad(self, side, ppath=None):
         """Decompile the code using jad"""
         pathbinlk = {0: self.binclienttmp, 1: self.binservertmp}
         pathsrclk = {0: self.srcclient, 1: self.srcserver}
 
+        if ppath:
+            pathsrclk[0] = ppath + "/" + pathsrclk[0]
+            pathsrclk[1] = ppath + "/" + pathsrclk[1]
+
         # HINT: We delete the old sources and recreate it
         if os.path.exists(pathsrclk[side]):
             shutil.rmtree(pathsrclk[side])
-        os.mkdir(pathsrclk[side])
+        os.makedirs(pathsrclk[side])
 
-        # HINT: We go throught the packages and apply jad to the directory
+        # HINT: We go through the packages and apply jad to the directory
         pkglist = []
         for path, dirlist, filelist in os.walk(pathbinlk[side]):
             if glob.glob(os.path.join(path, '*.class')):
@@ -544,7 +555,7 @@ class Commands(object):
         patchlk = {0: self.patchclient, 1: self.patchserver}
 
         # HINT: Here we transform the patches to match the directory separator of the specific platform
-        with open(self.patchtemp, 'wb') as outpatch, open(patchlk[side], 'r') as patch_file:
+        with open(self.patchtemp, 'w') as outpatch, open(patchlk[side], 'r') as patch_file:
             patch = patch_file.read().splitlines()
             for line in patch:
                 if line[:3] in ['+++', '---', 'Onl', 'dif']:
@@ -558,32 +569,38 @@ class Commands(object):
         linebuffer = []
         errormsgs = []
         retcode = None
+        errored = False
         while True:
-            o = p.stdout.readline()
+            if not errored:
+                try:
+                    o = p.stdout.readline().decode(sys.stdout.encoding)
+                except:
+                    self.logger.warning("Failed to log program output! Program is still running, but will not be logged.")
+                    errored = True
             retcode = p.poll()
-            if o == '' and retcode is not None:
+            if retcode is not None:
                 break
-            if o != '':
+            if not errored and o != '':
                 linebuffer.append(o.strip())
 
         if retcode == 0:
             for line in linebuffer:
                 self.logger.debug(line)
         else:
-            self.logger.warn('%s failed.' % forkcmd)
-            self.logger.warn('Return code : %d' % retcode)
+            self.logger.warning('%s failed.' % forkcmd)
+            self.logger.warning('Return code : %d' % retcode)
             for line in linebuffer:
                 if 'saving rejects' in line:
                     errormsgs.append(line)
                 self.logger.debug(line)
 
-            self.logger.warn('')
-            self.logger.warn('== ERRORS FOUND ==')
-            self.logger.warn('')
+            self.logger.warning('')
+            self.logger.warning('== ERRORS FOUND ==')
+            self.logger.warning('')
             for line in errormsgs:
-                self.logger.warn(line)
-            self.logger.warn('==================')
-            self.logger.warn('')
+                self.logger.warning(line)
+            self.logger.warning('==================')
+            self.logger.warning('')
 
     def applyffpatches(self, side):
         """Applies the patches to the src directory"""
@@ -591,7 +608,7 @@ class Commands(object):
         patchlk = {0: self.ffpatchclient, 1: self.ffpatchserver}
 
         # HINT: Here we transform the patches to match the directory separator of the specific platform
-        with open(self.patchtemp, 'wb') as outpatch, open(patchlk[side], 'r') as patch_file:
+        with open(self.patchtemp, 'w') as outpatch, open(patchlk[side], 'r') as patch_file:
             patch = patch_file.read().splitlines()
             for line in patch:
                 if line[:3] in ['+++', '---', 'Onl', 'dif']:
@@ -605,32 +622,38 @@ class Commands(object):
         linebuffer = []
         errormsgs = []
         retcode = None
+        errored = False
         while True:
-            o = p.stdout.readline()
+            if not errored:
+                try:
+                    o = p.stdout.readline().decode(sys.stdout.encoding)
+                except:
+                    self.logger.warning("Failed to log program output! Program is still running, but will not be logged.")
+                    errored = True
             retcode = p.poll()
-            if o == '' and retcode is not None:
+            if retcode is not None:
                 break
-            if o != '':
+            if not errored and o != '':
                 linebuffer.append(o.strip())
 
         if retcode == 0:
             for line in linebuffer:
                 self.logger.debug(line)
         else:
-            self.logger.warn('%s failed.' % forkcmd)
-            self.logger.warn('Return code : %d' % retcode)
+            self.logger.warning('%s failed.' % forkcmd)
+            self.logger.warning('Return code : %d' % retcode)
             for line in linebuffer:
                 if 'saving rejects' in line:
                     errormsgs.append(line)
                 self.logger.debug(line)
 
-            self.logger.warn('')
-            self.logger.warn('== ERRORS FOUND ==')
-            self.logger.warn('')
+            self.logger.warning('')
+            self.logger.warning('== ERRORS FOUND ==')
+            self.logger.warning('')
             for line in errormsgs:
-                self.logger.warn(line)
-            self.logger.warn('==================')
-            self.logger.warn('')
+                self.logger.warning(line)
+            self.logger.warning('==================')
+            self.logger.warning('')
 
     def recompile(self, side):
         """Recompile the sources and produce the final bins"""
@@ -642,34 +665,44 @@ class Commands(object):
             os.mkdir(pathbinlk[side])
 
         # HINT: We create the list of source directories based on the list of packages
-        pkglist = ''
+        self.logger.info("> Gathering class list.")
+        pkglist = ""
         for path, dirlist, filelist in os.walk(pathsrclk[side]):
-            if glob.glob(os.path.join(path, '*.java')):
-                pkglist += os.path.join(path, '*.java') + ' '
+            globlist = glob.glob(os.path.join(path, '*.java'))
+            for file in globlist:
+                pkglist += os.path.join(file) + '\n'
+        with open(self.dirtemp + "/recompclasslist.txt", "w") as file:
+            file.write(pkglist)
 
         # HINT: We have to split between client & server because both have different arguments
         forkcmd = ''
         if side == 0:
             cpc = os.pathsep.join(self.cpathclient)
             forkcmd = cmdlk[side].format(classpath=cpc, sourcepath=pathsrclk[side], outpath=pathbinlk[side],
-                                         pkgs=pkglist, fixes=self.fixesclient)
+                                         pkgs="@temp/recompclasslist.txt", fixes=self.fixesclient)
 
         if side == 1:
             cps = os.pathsep.join(self.cpathserver)
             forkcmd = cmdlk[side].format(classpath=cps, sourcepath=pathsrclk[side], outpath=pathbinlk[side],
-                                         pkgs=pkglist)
+                                         pkgs="@temp/recompclasslist.txt")
 
         self.logger.debug("recompile: '" + forkcmd + "'")
         p = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         linebuffer = []
         errormsgs = []
         retcode = None
+        errored = False
         while True:
-            o = p.stdout.readline()
+            if not errored:
+                try:
+                    o = p.stdout.readline().decode(sys.stdout.encoding)
+                except:
+                    self.logger.warning("Failed to log program output! Program is still running, but will not be logged.")
+                    errored = True
             retcode = p.poll()
-            if o == '' and retcode is not None:
+            if retcode is not None:
                 break
-            if o != '':
+            if not errored and o != '':
                 linebuffer.append(o.strip())
 
         if retcode == 0:
@@ -722,13 +755,18 @@ class Commands(object):
         self.logger.debug("runcmd: '" + forkcmd + "'")
         p = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         linebuffer = []
-        retcode = None
+        errored = False
         while True:
-            o = p.stdout.readline()
+            if not errored:
+                try:
+                    o = p.stdout.readline().decode(sys.stdout.encoding)
+                except:
+                    self.logger.warning("Failed to log program output! Program is still running, but will not be logged.")
+                    errored = True
             retcode = p.poll()
-            if o == '' and retcode is not None:
+            if retcode is not None:
                 break
-            if o != '':
+            if not errored and o != '':
                 linebuffer.append(o.strip())
 
         if retcode == 0:
@@ -739,26 +777,37 @@ class Commands(object):
             self.logger.error('Return code : %d' % retcode)
             for line in linebuffer:
                 self.logger.error(line)
+        return retcode
 
     def runmc(self, forkcmd):
         self.logger.debug("runmc: '" + forkcmd + "'")
         pclient = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         msgs = []
+        errored = False
         while True:
-            o = pclient.stdout.readline()
+            if not errored:
+                try:
+                    o = pclient.stdout.readline().decode(sys.stdout.encoding)
+                except:
+                    self.logger.warning("Failed to log program output! Program is still running, but will not be logged.")
+                    errored = True
             returnvalue = pclient.poll()
-            if o == '' and returnvalue is not None:
+            if returnvalue is not None:
                 break
-            if o != '':
+            if not errored and o != '':
                 self.loggermc.debug(o.strip())
                 msgs.append(o.strip())
 
-        if returnvalue != 0:
-            for msg in msgs:
-                self.logger.error(msg)
+        if returnvalue == 0:
+            for line in msgs:
+                self.logger.debug(line)
         else:
-            for msg in msgs:
-                self.logger.debug(msg)
+            self.logger.error('%s failed.' % forkcmd)
+            self.logger.error('Return code : %d' % returnvalue)
+            for line in msgs:
+                self.logger.error(line)
+
+        return returnvalue
 
     def extractjar(self, side):
         """Unzip the jar file to the bin directory defined in the config file"""
@@ -820,11 +869,11 @@ class Commands(object):
                 else:
                     # read each line in the file, stripping existing line end and adding dos line end
                     with open(src_file, 'r') as in_file:
-                        with open(dest_file, 'wb') as out_file:
+                        with open(dest_file, 'w') as out_file:
                             for line in in_file:
                                 out_file.write(line.rstrip() + '\r\n')
 
-    def rename(self, side):
+    def rename(self, side, reverse=False):
         """Rename the sources using the CSV data"""
         pathsrclk = {0: self.srcclient, 1: self.srcserver}
 
@@ -1005,7 +1054,7 @@ class Commands(object):
         if 'CHANGELOG' in [i[0] for i in newfiles]:
             print('')
             self.logger.info('== CHANGELOG ==')
-            changelog = urllib.urlopen('http://mcp.ocean-labs.de/files/mcprolling/mcp/CHANGELOG').readlines()
+            changelog = urllib.request.urlopen('http://mcp.ocean-labs.de/files/mcprolling/mcp/CHANGELOG').readlines()
             for line in changelog:
                 self.logger.info(line.strip())
                 if not line.strip():
@@ -1017,7 +1066,7 @@ class Commands(object):
             print('WARNING:')
             print('You are going to update MCP')
             print('Are you sure you want to continue ?')
-            answer = raw_input('If you really want to update, enter "Yes" ')
+            answer = input('If you really want to update, enter "Yes" ')
             if not answer.lower() in ['yes', 'y']:
                 print('You have not entered "Yes", aborting the update process')
                 sys.exit(0)
@@ -1032,7 +1081,7 @@ class Commands(object):
                     except OSError:
                         pass
 
-                urllib.urlretrieve('http://mcp.ocean-labs.de/files/mcprolling/mcp/' + entry[0], entry[0])
+                urllib.request.urlretrieve('http://mcp.ocean-labs.de/files/mcprolling/mcp/' + entry[0], entry[0])
             if entry[3] == 'D':
                 self.logger.info('Removing file from local install : %s' % entry[0])
                 # Remove file here
@@ -1064,13 +1113,13 @@ class Commands(object):
             methods = {}
             for row in methodsreader:
                 # HINT: Only include methods that have a non-empty description
-                if int(row['side']) == side and row['desc']:
+                if int(row['side']) == side and 'desc' in row and row['desc']:
                     methods[row['searge']] = row['desc'].replace('*/', '* /')
 
             fields = {}
             for row in fieldsreader:
                 # HINT: Only include fields that have a non-empty description
-                if int(row['side']) == side and row['desc']:
+                if int(row['side']) == side and 'desc' in row and row['desc']:
                     fields[row['searge']] = row['desc'].replace('*/', '* /')
 
         regexps = {

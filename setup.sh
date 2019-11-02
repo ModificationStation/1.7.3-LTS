@@ -1,10 +1,8 @@
 #!/bin/bash
 
-echo 'Initial 1.7.3-LTS Setup'
+echo "Initial LTS Setup"
 echo -------------------
-echo 
-
-read -p 'Are you sure you want to run the setup? [Y/N]? ' answer
+echo
 
 #
 # Methods
@@ -20,99 +18,114 @@ unpack() {
     unzip -qqod $2 $1
 }
 
+scriptsonly() {
+    echo "> Setting up LTS workspace..."
+    if [ -z "$1" ]; then
+	    ./runtime/bin/python/bin/pypy3 runtime/setuplts.py scriptsonly
+	else
+	    echo "! Running custom python command! Some things may not work correctly!"
+	    "$1" runtime/setuplts.py scriptsonly "$1"
+	fi
+}
+
 start() {
     #
-    # Copying scripts to the root folder
+    # Downloading natives
     #
-    
-    echo 
-    echo Copying scripts...
-    echo 
-    
-    # https://www.shellscript.sh/tips/cp-t/  :^)
-    find runtime/linux_scripts -name "*.sh" -print0 | xargs -0 cp -t ./
-    find . -maxdepth 1 -name "*.sh" | xargs -I{} chmod -v 755 {}
-    
-    #
-    # Create folders
-    #
-    
-    echo 
-    echo Creating folders...
-    echo 
-    
-    mkdir -p jars/bin/natives/
-    
-    #
-    # Download runtimes
-    #
-    
-    echo Downloading runtimes...
-    
-    # Client
-    echo ' > Client'
-    download https://launcher.mojang.com/v1/objects/43db9b498cb67058d2e12d394e6507722e71bb45/client.jar jars/bin/minecraft.jar
-    
-    # Server (From BetaCraft, official would be better)
-    echo ' > Server'
-    download https://betacraft.ovh/server-archive/minecraft/b1.7.3.jar jars/minecraft_server.jar
-    
-    # LWJGL 2.8.4
-    echo ' > LWJGL'
-    download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/2.8.4/lwjgl-2.8.4.jar jars/bin/lwjgl.jar
-    download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl_util/2.8.4/lwjgl_util-2.8.4.jar jars/bin/lwjgl_util.jar
-    download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-linux.jar jars/bin/natives/lwjgl_platform.jar
-    
-    # jinput 2.05
-    echo ' > jinput'
-    download http://central.maven.org/maven2/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar jars/bin/jinput.jar
-    download http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-linux.jar jars/bin/natives/jinput_platform.jar
-    
-    # PyPy 2.7.13
-    if [ ! -d runtime/bin/pypy_linux/ ]; then
-        echo ' > PyPy 6.0.0'
-        download https://bitbucket.org/squeaky/portable-pypy/downloads/pypy-6.0.0-linux_x86_64-portable.tar.bz2 runtime/bin/pypy.tar.bz2
+
+    # PyPy 3.6.1
+    if [ -z "$1" ] && [ ! -d runtime/bin/python/ ]; then
+        echo "> Downloading PyPy 7.1.1 on Python 3.6.1"
+
+        os=$(uname)
+        if [ "$os" == "Darwin" ]; then
+            download "https://bitbucket.org/pypy/pypy/downloads/pypy3.6-v7.1.1-osx64.tar.bz2" runtime/bin/pypy.tar.bz2
+        elif [ "$os" == "Linux" ]; then
+            download "https://bitbucket.org/squeaky/portable-pypy/downloads/pypy3.6-7.1.1-beta-linux_x86_64-portable.tar.bz2" runtime/bin/pypy.tar.bz2
+        else
+            echo "! You are not on a supported OS listed in the autoinstaller, unfortunately. Sorry about that :("
+            echo "! You may try using your own python3 install by using 'c' in setup."
+            exit 1
+        fi
     fi
-    
+
     #
     # Unzipping natives
     #
-    
-    echo
-    echo Unzipping natives
-    
-    echo ' > lwjgl_platform.jar'
-    unpack jars/bin/natives/lwjgl_platform.jar jars/bin/natives
-    echo ' > jinput_platform.jar'
-    unpack jars/bin/natives/jinput_platform.jar jars/bin/natives
-    if [ ! -d runtime/bin/pypy_linux/ ]; then
-        echo ' > PyPy 6.0.0'
-        tar -xjf runtime/bin/pypy.tar.bz2 -C runtime/bin/ pypy-6.0.0-linux_x86_64-portable/
-        mv runtime/bin/pypy-6.0.0-linux_x86_64-portable/ runtime/bin/pypy_linux
-    fi
-    echo
-    
-    #
-    # Cleanup
-    #
-    
-    echo  Cleaning up...
-    echo 
 
-    rm -R jars/bin/natives/META-INF>/dev/null
-    rm jars/bin/natives/lwjgl_platform.jar
-    rm jars/bin/natives/jinput_platform.jar
-    if [ -d runtime/bin/pypy.tar.bz2 ]; then
+    if [ -z "$1" ] && [ ! -d runtime/bin/python/ ]; then
+        echo
+        echo Unzipping natives
+
+        echo "> PyPy 7.1.1 on Python 3.6.1"
+        tar -xjf runtime/bin/pypy.tar.bz2 -C runtime/bin/
+        mv runtime/bin/pypy3.6* runtime/bin/python
         rm runtime/bin/pypy.tar.bz2
     fi
-    
+
+	#
+	# Setup LTS workspace
+	#
+
+	echo
+	echo Setting up LTS workspace...
+
+    if [ -z "$1" ]; then
+        ./runtime/bin/python/bin/pypy3 runtime/setuplts.py
+    else
+	    echo "! Running custom python command! Some things may not work correctly!"
+        "$1" runtime/setuplts.py "$1"
+    fi
+
+    echo
     echo Finished!
     exit
 }
 
-case "$answer" in
-    [yY])
-        start ;;
-    *)
-        exit ;;
-esac
+setpython() {
+    echo "> Enter the path to your desired python install."
+    read -p ": " answer
+
+    start ${answer}
+}
+
+setpythonscriptsonly() {
+    echo "> Enter the path to your desired python install."
+    read -p ": " answer
+
+    scriptsonly ${answer}
+}
+
+if [ -d runtime/bin/python/ ]; then
+    echo "> Input 's' if you want to only copy the .sh files."
+    echo "> Input 'c' if you want to use a custom python command."
+    echo "> Input 'i' if you want to use a custom python command and only copy the .sh files."
+    echo "> Are you sure you want to run the setup? [y/N/s/c/i]?"
+    read -p ": " answer
+
+    case "$answer" in
+        [yY])
+            start ;;
+        [sS])
+            scriptsonly ;;
+        [cC])
+            setpython ;;
+        [iI])
+            setpythonscriptsonly ;;
+        *)
+            exit ;;
+    esac
+else
+    echo "> Input 'c' if you want to use a custom python command."
+    echo "> Are you sure you want to run the setup? [y/N/c]?"
+    read -p ": " answer
+
+    case "$answer" in
+        [yY])
+            start ;;
+        [cC])
+            setpython ;;
+        *)
+            exit ;;
+    esac
+fi

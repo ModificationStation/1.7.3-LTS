@@ -1,22 +1,44 @@
 @echo off
-title Initial 1.7.3-LTS Setup
+title Initial LTS Setup
 
-echo Initial 1.7.3-LTS Setup
+echo Initial LTS Setup
 echo -------------------
 echo.
 
 ::
-:: Conirmation
+:: Confirmation
 ::
+if exist "runtime\bin\python\python.exe" (
+    call :areyousurepython
+) else (
+    call :areyousure
+)
 
-set /P c=Are you sure you want to run the setup? [y/N]? 
-if /I "%c%" EQU "Y" goto :start 
 goto :end
 
 
 ::
 :: Methods
 ::
+
+rem Ask user confirmation.
+:areyousure
+echo ^> Are you sure you want to run the setup? [y/N]?
+set /p answer=": "
+if /I "%answer%" EQU "Y" goto :start
+exit /b
+
+:areyousurepython
+echo ^> Input 's' if you want to only copy the .bat files.
+echo ^> Input 'c' if you want to use a custom python command.
+echo ^> Input 'i' if you want to use a custom python command and only copy the .bat files.
+echo ^> Are you sure you want to run the setup? [y/N/s/c/i]?
+set /p answer=": "
+if /I "%answer%" EQU "Y" call :start
+if /I "%answer%" EQU "S" call :scriptsonly
+if /I "%answer%" EQU "C" call :setpython
+if /I "%answer%" EQU "I" call :setpythonscriptsonly
+exit /b
 
 rem Download function
 rem Arguments: 
@@ -36,81 +58,83 @@ rem     output path: Output folder
 runtime\bin\7z.exe x -y -o%2 %1 >>nul
 exit /b
 
+:scriptsonly
+
+echo.
+echo ^> Setting up LTS workspace...
+if "%~1" == "" (
+    runtime\bin\python\python runtime\setuplts.py scriptsonly
+} else (
+    echo ! Running custom python command! Some things may not work correctly!
+    "%~1" runtime\setuplts.py scriptsonly "%~1"
+)
+exit /b
+
 :start
-
-::
-:: Copying scripts to the root folder
-::
-
-echo.
-echo Copying scripts...
-echo.
-
-xcopy /Y runtime\windows_scripts\*.bat . >> nul
-
-
-::
-:: Create folders
-::
-
-echo.
-echo Creating folders...
-echo.
-
-mkdir jars\bin\natives >> nul
 
 ::
 :: Download runtimes
 ::
+echo.
+echo ^> Downloading runtimes...
 
-echo Downloading runtimes...
-
-:: Client
-echo  ^> Client
-call :download https://launcher.mojang.com/v1/objects/43db9b498cb67058d2e12d394e6507722e71bb45/client.jar jars\bin\minecraft.jar
-
-:: Server (From BetaCraft, official would be better...)
-echo  ^> Server
-call :download https://betacraft.ovh/server-archive/minecraft/b1.7.3.jar jars\minecraft_server.jar
-
-:: LWJGL 2.8.4
-echo  ^> LWJGL
-call :download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/2.8.4/lwjgl-2.8.4.jar jars\bin\lwjgl.jar
-call :download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl_util/2.8.4/lwjgl_util-2.8.4.jar jars\bin\lwjgl_util.jar
-call :download http://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-windows.jar jars\bin\natives\lwjgl_platform.jar
-
-:: jinput 2.0.5
-echo  ^> jinput
-call :download http://central.maven.org/maven2/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar jars\bin\jinput.jar
-call :download http://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-windows.jar jars\bin\natives\jinput_platform.jar
-
+:: Python 3.6.1
+if "%~1" == "" (
+    echo ^> Python 3.6.1 embeddable zip.
+    if exist "runtime\bin\python\python.exe" (
+        echo ^> Skipping Python. Already exists.
+    ) else (
+        call :download https://www.python.org/ftp/python/3.6.1/python-3.6.1-embed-win32.zip runtime\bin\python.zip
+    )
+)
 
 ::
 :: Unzipping natives
 ::
 
 echo.
-echo Unzipping natives...
+echo ^> Unzipping runtimes...
 
-echo  ^> lwjgl_platform.jar
-call :unzip jars\bin\natives\lwjgl_platform.jar jars\bin\natives
-echo  ^> jinput_platform.jar
-call :unzip jars\bin\natives\jinput_platform.jar jars\bin\natives
-echo.
+:: Python 3.6.1
+if "%~1" == "" (
+    echo ^> python.zip
+    if exist "runtime\bin\python\python.exe" (
+        echo ^> Skipping Python. Already exists.
+    ) else (
+        call :unzip runtime\bin\python.zip runtime\bin\python
+        del runtime\bin\python.zip
+    )
+)
 
 ::
-:: Clean up
+:: Setup LTS workspace
 ::
 
-echo Cleaning up...
 echo.
+echo ^> Setting up LTS workspace...
 
-rmdir /S /Q jars\bin\natives\META-INF >> nul
-del /Q jars\bin\natives\lwjgl_platform.jar >> nul
-del /Q jars\bin\natives\jinput_platform.jar >> nul
+if "%~1" == "" (
+    runtime\bin\python\python runtime\setuplts.py
+) else (
+    echo ! Running custom python command! Some things may not work correctly!
+    "%~1" runtime\setuplts.py "%~1"
+)
+exit /b
+
+:setpython
+echo Enter the path to your desired python install.
+set /p answer=": "
+call :start "%answer%"
+exit /b
+
+:setpythonscriptsonly
+echo Enter the path to your desired python install.
+set /p answer=": "
+call :scriptsonly "%answer%"
+exit /b
 
 :end
-echo Finished^!
 echo.
+echo Finished!
 
 pause

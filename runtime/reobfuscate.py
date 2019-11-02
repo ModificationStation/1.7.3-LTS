@@ -5,8 +5,10 @@ Created on Fri Apr  8 16:54:36 2011
 @author: ProfMobius
 @version: v1.1
 """
-import sys, time
 from optparse import OptionParser
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 from commands import Commands
 
 

@@ -1,3 +1,10 @@
 @echo off
-runtime\bin\python\python_mcp runtime\decompile.py %*
+
+if exist "runtime/command" (
+    set /p command=< runtime\command
+) else (
+    set command=runtime\bin\python\python
+)
+
+"%command%" runtime\decompile.py %*
 pause
