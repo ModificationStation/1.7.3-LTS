@@ -81,7 +81,11 @@ def makepatches(side):
     currenttime = time.time()
 
     commands.logger.info("> Generating new patch files...")
-    cmd = ["diff", "-r", "-U3", "--exclude=*~", filename + "_unpatched/net", filename + "/net"]
+    
+    if os.name.__contains__("posix"):
+        cmd = ["diff -r -U3 --exclude=*~ " + filename + "_unpatched/net " + filename + "/net"]
+    else:
+        cmd = ["diff", "-r", "-U3", "--exclude=*~", filename + "_unpatched/net", filename + "/net"]
     with open("src/" + filename + ".patch", "w") as patchfile:
         subprocess.run(cmd, shell=True, stdout=patchfile,  stderr=subprocess.STDOUT, cwd="src/")
 
