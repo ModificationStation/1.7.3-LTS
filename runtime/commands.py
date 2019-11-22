@@ -474,6 +474,9 @@ class Commands(object):
             ffconf = self.ffserverconf
             ffsrc = self.xserverout
 
+        if not os.path.exists(self.dirffout):
+            os.makedirs(self.dirffout)
+
         forkcmd = self.cmdfernflower.format(jarff=self.fernflower, conf=ffconf, jarin=ffsrc, jarout=self.dirffout)
         self.runcmd(forkcmd)
 
@@ -834,7 +837,7 @@ class Commands(object):
 
         # HINT: We check if the top output directory exists. If not, we create it
         if not os.path.exists(pathbinlk[side]):
-            os.mkdir(pathbinlk[side])
+            os.makedirs(pathbinlk[side])
 
         # HINT: We extract the jar to the right location
         zipjar = zipfile.ZipFile(jarlk[side])
