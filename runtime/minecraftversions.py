@@ -288,7 +288,7 @@ versions = {
             "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.9_PreRelease4.jar"
         },
         "b1.9-pre5": {
-            "url": "http://assets.minecraft.net/1_9-pre5/minecraft_server.jar"
+            "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.9_PreRelease5.jar"
         },
         "b1.9-pre6": {
             "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.9_PreRelease6.jar"
