@@ -67,6 +67,19 @@ diff -r -U 3 minecraft/isom/ZoneRenderer.java minecraft_patched/isom/ZoneRendere
  }
 +*/
 \ No newline at end of file
+diff -r -U 3 minecraft/net/minecraft/src/EntityCreeper.java minecraft_patched/net/minecraft/src/EntityCreeper.java
+--- minecraft/net/minecraft/src/EntityCreeper.java	2019-11-28 19:02:33.853071000 +0700
++++ minecraft_patched/net/minecraft/src/EntityCreeper.java	2019-11-28 19:04:09.436858000 +0700
+@@ -11,7 +11,7 @@
+ 
+     protected void func_21057_b() {
+         super.func_21057_b();
+-        this.field_21064_bx.func_21124_a(16, -1);
++        this.field_21064_bx.func_21124_a(16, (byte)-1);
+         this.field_21064_bx.func_21124_a(17, (byte)0);
+     }
+ 
+
 diff -r -U 3 minecraft/net/minecraft/src/CodecMus.java minecraft_patched/net/minecraft/src/CodecMus.java
 --- minecraft/net/minecraft/src/CodecMus.java	2019-11-23 20:51:47.293206600 +0700
 +++ minecraft_patched/net/minecraft/src/CodecMus.java	2019-11-23 21:06:17.890236600 +0700
