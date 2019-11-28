@@ -30,3 +30,6 @@ runtime/command
 !setup.bat
 *.sh
 !setup.sh
+
+# Block .iml files 
+*.iml
