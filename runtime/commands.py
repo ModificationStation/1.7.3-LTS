@@ -80,16 +80,12 @@ class Commands(object):
 
     def readcommands(self):
         self.patcher = self.config.get('COMMANDS', 'Patcher').replace('/', os.sep).replace('\\', os.sep)
-        self.jadretro = self.config.get('COMMANDS', 'JadRetro').replace('/', os.sep).replace('\\', os.sep)
-        self.jad = self.config.get('COMMANDS', 'Jad%s' % self.osname).replace('/', os.sep).replace('\\', os.sep)
-        self.cmdjad = self.config.get('COMMANDS', 'CmdJad%s' % self.osname).replace('/', os.sep).replace('\\', os.sep)
         self.cmdpatch = self.config.get('COMMANDS', 'CmdPatch%s' % self.osname).replace('/', os.sep).replace('\\',
                                                                                                              os.sep)
         self.fernflower = self.config.get('COMMANDS', 'Fernflower').replace('/', os.sep).replace('\\', os.sep)
         self.exceptor = self.config.get('COMMANDS', 'Exceptor').replace('/', os.sep).replace('\\', os.sep)
         self.specialsource = self.config.get('COMMANDS', 'SpecialSource').replace('/', os.sep).replace('\\', os.sep)
 
-        self.cmdjadretro = self.config.get('COMMANDS', 'CmdJadretro', raw=1) % self.cmdjava
         self.cmdrecompclt = self.config.get('COMMANDS', 'CmdRecompClt', raw=1) % self.cmdjavac
         self.cmdrecompsrv = self.config.get('COMMANDS', 'CmdRecompSrv', raw=1) % self.cmdjavac
         self.cmdstartsrv = self.config.get('COMMANDS', 'CmdStartSrv', raw=1) % self.cmdjava
@@ -201,11 +197,9 @@ class Commands(object):
         self.srcserver = config.get('OUTPUT', 'SrcServer')
 
         # HINT: Patcher related configs
+        self.patchtemp = config.get('PATCHES', 'PatchTemp')
         self.patchclient = config.get('PATCHES', 'PatchClient')
         self.patchserver = config.get('PATCHES', 'PatchServer')
-        self.patchtemp = config.get('PATCHES', 'PatchTemp')
-        self.ffpatchclient = config.get('PATCHES', 'FFPatchClient')
-        self.ffpatchserver = config.get('PATCHES', 'FFPatchServer')
 
         # HINT: Recompilation related configs
         try:
@@ -283,7 +277,6 @@ class Commands(object):
                     print("Found new class: \"" + file + "\", adding to SRG.")
                     text += "\n\nCL: " + file + " " + file.split("net/minecraft/src/")[-1]
         return text
-
 
     def checkjava(self):
         """Check for java and setup the proper directory if needed"""
@@ -474,6 +467,9 @@ class Commands(object):
             ffconf = self.ffserverconf
             ffsrc = self.xserverout
 
+        if not os.path.exists(self.dirffout):
+            os.makedirs(self.dirffout)
+
         forkcmd = self.cmdfernflower.format(jarff=self.fernflower, conf=ffconf, jarin=ffsrc, jarout=self.dirffout)
         self.runcmd(forkcmd)
 
@@ -487,22 +483,6 @@ class Commands(object):
         forkcmd = self.cmdexceptor.format(jarexc=self.exceptor, input=excinput[side], output=excoutput[side],
                                           conf=excconf[side], log=exclog[side])
         self.runcmd(forkcmd)
-
-    def applyjadretro(self, side):
-        """Apply jadretro to the bin output directory"""
-        pathbinlk = {0: self.binclienttmp, 1: self.binservertmp}
-        pkglist = []
-        for path, dirlist, filelist in os.walk(pathbinlk[side]):
-            if glob.glob(os.path.join(path, '*.class')):
-                for pkg in self.ignorepkg:
-                    if pkg.replace('\\', os.sep).replace('/', os.sep) in path:
-                        break
-                else:
-                    pkglist.append(path)
-
-        for pkg in pkglist:
-            forkcmd = self.cmdjadretro.format(jarjr=self.jadretro, targetdir=pkg)
-            self.runcmd(forkcmd)
 
     def applyss(self, side):
         if side == 0:
@@ -519,93 +499,10 @@ class Commands(object):
                                                srg=srgfile)
         self.runcmd(forkcmd)
 
-    def applyjad(self, side, ppath=None):
-        """Decompile the code using jad"""
-        pathbinlk = {0: self.binclienttmp, 1: self.binservertmp}
-        pathsrclk = {0: self.srcclient, 1: self.srcserver}
-
-        if ppath:
-            pathsrclk[0] = ppath + "/" + pathsrclk[0]
-            pathsrclk[1] = ppath + "/" + pathsrclk[1]
-
-        # HINT: We delete the old sources and recreate it
-        if os.path.exists(pathsrclk[side]):
-            shutil.rmtree(pathsrclk[side])
-        os.makedirs(pathsrclk[side])
-
-        # HINT: We go through the packages and apply jad to the directory
-        pkglist = []
-        for path, dirlist, filelist in os.walk(pathbinlk[side]):
-            if glob.glob(os.path.join(path, '*.class')):
-                for pkg in self.ignorepkg:
-                    if pkg.replace('\\', os.sep).replace('/', os.sep) in path:
-                        break
-                else:
-                    pkglist.append(path)
-
-        for pkg in pkglist:
-            classlist = os.path.join(pkg, '*.class')
-
-            forkcmd = self.cmdjad.format(binjad=self.jad, outdir=pathsrclk[side], classes=classlist)
-            self.runcmd(forkcmd)
-
-    def applypatches(self, side):
-        """Applies the patches to the src directory"""
-        pathsrclk = {0: self.srcclient, 1: self.srcserver}
-        patchlk = {0: self.patchclient, 1: self.patchserver}
-
-        # HINT: Here we transform the patches to match the directory separator of the specific platform
-        with open(self.patchtemp, 'w') as outpatch, open(patchlk[side], 'r') as patch_file:
-            patch = patch_file.read().splitlines()
-            for line in patch:
-                if line[:3] in ['+++', '---', 'Onl', 'dif']:
-                    outpatch.write(line.replace('\\', os.sep).replace('/', os.sep) + '\r\n')
-                else:
-                    outpatch.write(line + '\r\n')
-
-        forkcmd = self.cmdpatch.format(srcdir=pathsrclk[side], patchfile=self.patchtemp)
-
-        p = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        linebuffer = []
-        errormsgs = []
-        retcode = None
-        errored = False
-        while True:
-            if not errored:
-                try:
-                    o = p.stdout.readline().decode(sys.stdout.encoding)
-                except:
-                    self.logger.warning("Failed to log program output! Program is still running, but will not be logged.")
-                    errored = True
-            retcode = p.poll()
-            if retcode is not None:
-                break
-            if not errored and o != '':
-                linebuffer.append(o.strip())
-
-        if retcode == 0:
-            for line in linebuffer:
-                self.logger.debug(line)
-        else:
-            self.logger.warning('%s failed.' % forkcmd)
-            self.logger.warning('Return code : %d' % retcode)
-            for line in linebuffer:
-                if 'saving rejects' in line:
-                    errormsgs.append(line)
-                self.logger.debug(line)
-
-            self.logger.warning('')
-            self.logger.warning('== ERRORS FOUND ==')
-            self.logger.warning('')
-            for line in errormsgs:
-                self.logger.warning(line)
-            self.logger.warning('==================')
-            self.logger.warning('')
-
     def applyffpatches(self, side):
         """Applies the patches to the src directory"""
         pathsrclk = {0: self.srcclient, 1: self.srcserver}
-        patchlk = {0: self.ffpatchclient, 1: self.ffpatchserver}
+        patchlk = {0: self.patchclient, 1: self.patchserver}
 
         # HINT: Here we transform the patches to match the directory separator of the specific platform
         with open(self.patchtemp, 'w') as outpatch, open(patchlk[side], 'r') as patch_file:
@@ -834,7 +731,7 @@ class Commands(object):
 
         # HINT: We check if the top output directory exists. If not, we create it
         if not os.path.exists(pathbinlk[side]):
-            os.mkdir(pathbinlk[side])
+            os.makedirs(pathbinlk[side])
 
         # HINT: We extract the jar to the right location
         zipjar = zipfile.ZipFile(jarlk[side])
@@ -1094,6 +991,7 @@ class Commands(object):
             self.logger.info('Downloading!')
 
             filename = 'mcp_' + self.latestversion + '.zip'
+            # FIXME
             os.system('runtime\\bin\\wget.exe -q -O ' + filename +
                       'http://github.com/ModificationStation/1.7.3-LTS/archive/master.zip')
             self.logger.info('Download complete! Saved to ' + filename + '!')

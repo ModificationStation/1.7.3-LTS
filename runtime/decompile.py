@@ -14,12 +14,12 @@ from commands import Commands
 import recompile as recompile
 
 
-def main(conffile=None, force_jad=False):
+def main(conffile=None):
     commands = Commands(conffile)
     commands.checkforupdates()
 
-    cltdone = decompile_side(0, commands, force_jad)
-    srvdone = decompile_side(1, commands, force_jad)
+    cltdone = decompile_side(0, commands)
+    srvdone = decompile_side(1, commands)
 
     commands.logger.info('== Post decompiling operations ==')
     if not cltdone or not srvdone:
@@ -61,23 +61,14 @@ def decompile_side(side=0, commands=None, force_jad=False):
             commands.applyss(side)
             commands.logger.info('> Applying Exceptor')
             commands.applyexceptor(side)
-            if use_ff:
-                commands.logger.info('> Decompiling...')
-                commands.applyff(side)
-                commands.logger.info('> Unzipping the sources')
-                commands.extractsrc(side)
+            commands.logger.info('> Decompiling...')
+            commands.applyff(side)
+            commands.logger.info('> Unzipping the sources')
+            commands.extractsrc(side)
             commands.logger.info('> Unzipping the jar')
             commands.extractjar(side)
-            if not use_ff:
-                commands.logger.info('> Applying jadretro')
-                commands.applyjadretro(side)
-                commands.logger.info('> Decompiling...')
-                commands.applyjad(side)
             commands.logger.info('> Applying patches')
-            if not use_ff:
-                commands.applypatches(side)
-            else:
-                commands.applyffpatches(side)
+            commands.applyffpatches(side)
             # LTS JAVADOC
             commands.logger.info('> Adding javadoc')
             commands.process_javadoc(side)
@@ -97,8 +88,6 @@ def decompile_side(side=0, commands=None, force_jad=False):
 
 if __name__ == '__main__':
     parser = OptionParser(version='MCP %s' % Commands.MCPVersion)
-    parser.add_option('-j', '--jad', dest='force_jad', action='store_true',
-                      help='force use of JAD even if Fernflower available', default=False)
     parser.add_option('-c', '--config', dest='config', help='additional configuration file')
     (options, args) = parser.parse_args()
-    main(options.config, options.force_jad)
+    main(options.config)

@@ -1,2 +1,2 @@
-To use the fernflower decompiler, just put the fernflower.jar file into the runtime/bin folder.
-Only tested with fernflower 0.8.6, other version may fail.
+LTS is using fixed fernflower; sources here: https://github.com/Dereku/fernflower
+License: http://www.apache.org/licenses/LICENSE-2.0

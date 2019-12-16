@@ -1,5 +1,8 @@
 versions = {
     "client": {
+        "b1.9-pre5": {
+            "url": "http://assets.minecraft.net/1_9-pre5/minecraft.jar"
+        },
         "b1.8.1": {
             "url": "https://launcher.mojang.com/v1/objects/6b562463ccc2c7ff12ff350a2b04a67b3adcd37b/client.jar"
         },

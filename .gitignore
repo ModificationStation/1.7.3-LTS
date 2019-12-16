@@ -24,3 +24,12 @@ runtime/bin/python/
 
 # Block command file.
 runtime/command
+
+# Block scripts in the root folder except setup.*
+*.bat
+!setup.bat
+*.sh
+!setup.sh
+
+# Block .iml files 
+*.iml
