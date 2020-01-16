@@ -92,30 +92,30 @@ class InstallMC:
         else:
             natives = {
                 "windows": {
-                    "lwjgl": "https://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-windows.jar",
-                    "jinput": "https://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-windows.jar"
+                    "lwjgl": "https://repo1.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-windows.jar",
+                    "jinput": "https://repo1.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-windows.jar"
                 },
                 "macosx": {
                     # macOS requires a newer LWJGL version
-                    "lwjgl": "https://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.9.0/lwjgl-platform-2.9.0-natives-osx.jar",
-                    "jinput": "https://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-osx.jar"
+                    "lwjgl": "https://repo1.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.9.0/lwjgl-platform-2.9.0-natives-osx.jar",
+                    "jinput": "https://repo1.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-osx.jar"
                 },
                 "linux": {
-                    "lwjgl": "https://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-linux.jar",
-                    "jinput": "https://central.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-linux.jar"
+                    "lwjgl": "https://repo1.maven.org/maven2/org/lwjgl/lwjgl/lwjgl-platform/2.8.4/lwjgl-platform-2.8.4-natives-linux.jar",
+                    "jinput": "https://repo1.maven.org/maven2/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-linux.jar"
                 }
             }
             lwjgl_version = "2.9.0" if self.platform == "macosx" else "2.8.4"
             self.logger.info("\n> Downloading LWJGL...")
             libtime = time.time()
-            self.download("https://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/" + lwjgl_version + "/lwjgl-" + lwjgl_version + ".jar", os.path.join(self.jardir, "bin", "lwjgl.jar"))
-            self.download("https://central.maven.org/maven2/org/lwjgl/lwjgl/lwjgl_util/" + lwjgl_version + "/lwjgl_util-" + lwjgl_version + ".jar", os.path.join(self.jardir, "bin", "lwjgl_util.jar"))
+            self.download("https://repo1.maven.org/maven2/org/lwjgl/lwjgl/lwjgl/" + lwjgl_version + "/lwjgl-" + lwjgl_version + ".jar", os.path.join(self.jardir, "bin", "lwjgl.jar"))
+            self.download("https://repo1.maven.org/maven2/org/lwjgl/lwjgl/lwjgl_util/" + lwjgl_version + "/lwjgl_util-" + lwjgl_version + ".jar", os.path.join(self.jardir, "bin", "lwjgl_util.jar"))
             
             self.logger.info("> Downloading LWJGL natives for your platform...")
             self.download(natives[self.platform]["lwjgl"], os.path.join(self.jardir, "bin", "lwjgl_natives.zip"))
 
             self.logger.info("\n> Downloading JInput...")
-            self.download("http://central.maven.org/maven2/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar", os.path.join(self.jardir, "bin", "jinput.jar"))
+            self.download("https://repo1.maven.org/maven2/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar", os.path.join(self.jardir, "bin", "jinput.jar"))
             self.logger.info("> Downloading JInput natives for your platform...")
             self.download(natives[self.platform]["jinput"], os.path.join(self.jardir, "bin", "jinput_natives.zip"))
 
