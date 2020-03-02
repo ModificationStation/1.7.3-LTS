@@ -102,7 +102,7 @@ class Cleanup:
                     os.unlink(file + "." + self.systemext)
         except Exception as e:
             no_error = False
-            print("> Couldn't clear \"" + self.jardir + "\"!")
+            print("> Couldn't clear system specific files!")
             traceback.print_exc()
 
         if no_error:
