@@ -46,65 +46,69 @@ class Cleanup:
             sys.exit(1)
 
         print("> Commencing the purge of the universe...")
+        no_error = True
 
         print("> Deleting \"" + self.jardir + "\"...")
         jartime = time.time()
         # Delete jars while keeping server.properties.
-        if os.path.exists(self.jardir):
-            if not os.path.exists(self.tempdir):
-                os.makedirs(self.tempdir)
-            shutil.copy2(os.path.join(self.jardir, "server.properties"), self.tempdir)
-            shutil.rmtree(self.jardir)
-            os.makedirs(self.jardir)
-            if os.path.exists(os.path.join(self.tempdir, "server.properties")):
-                shutil.copy2(os.path.join(self.tempdir, "server.properties"), self.jardir)
+        try:
+            if os.path.exists(self.jardir):
+                if not os.path.exists(self.tempdir):
+                    os.makedirs(self.tempdir)
+                if os.path.exists(os.path.join(self.jardir, "server.properties")):
+                    shutil.copy2(os.path.join(self.jardir, "server.properties"), self.tempdir)
+                shutil.rmtree(self.jardir)
+                os.makedirs(self.jardir)
+                if os.path.exists(os.path.join(self.tempdir, "server.properties")):
+                    shutil.copy2(os.path.join(self.tempdir, "server.properties"), self.jardir)
+        except Exception as e:
+            no_error = False
+            print("> Couldn't clear \"" + self.jardir + "\"!")
+            traceback.print_exc()
         print('> Done in %.2f seconds' % (time.time() - jartime))
 
-        print("> Deleting \"" + self.reobfdir + "\"...")
-        reobftime = time.time()
-        if os.path.exists(self.reobfdir):
-            shutil.rmtree(self.reobfdir)
-        print('> Done in %.2f seconds' % (time.time() - reobftime))
-
-        print("> Deleting \"" + self.logdir + "\"...")
-        logtime = time.time()
-        if os.path.exists(self.logdir):
-            shutil.rmtree(self.logdir)
-        print('> Done in %.2f seconds' % (time.time() - logtime))
-
-        print("> Deleting \"" + self.bindir + "\"...")
-        bintime = time.time()
-        if os.path.exists(self.bindir):
-            shutil.rmtree(self.bindir)
-        print('> Done in %.2f seconds' % (time.time() - bintime))
-
-        print("> Deleting \"" + self.srcdir + "\"...")
-        srctime = time.time()
-        if os.path.exists(self.srcdir):
-            shutil.rmtree(self.srcdir)
-        print('> Done in %.2f seconds' % (time.time() - srctime))
-
-        print("> Deleting \"" + self.tempdir + "\"...")
-        temptime = time.time()
-        if os.path.exists(self.tempdir):
-            shutil.rmtree(self.tempdir)
-        print('> Done in %.2f seconds' % (time.time() - temptime))
+        for dir in [self.reobfdir, self.bindir, self.srcdir, self.tempdir]:
+            print("> Deleting \"" + dir + "\"...")
+            deltime = time.time()
+            try:
+                if os.path.exists(dir):
+                    shutil.rmtree(dir)
+            except Exception as e:
+                no_error = False
+                print("> Couldn't clear \"" + dir + "\"!")
+                traceback.print_exc()
+            print('> Done in %.2f seconds' % (time.time() - deltime))
 
         print("> Deleting non-default config...")
         conftime = time.time()
-        if os.path.exists(self.confdir):
-            if os.path.exists(os.path.join(self.confdir, "patches")) and os.path.isdir(os.path.join(self.confdir, "patches")):
-                shutil.rmtree(os.path.join(self.confdir, "patches"))
-            for file in os.listdir(self.confdir):
-                if os.path.isfile(os.path.join(self.confdir, file)) and file not in ["mcp.cfg", "version.cfg"]:
-                    os.unlink(os.path.join(self.confdir, file))
+        try:
+            if os.path.exists(self.confdir):
+                if os.path.exists(os.path.join(self.confdir, "patches")) and os.path.isdir(os.path.join(self.confdir, "patches")):
+                    shutil.rmtree(os.path.join(self.confdir, "patches"))
+                for file in os.listdir(self.confdir):
+                    if os.path.isfile(os.path.join(self.confdir, file)) and file not in ["mcp.cfg", "version.cfg"]:
+                        os.unlink(os.path.join(self.confdir, file))
+        except Exception as e:
+            no_error = False
+            print("> Couldn't clear \"" + self.confdir + "\"!")
+            traceback.print_exc()
         print('> Done in %.2f seconds' % (time.time() - conftime))
 
         print("> Deleting system specific files from root...")
         systime = time.time()
-        for file in ["decompile", "recompile", "reobfuscate", "startclient", "startserver", "updatemcp", "updatemd5"]:
-            if os.path.exists(file + "." + self.systemext) and os.path.isfile(file + "." + self.systemext):
-                os.unlink(file + "." + self.systemext)
+        try:
+            for file in ["decompile", "recompile", "reobfuscate", "startclient", "startserver", "updatemcp", "updatemd5"]:
+                if os.path.exists(file + "." + self.systemext) and os.path.isfile(file + "." + self.systemext):
+                    os.unlink(file + "." + self.systemext)
+        except Exception as e:
+            no_error = False
+            print("> Couldn't clear \"" + self.jardir + "\"!")
+            traceback.print_exc()
+
+        if no_error:
+            os.unlink("cleanup." + self.systemext)
+        else:
+            print("> Cleanup file has not been deleted because an error occurred earlier.")
         print('> Done in %.2f seconds' % (time.time() - systime))
 
         print("> Done!")

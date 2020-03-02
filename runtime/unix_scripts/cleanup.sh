@@ -9,7 +9,3 @@ else
 fi
 
 "${command}" runtime/cleanup.py "$@"
-
-if [ $? -ne 1 ]; then
-    rm -f ./cleanup.sh
-fi

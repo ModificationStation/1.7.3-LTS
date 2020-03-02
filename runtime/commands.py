@@ -583,7 +583,7 @@ class Commands(object):
             forkcmd = cmdlk[side].format(classpath=cps, sourcepath=pathsrclk[side], outpath=pathbinlk[side],
                                          pkgs="@temp/recompclasslist.txt")
 
-        self.logger.debug("recompile: '" + forkcmd + "'")
+        self.logger.info("recompile: '" + forkcmd + "'")
         p = subprocess.Popen(forkcmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         linebuffer = []
         errormsgs = []

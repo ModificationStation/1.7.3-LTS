@@ -7,7 +7,3 @@ if exist "runtime/command" (
 )
 
 "%command%" runtime\cleanup.py %*
-
-if not exitcode == 1 (
-    del /F cleanup.bat > nul
-)
