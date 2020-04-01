@@ -49,6 +49,8 @@ def decompile_side(side=0, commands=None, force_jad=False):
         return True
 
     if not os.path.exists(srcdir):
+        isoldmappings = os.path.exists("conf/OLDMAPPINGS")
+        isbetamappings = os.path.exists("conf/BETAMAPPINGS")
         if side == 0:
             commands.logger.info('== Decompiling Client ==')
         if side == 1:
@@ -56,26 +58,35 @@ def decompile_side(side=0, commands=None, force_jad=False):
 
         if commands.checkjars(side):
             currenttime = time.time()
-            commands.logger.info('> Creating SRGS')
-            commands.createsrgs(side)
+            if not isoldmappings or isbetamappings:
+                commands.logger.info('> Creating SRGS')
+                commands.createsrgs(side)
             commands.logger.info('> Applying SpecialSource')
-            commands.applyss(side)
-            commands.logger.info('> Applying Exceptor')
-            commands.applyexceptor(side)
+            commands.applyss(side, isoldmappings and not isbetamappings)
+            if not isoldmappings:
+                commands.logger.info('> Applying Exceptor')
+                commands.applyexceptor(side)
             commands.logger.info('> Decompiling...')
+            if isoldmappings and not isbetamappings:
+                if side == 0:
+                    shutil.copy(commands.rgclientout, commands.xclientout)
+                else:
+                    shutil.copy(commands.rgserverout, commands.xserverout)
             commands.applyff(side)
             commands.logger.info('> Unzipping the sources')
             commands.extractsrc(side)
             commands.logger.info('> Unzipping the jar')
             commands.extractjar(side)
-            commands.logger.info('> Applying patches')
-            commands.applyffpatches(side)
+            if not isoldmappings:
+                commands.logger.info('> Applying patches')
+                commands.applyffpatches(side)
             # LTS JAVADOC
-            commands.logger.info('> Adding javadoc')
-            commands.process_javadoc(side)
+            if not isoldmappings:
+                commands.logger.info('> Adding javadoc')
+                commands.process_javadoc(side)
             # LTS END JAVADOC
-            commands.logger.info('> Renaming sources')
-            commands.rename(side)
+                commands.logger.info('> Renaming sources')
+                commands.rename(side)
             if os.path.exists("conf/ModLoader.java") and side == 0:
                 commands.logger.info('> Do you want to install a fixed class for ModLoader? [y/N]')
                 commands.logger.info('> You will still need to change some errored variables from int to boolean.')

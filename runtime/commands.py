@@ -484,16 +484,22 @@ class Commands(object):
                                           conf=excconf[side], log=exclog[side])
         self.runcmd(forkcmd)
 
-    def applyss(self, side):
+    def applyss(self, side, oldmappings=False):
         if side == 0:
             ssinputjar = self.jarclient
             ssoutputjar = self.rgclientout
-            srgfile = self.rgsrgsclient
+            if oldmappings:
+                srgfile = "conf/client_rg.srg"
+            else:
+                srgfile = self.rgsrgsclient
 
         if side == 1:
             ssinputjar = self.jarserver
             ssoutputjar = self.rgserverout
-            srgfile = self.rgsrgsserver
+            if oldmappings:
+                srgfile = "conf/server_rg.srg"
+            else:
+                srgfile = self.rgsrgsserver
 
         forkcmd = self.cmdspecialsource.format(jarexc=self.specialsource, input=ssinputjar, output=ssoutputjar,
                                                srg=srgfile)
