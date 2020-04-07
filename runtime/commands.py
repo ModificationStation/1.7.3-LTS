@@ -484,25 +484,18 @@ class Commands(object):
                                           conf=excconf[side], log=exclog[side])
         self.runcmd(forkcmd)
 
-    def applyss(self, side, oldmappings=False):
+    def applyss(self, side):
         if side == 0:
             ssinputjar = self.jarclient
             ssoutputjar = self.rgclientout
-            if oldmappings:
-                srgfile = "conf/client_rg.srg"
-            else:
-                srgfile = self.rgsrgsclient
+            srgfile = self.rgsrgsclient
 
         if side == 1:
             ssinputjar = self.jarserver
             ssoutputjar = self.rgserverout
-            if oldmappings:
-                srgfile = "conf/server_rg.srg"
-            else:
-                srgfile = self.rgsrgsserver
+            srgfile = self.rgsrgsserver
 
-        forkcmd = self.cmdspecialsource.format(jarexc=self.specialsource, input=ssinputjar, output=ssoutputjar,
-                                               srg=srgfile)
+        forkcmd = self.cmdspecialsource.format(jarexc=self.specialsource, input=ssinputjar, output=ssoutputjar, srg=srgfile)
         self.runcmd(forkcmd)
 
     def applyffpatches(self, side):

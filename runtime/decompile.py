@@ -13,6 +13,7 @@ from optparse import OptionParser
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))  # Workaround for python 3.6's obtuse import system.
 from commands import Commands
 import recompile as recompile
+import rgsparser
 
 
 def main(conffile=None):
@@ -61,8 +62,12 @@ def decompile_side(side=0, commands=None, force_jad=False):
             if not isoldmappings or isbetamappings:
                 commands.logger.info('> Creating SRGS')
                 commands.createsrgs(side)
+            else:
+                commands.logger.info("> Generating SRGS from old files. Only field and class names will be converted!")
+                mappings = rgsparser.RGSParser(side)
+                mappings.export_srgs()
             commands.logger.info('> Applying SpecialSource')
-            commands.applyss(side, isoldmappings and not isbetamappings)
+            commands.applyss(side)
             if not isoldmappings:
                 commands.logger.info('> Applying Exceptor')
                 commands.applyexceptor(side)
