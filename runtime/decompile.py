@@ -8,18 +8,19 @@ Created on Fri Apr  8 16:54:36 2011
 import time
 import os
 import sys
+import shutil
 from optparse import OptionParser
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))  # Workaround for python 3.6's obtuse import system.
 from commands import Commands
 import recompile as recompile
 
 
-def main(conffile=None, force_jad=False):
+def main(conffile=None):
     commands = Commands(conffile)
     commands.checkforupdates()
 
-    cltdone = decompile_side(0, commands, force_jad)
-    srvdone = decompile_side(1, commands, force_jad)
+    cltdone = decompile_side(0, commands)
+    srvdone = decompile_side(1, commands)
 
     commands.logger.info('== Post decompiling operations ==')
     if not cltdone or not srvdone:
@@ -61,29 +62,27 @@ def decompile_side(side=0, commands=None, force_jad=False):
             commands.applyss(side)
             commands.logger.info('> Applying Exceptor')
             commands.applyexceptor(side)
-            if use_ff:
-                commands.logger.info('> Decompiling...')
-                commands.applyff(side)
-                commands.logger.info('> Unzipping the sources')
-                commands.extractsrc(side)
+            commands.logger.info('> Decompiling...')
+            commands.applyff(side)
+            commands.logger.info('> Unzipping the sources')
+            commands.extractsrc(side)
             commands.logger.info('> Unzipping the jar')
             commands.extractjar(side)
-            if not use_ff:
-                commands.logger.info('> Applying jadretro')
-                commands.applyjadretro(side)
-                commands.logger.info('> Decompiling...')
-                commands.applyjad(side)
             commands.logger.info('> Applying patches')
-            if not use_ff:
-                commands.applypatches(side)
-            else:
-                commands.applyffpatches(side)
+            commands.applyffpatches(side)
             # LTS JAVADOC
             commands.logger.info('> Adding javadoc')
             commands.process_javadoc(side)
             # LTS END JAVADOC
             commands.logger.info('> Renaming sources')
             commands.rename(side)
+            if os.path.exists("conf/ModLoader.java") and side == 0:
+                commands.logger.info('> Do you want to install a fixed class for ModLoader? [y/N]')
+                commands.logger.info('> You will still need to change some errored variables from int to boolean.')
+                inp = str(input(": "))
+                if inp.lower() == "yes" or inp.lower() == "y":
+                    shutil.copyfile("conf/ModLoader.java", commands.dirsrc + "/minecraft/net/minecraft/src/ModLoader.java")
+                
             commands.logger.info('> Done in %.2f seconds' % (time.time() - currenttime))
     else:
         if side == 0:
@@ -97,8 +96,6 @@ def decompile_side(side=0, commands=None, force_jad=False):
 
 if __name__ == '__main__':
     parser = OptionParser(version='MCP %s' % Commands.MCPVersion)
-    parser.add_option('-j', '--jad', dest='force_jad', action='store_true',
-                      help='force use of JAD even if Fernflower available', default=False)
     parser.add_option('-c', '--config', dest='config', help='additional configuration file')
     (options, args) = parser.parse_args()
-    main(options.config, options.force_jad)
+    main(options.config)

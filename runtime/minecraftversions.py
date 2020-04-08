@@ -1,5 +1,8 @@
 versions = {
     "client": {
+        "b1.9-pre5": {
+            "url": "http://assets.minecraft.net/1_9-pre5/minecraft.jar"
+        },
         "b1.8.1": {
             "url": "https://launcher.mojang.com/v1/objects/6b562463ccc2c7ff12ff350a2b04a67b3adcd37b/client.jar"
         },
@@ -276,19 +279,19 @@ versions = {
             "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.9_PreRelease1.jar"
         },
         "b1.9-pre2": {
-            "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.9_PreRelease2.jar"
+            "url": "http://assets.minecraft.net/1_9-pre2/minecraft_server.jar"
         },
         "b1.9-pre3": {
-            "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.9_PreRelease3.jar"
+            "url": "http://assets.minecraft.net/1_9-pre3/minecraft_server.jar"
         },
         "b1.9-pre4": {
-            "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.9_PreRelease4.jar"
+            "url": "http://assets.minecraft.net/1_9-pre4/minecraft_server.jar"
         },
         "b1.9-pre5": {
-            "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.9_PreRelease5.jar"
+            "url": "http://assets.minecraft.net/1_9-pre5/minecraft_server.jar"
         },
         "b1.9-pre6": {
-            "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.9_PreRelease6.jar"
+            "url": "http://assets.minecraft.net/1_9-pre6/minecraft_server.jar"
         }
     }
 }
