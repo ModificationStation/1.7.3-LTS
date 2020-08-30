@@ -261,7 +261,7 @@ versions = {
             "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.7.3.jar"
         },
         "b1.7.3-mcp": {
-            "url": "https://files.pymcl.net/archive/craftbukkit/b1.7.3/bin/craftbukkit-1060-6f67ce03005ab3f51cb0f6401c5bd8a1996497f0.jar"
+            "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.7.3.jar"
         },
         "b1.8.1": {
             "url": "http://files.pymcl.net/server/vanilla/bin/Beta%201.8.1.jar"
