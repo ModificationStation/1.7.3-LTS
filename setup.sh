@@ -39,9 +39,9 @@ start() {
 
         os=$(uname)
         if [ "$os" == "Darwin" ]; then
-            download "https://bitbucket.org/pypy/pypy/downloads/pypy3.6-v7.1.1-osx64.tar.bz2" runtime/bin/pypy.tar.bz2
+            download "https://downloads.python.org/pypy/pypy3.6-v7.3.2-osx64.tar.bz2" runtime/bin/pypy.tar.bz2
         elif [ "$os" == "Linux" ]; then
-            download "https://bitbucket.org/squeaky/portable-pypy/downloads/pypy3.6-7.1.1-beta-linux_x86_64-portable.tar.bz2" runtime/bin/pypy.tar.bz2
+            download "https://downloads.python.org/pypy/pypy3.6-v7.3.2-linux32.tar.bz2" runtime/bin/pypy.tar.bz2
         else
             echo "! You are not on a supported OS listed in the autoinstaller, unfortunately. Sorry about that :("
             echo "! You may try using your own python3 install by using 'c' in setup."
@@ -57,7 +57,7 @@ start() {
         echo
         echo Unzipping natives
 
-        echo "> PyPy 7.1.1 on Python 3.6.1"
+        echo "> PyPy 7.3.2 on Python 3.6.1"
         tar -xjf runtime/bin/pypy.tar.bz2 -C runtime/bin/
         mv runtime/bin/pypy3.6* runtime/bin/python
         rm runtime/bin/pypy.tar.bz2
