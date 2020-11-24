@@ -1,66 +1,89 @@
-diff -r -U 3 minecraft\net\minecraft\src\CodecMus.java minecraft_patched\net\minecraft\src\CodecMus.java
---- minecraft\net\minecraft\src\CodecMus.java	Tue Jul 05 00:59:58 2011
-+++ minecraft_patched\net\minecraft\src\CodecMus.java	Tue Jul 05 01:03:31 2011
-@@ -1,5 +1,6 @@
+diff -r -U3 --exclude='*~' minecraft_unpatched/net/minecraft/src/CodecMus.java minecraft/net/minecraft/src/CodecMus.java
+--- minecraft_unpatched/net/minecraft/src/CodecMus.java	2020-11-24 22:39:44.115112700 +0000
++++ minecraft/net/minecraft/src/CodecMus.java	2020-11-24 22:45:59.001900000 +0000
+@@ -1,10 +1,16 @@
  package net.minecraft.src;
  
 +import java.io.IOException;
  import java.io.InputStream;
- import net.minecraft.src.MusInputStream;
  import paulscode.sound.codecs.CodecJOrbis;
-@@ -7,6 +8,10 @@
+ 
  public class CodecMus extends CodecJOrbis {
- 
-    protected InputStream openInputStream() {
--      return new MusInputStream(this, this.url, this.urlConnection.getInputStream());
-+      try {
-+         return new MusInputStream(this, this.url, this.urlConnection.getInputStream());
-+      } catch (IOException e) {
-+         return null;
-+      }
-    }
+     protected InputStream openInputStream() {
+-        return new MusInputStream(this, this.url, this.urlConnection.getInputStream());
++        try {
++			return new MusInputStream(this, this.url, this.urlConnection.getInputStream());
++		} catch (IOException e) {
++			e.printStackTrace();
++			return null;
++		}
+     }
  }
-diff -r -U 3 minecraft\net\minecraft\src\ItemMap.java minecraft_patched\net\minecraft\src\ItemMap.java
---- minecraft\net\minecraft\src\ItemMap.java	Tue Jul 05 01:00:10 2011
-+++ minecraft_patched\net\minecraft\src\ItemMap.java	Tue Jul 05 01:02:12 2011
-@@ -19,7 +19,7 @@
-    }
- 
-    public static MapData func_28013_a(short var0, World var1) {
--      "map_" + var0;
-+//      "map_" + var0;
-       MapData var3 = (MapData)var1.func_28103_a(MapData.class, "map_" + var0);
-       if(var3 == null) {
-          int var4 = var1.func_28101_b("map");
-@@ -32,7 +32,7 @@
-    }
- 
-    public MapData func_28012_a(ItemStack var1, World var2) {
--      "map_" + var1.func_21181_i();
-+//      "map_" + var1.func_21181_i();
-       MapData var4 = (MapData)var2.func_28103_a(MapData.class, "map_" + var1.func_21181_i());
-       if(var4 == null) {
-          var1.func_28156_b(var2.func_28101_b("map"));
-diff -r -U 3 minecraft\net\minecraft\src\MusInputStream.java minecraft_patched\net\minecraft\src\MusInputStream.java
---- minecraft\net\minecraft\src\MusInputStream.java	Tue Jul 05 01:00:02 2011
-+++ minecraft_patched\net\minecraft\src\MusInputStream.java	Tue Jul 05 01:04:05 2011
+Only in minecraft/net/minecraft/src: CodecMus.java#
+Only in minecraft/net/minecraft/src: ItemMap.java#
+Only in minecraft/net/minecraft/src: MusInputStrea#
+diff -r -U3 --exclude='*~' minecraft_unpatched/net/minecraft/src/MusInputStream.java minecraft/net/minecraft/src/MusInputStream.java
+--- minecraft_unpatched/net/minecraft/src/MusInputStream.java	2020-11-24 22:39:46.346533700 +0000
++++ minecraft/net/minecraft/src/MusInputStream.java	2020-11-24 22:45:38.566276400 +0000
 @@ -1,5 +1,6 @@
  package net.minecraft.src;
  
 +import java.io.IOException;
  import java.io.InputStream;
  import java.net.URL;
- import net.minecraft.src.CodecMus;
-@@ -28,7 +29,11 @@
-    }
  
-    public int read(byte[] var1, int var2, int var3) {
--      var3 = this.field_1515_d.read(var1, var2, var3);
-+      try {
-+         var3 = this.field_1515_d.read(var1, var2, var3);
-+      } catch (IOException e) {
-+         return 0;
-+      }
+@@ -25,7 +26,11 @@
+     }
  
-       for(int var4 = 0; var4 < var3; ++var4) {
-          byte var5 = var1[var2 + var4] = (byte)(var1[var2 + var4] ^ this.field_1516_c >> 8);
+     public int read(byte[] var1, int var2, int var3) {
+-        var3 = this.field_1515_d.read(var1, var2, var3);
++        try {
++			var3 = this.field_1515_d.read(var1, var2, var3);
++		} catch (IOException e) {
++			e.printStackTrace();
++		}
+ 
+         for(int var4 = 0; var4 < var3; ++var4) {
+             byte var5 = var1[var2 + var4] = (byte)(var1[var2 + var4] ^ this.field_1516_c >> 8);
+diff -r -U3 --exclude='*~' minecraft_unpatched/net/minecraft/src/TileEntityChest.java minecraft/net/minecraft/src/TileEntityChest.java
+--- minecraft_unpatched/net/minecraft/src/TileEntityChest.java	2020-11-24 22:39:47.989947500 +0000
++++ minecraft/net/minecraft/src/TileEntityChest.java	2020-11-24 22:44:47.273903700 +0000
+@@ -88,4 +88,10 @@
+             return var1.func_360_d((double)this.field_823_f + 0.5D, (double)this.field_822_g + 0.5D, (double)this.field_821_h + 0.5D) <= 64.0D;
+         }
+     }
++    
++	public void func_183_c() {
++	}
++
++	public void func_474_j_() {
++	}
+ }
+diff -r -U3 --exclude='*~' minecraft_unpatched/net/minecraft/src/TileEntityDispenser.java minecraft/net/minecraft/src/TileEntityDispenser.java
+--- minecraft_unpatched/net/minecraft/src/TileEntityDispenser.java	2020-11-24 22:39:47.997453500 +0000
++++ minecraft/net/minecraft/src/TileEntityDispenser.java	2020-11-24 22:45:03.370894700 +0000
+@@ -108,4 +108,10 @@
+             return var1.func_360_d((double)this.field_823_f + 0.5D, (double)this.field_822_g + 0.5D, (double)this.field_821_h + 0.5D) <= 64.0D;
+         }
+     }
++    
++	public void func_183_c() {
++	}
++
++	public void func_474_j_() {
++	}
+ }
+diff -r -U3 --exclude='*~' minecraft_unpatched/net/minecraft/src/TileEntityFurnace.java minecraft/net/minecraft/src/TileEntityFurnace.java
+--- minecraft_unpatched/net/minecraft/src/TileEntityFurnace.java	2020-11-24 22:39:48.004960100 +0000
++++ minecraft/net/minecraft/src/TileEntityFurnace.java	2020-11-24 22:46:22.027891300 +0000
+@@ -208,4 +208,10 @@
+             return var1.func_360_d((double)this.field_823_f + 0.5D, (double)this.field_822_g + 0.5D, (double)this.field_821_h + 0.5D) <= 64.0D;
+         }
+     }
++    
++	public void func_183_c() {
++	}
++
++	public void func_474_j_() {
++	}
+ }

@@ -1,12 +1,34 @@
-diff -r -U 3 minecraft_server\net\minecraft\src\ItemMap.java minecraft_server_patched\net\minecraft\src\ItemMap.java
---- minecraft_server\net\minecraft\src\ItemMap.java	Tue Jul 05 01:00:46 2011
-+++ minecraft_server_patched\net\minecraft\src\ItemMap.java	Tue Jul 05 01:02:44 2011
-@@ -22,7 +22,7 @@
-    }
- 
-    public MapData func_28023_a(ItemStack var1, World var2) {
--      "map_" + var1.func_21125_h();
-+//      "map_" + var1.func_21125_h();
-       MapData var4 = (MapData)var2.func_28103_a(MapData.class, "map_" + var1.func_21125_h());
-       if(var4 == null) {
-          var1.func_28145_b(var2.func_28104_b("map"));
+Only in minecraft_server/net/minecraft/src: ItemMap.java#
+diff -r -U3 --exclude='*~' minecraft_server_unpatched/net/minecraft/src/TileEntityChest.java minecraft_server/net/minecraft/src/TileEntityChest.java
+--- minecraft_server_unpatched/net/minecraft/src/TileEntityChest.java	2020-11-24 22:40:10.130501600 +0000
++++ minecraft_server/net/minecraft/src/TileEntityChest.java	2020-11-24 22:43:53.232236700 +0000
+@@ -88,4 +88,7 @@
+             return var1.func_101_d((double)this.field_478_b + 0.5D, (double)this.field_483_c + 0.5D, (double)this.field_482_d + 0.5D) <= 64.0D;
+         }
+     }
++
++	public void func_183_c() {
++	}
+ }
+diff -r -U3 --exclude='*~' minecraft_server_unpatched/net/minecraft/src/TileEntityDispenser.java minecraft_server/net/minecraft/src/TileEntityDispenser.java
+--- minecraft_server_unpatched/net/minecraft/src/TileEntityDispenser.java	2020-11-24 22:40:10.138509000 +0000
++++ minecraft_server/net/minecraft/src/TileEntityDispenser.java	2020-11-24 22:44:16.663426300 +0000
+@@ -108,4 +108,7 @@
+             return var1.func_101_d((double)this.field_478_b + 0.5D, (double)this.field_483_c + 0.5D, (double)this.field_482_d + 0.5D) <= 64.0D;
+         }
+     }
++    
++	public void func_183_c() {
++	}
+ }
+diff -r -U3 --exclude='*~' minecraft_server_unpatched/net/minecraft/src/TileEntityFurnace.java minecraft_server/net/minecraft/src/TileEntityFurnace.java
+--- minecraft_server_unpatched/net/minecraft/src/TileEntityFurnace.java	2020-11-24 22:40:10.140010200 +0000
++++ minecraft_server/net/minecraft/src/TileEntityFurnace.java	2020-11-24 22:46:33.098926700 +0000
+@@ -196,4 +196,7 @@
+             return var1.func_101_d((double)this.field_478_b + 0.5D, (double)this.field_483_c + 0.5D, (double)this.field_482_d + 0.5D) <= 64.0D;
+         }
+     }
++    
++	public void func_183_c() {
++	}
+ }
