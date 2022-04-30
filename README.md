@@ -1,3 +1,5 @@
+# This project is no longer maintained, see [RetroMCP-Java](https://github.com/MCPHackers/RetroMCP-Java).
+
 # 1.7.3-LTS
 
 1.7.3-LTS is a modification of the Minecraft Coder Pack to create a "Long Term Service" patch for Minecraft Beta 1.7.3
